@@ -1,46 +1,57 @@
 from django.db import models
-from app_categories.models import Subcategories
+from django.utils.translation import gettext_lazy as _
 
 
 class Goods(models.Model):
-    goodsname = models.CharField(max_length=100, verbose_name='Название товара')
-    description = models.TextField(verbose_name='Описание')
-    categoryidx = models.ForeignKey(Subcategories, on_delete=models.CASCADE, verbose_name='Категория')
-    image = models.ImageField(upload_to='goods/', verbose_name='Изображение товара')
+    """Товары"""
+    goodsname = models.CharField(max_length=100, verbose_name=_('goods name'))
+    description = models.TextField(verbose_name=_('description'))
+    categoryidx = models.ForeignKey('app_categories.Subcategories',
+                                    on_delete=models.CASCADE, verbose_name=_('category'))
+    image = models.ImageField(upload_to='goods/', verbose_name=_('image'))
 
     class Meta:
-        verbose_name = 'Товар'
-        verbose_name_plural = 'Товары'
+        verbose_name = _('goods')
+        verbose_name_plural = _('goods')
+
+    def __str__(self):
+        return self.goodsname
 
 
 class Shops(models.Model):
-    shopname = models.CharField(max_length=50, verbose_name='Название магазина')
-    address = models.CharField(max_length=100, verbose_name='Адрес')
-    phone = models.PositiveIntegerField(max_length=20, verbose_name='Телефон')
-    email = models.EmailField(verbose_name='Электронная почта')
-    description = models.TextField(verbose_name='Описание')
-    image = models.ImageField(upload_to='shops/', verbose_name='Изображение магазина')
+    """Магазины"""
+    shopname = models.CharField(max_length=50, verbose_name=_('shop name'))
+    address = models.CharField(max_length=100, verbose_name=_('address'))
+    phone = models.PositiveIntegerField(max_length=20, verbose_name=_('phone'))
+    email = models.EmailField(verbose_name=_('email'))
+    description = models.TextField(verbose_name=_('description'))
+    image = models.ImageField(upload_to='shops/', verbose_name=_('image'))
 
     class Meta:
-        verbose_name = 'Магазин'
-        verbose_name_plural = 'Магазины'
+        verbose_name = _('shop')
+        verbose_name_plural = _('shops')
+
+    def __str__(self):
+        return self.shopname
 
 
 class GoodsStorages(models.Model):
-    goodsidx = models.ForeignKey(Goods, on_delete=models.CASCADE, verbose_name='Товар')
-    quantity = models.PositiveIntegerField(verbose_name='Количество')
-    limited = models.BooleanField(default=False, verbose_name='Ограниченный тираж')
+    """Склады товаров"""
+    goodsidx = models.ForeignKey(Goods, on_delete=models.CASCADE, verbose_name=_('goods'))
+    quantity = models.PositiveIntegerField(verbose_name=_('quantity'))
+    limited = models.BooleanField(default=False, verbose_name=_('limited edition'))
 
     class Meta:
-        verbose_name = 'Товар на складе'
-        verbose_name_plural = 'Товары на складе'
+        verbose_name = _('goods storage')
+        verbose_name_plural = _('goods storages')
 
 
 class GoodsInShops(models.Model):
-    goodsidx = models.ForeignKey(Goods, on_delete=models.CASCADE, verbose_name='Товар')
-    shopidx = models.ForeignKey(Shops, on_delete=models.CASCADE, verbose_name='Магазин')
-    price = models.FloatField(verbose_name='Цена')
+    """Товары в магазинах"""
+    goodsidx = models.ForeignKey(Goods, on_delete=models.CASCADE, verbose_name=_('goods'))
+    shopidx = models.ForeignKey(Shops, on_delete=models.CASCADE, verbose_name=_('shop'))
+    price = models.FloatField(verbose_name=_('price'))
 
     class Meta:
-        verbose_name = 'Товар в магазине'
-        verbose_name_plural = 'Товары в магазинах'
+        verbose_name = _('goods in shop')
+        verbose_name_plural = _('goods in shops')
