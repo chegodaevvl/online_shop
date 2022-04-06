@@ -1,5 +1,4 @@
 from django.db import models
-from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
 
 
@@ -36,12 +35,12 @@ class PaymentMethod(models.Model):
 
 class Orders(models.Model):
     """ Заказы """
-    useridx = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_('user'))
+    useridx = models.ForeignKey('auth.User', on_delete=models.CASCADE, verbose_name=_('user'))
     order = models.TextField(null=False, verbose_name=_('order list'))
     orderdate = models.DateTimeField(auto_now=True, null=False, verbose_name=_('order date'))
-    total = models.DecimalField(decimal_places=2, verbose_name=_('order total price'))
-    paid = models.ForeignKey(PaymentMethod, on_delete=models.SET_NULL, verbose_name=_('payment method'))
-    shipment = models.ForeignKey(ShipmentMethod, on_delete=models.SET_NULL, verbose_name=_('shipment method'))
+    total = models.DecimalField(max_digits=8, decimal_places=2, verbose_name=_('order total price'))
+    paid = models.ForeignKey('PaymentMethod', on_delete=models.CASCADE, verbose_name=_('payment method'))
+    shipment = models.ForeignKey('ShipmentMethod', on_delete=models.CASCADE, verbose_name=_('shipment method'))
     address = models.CharField(max_length=50, null=False, verbose_name=_('order delivery address'))
 
     class Meta:
@@ -80,8 +79,8 @@ class DiscountRule(models.Model):
 
 class Discount(models.Model):
     """ Скидки """
-    discounttypeidx = models.ForeignKey(DiscountType, on_delete=models.CASCADE)
-    discountruleidx = models.ForeignKey(DiscountRule, on_delete=models.CASCADE)
+    discounttypeidx = models.ForeignKey('DiscountType', on_delete=models.CASCADE)
+    discountruleidx = models.ForeignKey('DiscountRule', on_delete=models.CASCADE)
     description = models.TextField(null=False, verbose_name=_('discount description'))
     startdate = models.DateField(null=False, verbose_name=_('discount start date'))
     enddate = models.DateField(null=False, verbose_name=_('discount end date'))
