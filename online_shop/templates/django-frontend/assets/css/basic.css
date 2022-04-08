@@ -2525,7 +2525,7 @@ button.link {
 }
 
 .wrap {
-  padding: 0 15px;
+  padding: 15px 15px 0;
   max-width: 1630px;
   min-width: 320px;
   width: 100%;
