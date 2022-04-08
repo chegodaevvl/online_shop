@@ -3,7 +3,7 @@ from .models import Orders, Discount, DiscountRule, DiscountType, PaymentMethod,
 
 
 class OrdersAdmin(admin.ModelAdmin):
-    list_display = ['useridx', 'order', 'orderdate', 'total', 'paid', 'shipment', 'address']
+    list_display = ['useridx', 'order', 'dt', 'total', 'paid', 'shipment', 'address']
 
 
 class DiscountAdmin(admin.ModelAdmin):

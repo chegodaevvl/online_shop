@@ -37,7 +37,7 @@ class Orders(models.Model):
     """ Заказы """
     useridx = models.ForeignKey('auth.User', on_delete=models.CASCADE, verbose_name=_('user'))
     order = models.TextField(null=False, verbose_name=_('order list'))
-    orderdate = models.DateTimeField(auto_now=True, null=False, verbose_name=_('order date'))
+    dt = models.DateTimeField(auto_now=True, null=False, verbose_name=_('order date'))
     total = models.DecimalField(max_digits=8, decimal_places=2, verbose_name=_('order total price'))
     paid = models.ForeignKey('PaymentMethod', on_delete=models.CASCADE, verbose_name=_('payment method'))
     shipment = models.ForeignKey('ShipmentMethod', on_delete=models.CASCADE, verbose_name=_('shipment method'))
