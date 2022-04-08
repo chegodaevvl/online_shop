@@ -337,13 +337,12 @@
 }
 
 .CategoriesHomeItem {
-  padding-top: 300px;
+  padding-top: 310px;
   padding-left: 130px;
   padding-bottom: 100px;
   width: 395px;
   border: 1px #0063d1 solid;
   color: #1e7cc4;
-  background-image: url("../img/content/home/camera.png");
   background-repeat: no-repeat;
   background-size: 300px 200px;
   background-position-x: 30px;
@@ -351,6 +350,52 @@
   transition: color 0.5s ease-in-out;
   transition: background-color 0.5s ease-in-out;
   cursor: pointer;
+}
+
+.drone {
+  background-image: url("../img/content/home/slider.png");
+}
+
+.phone {
+  background-image: url("../img/content/home/iphone13.png");
+  background-position-x: 100px;
+  background-position-y: 40px;
+  background-size: 50%;
+}
+
+.tablet {
+  background-image: url("../img/content/home/ipad.png");
+  background-position-x: 100px;
+  background-position-y: 70px;
+  background-size: 50%;
+}
+
+.notebook {
+  background-image: url("../img/content/home/macbook.png");
+  background-position-x: 50px;
+  background-position-y: 40px;
+  background-size: 70%;
+}
+
+.camera {
+  background-image: url("../img/content/home/camera.png");
+  background-position-x: 50px;
+  background-position-y: 40px;
+  background-size: 70%;
+}
+
+.videocard {
+  background-image: url("../img/content/home/videoca.png");
+  background-position-x: 50px;
+  background-position-y: 40px;
+  background-size: 70%;
+}
+
+.display {
+  background-image: url("../img/content/home/studio display.png");
+  background-position-x: 55px;
+  background-position-y: 40px;
+  background-size: 70%;
 }
 
 .CategoriesHomeItem:hover {
@@ -4303,6 +4348,8 @@ a.Cart-title {
   }
 }
 .Slider-content {
+  margin: 0 !important;
+  display: flex;
   visibility: visible;
 }
 .Slider_main {
@@ -4356,7 +4403,7 @@ a.Cart-title {
 }
 .Slider_main .Slider-navigate {
   justify-content: flex-start;
-  margin-left: 25.5%;
+  margin-left: 50%;
 }
 .Slider_main .Slider-navigateWrap {
   height: 80px;
@@ -4438,6 +4485,7 @@ a.Cart-title {
   }
 }
 .Slider-title {
+  padding-top: 100px;
   font-weight: 600;
   line-height: 84px;
   text-transform: uppercase;
@@ -4459,7 +4507,7 @@ a.Cart-title {
   }
 }
 .Slider-text {
-  font-size: 20px;
+  font-size: 40px;
   color: #8a8c95;
   line-height: 1.7em;
 }
@@ -4537,9 +4585,42 @@ a.Cart-title {
     max-width: 100%;
   }
 }
-.Slider img {
-  max-width: 100%;
+/*.Slider img {*/
+/*  max-width: 100%;*/
+/*}*/
+
+.Slider-left {
+  padding-left: 100px;
+  margin-right: 300px;
 }
+
+.Slider-title {
+  margin: 0;
+}
+
+.Slider-title span {
+  color: #1d459b;
+}
+
+.Slider-text {
+  margin: 0;
+  margin-bottom: 25px;
+  display: block;
+}
+
+.Slider-btn {
+  padding: 15px 30px 15px 30px;
+  background-color: #1d459b;
+  color: #fff;
+  border-radius: 50px;
+  font-size: 20px;
+}
+
+.iphone13promax {
+  padding-top: 25px;
+  width: 80%;
+}
+
 /* Slider */
 .slick-slider {
   position: relative;
@@ -4695,7 +4776,7 @@ a.Cart-title {
   cursor: pointer;
   width: 7px;
   height: 7px;
-  border-radius: 0;
+  border-radius: 10px;
 }
 .slick-dots li button:hover,
 .slick-dots li button:focus {

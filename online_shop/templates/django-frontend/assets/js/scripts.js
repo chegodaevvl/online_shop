@@ -339,7 +339,7 @@ var Slider = function(){
                 var $navigate = $this.closest($block).find('.Slider-navigate');
                 $this.slick({
                     dots: true,
-                    arrows: true,
+                    arrows: false,
                     autoplay: true,
                     appendArrows: $navigate,
                     appendDots: $navigate,
