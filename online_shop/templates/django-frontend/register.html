@@ -1,0 +1,143 @@
+<link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+
+<style>
+/* @import url(//fonts.googleapis.com/css?family=Montserrat:300,400,500);
+.bform {
+  font-family: "Montserrat", sans-serif;
+  color: #8d97ad;
+  font-weight: 300;
+  overflow: hidden;
+  position: relative;
+} */
+
+.bform h1,
+.bform h2,
+.bform h3,
+.bform h4,
+.bform h5,
+.bform h6 {
+  color: #3e4555;
+}
+
+.bform .subtitle {
+  color: #8d97ad;
+  line-height: 24px;
+}
+
+.bform a {
+  text-decoration: none;
+}
+
+.bform .btn-danger-gradiant {
+  background: #1d459b;
+  background: -webkit-linear-gradient(legacy-direction(to right), #1d459b 0%, #0c2863 100%);
+  background: -webkit-gradient(linear, left top, right top, from(#1d459b), to(#0c2863));
+  background: -webkit-linear-gradient(left, #1d459b 0%, #0c2863 100%);
+  background: -o-linear-gradient(left, #1d459b 0%, #0c2863 100%);
+  background: linear-gradient(to right, #1d459b 0%, #0c2863 100%);
+}
+
+.bform .btn-danger-gradiant:hover {
+  background: #0c2863;
+  background: -webkit-linear-gradient(legacy-direction(to right), #0c2863 0%, #1d459b 100%);
+  background: -webkit-gradient(linear, left top, right top, from(#0c2863), to(#1d459b));
+  background: -webkit-linear-gradient(left, #0c2863 0%, #1d459b 100%);
+  background: -o-linear-gradient(left, #0c2863 0%, #1d459b 100%);
+  background: linear-gradient(to right, #0c2863 0%, #1d459b 100%);
+}
+
+.bform .btn-md {
+  padding: 15px 45px;
+  font-size: 16px;
+}
+
+.bform .bg-facebook {
+  background-color: #3b5a9a;
+}
+
+.bform .bg-twitter {
+  background-color: #56adf2;
+}
+
+.bform .text-danger {
+  color: #0c2863 !important;
+}
+
+.bform .right-image {
+  background-position: center bottom;
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  top: 0;
+}
+
+@media (max-width: 1023px) {
+  .bform .contact-form {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+@media (max-width: 767px) {
+  .bform .contact-form {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+}
+
+@media (max-width: 1023px) {
+	.bform .right-image {
+		position: relative;
+		bottom: -95px;
+	}
+}
+</style>
+
+<div class="bform py-5">
+  <!-- Row  -->
+  <div class="row">
+    <div class="container">
+      <div class="col-lg-6 align-justify-center pr-4 pl-0 contact-form">
+        <div class="">
+          <h2 class="mb-3 font-weight-light">Регистрация</h2>
+          <h6 class="subtitle font-weight-normal">Описание</h6>
+          <form class="mt-3">
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="form-group">
+                  <input class="form-control" type="text" placeholder="full name">
+                </div>
+              </div>
+              <div class="col-lg-12">
+                <div class="form-group">
+                  <input class="form-control" type="email" placeholder="email address">
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <input class="form-control" type="password" placeholder="password">
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <input class="form-control" type="password" placeholder="confirm password">
+                </div>
+              </div>
+              <div class="col-lg-12">
+                <button type="submit" class="btn btn-md btn-block btn-danger-gradiant text-white border-0"><span>Создать аккаунт</span></button>
+                <!--  -->
+              </div>
+            </div>
+          </form>
+          <div class="row">
+            <div class="col-lg-12 text-center mt-4">
+              Уже есть аккаунт? <a href="#" class="text-danger">Войти</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
