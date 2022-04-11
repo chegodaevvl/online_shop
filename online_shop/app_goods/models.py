@@ -22,7 +22,7 @@ class Shops(models.Model):
     """Магазины"""
     shopname = models.CharField(max_length=50, verbose_name=_('shop name'))
     address = models.CharField(max_length=100, verbose_name=_('address'))
-    phone = models.PositiveIntegerField(max_length=20, verbose_name=_('phone'))
+    phone = models.PositiveIntegerField(verbose_name=_('phone'))
     email = models.EmailField(verbose_name=_('email'))
     description = models.TextField(verbose_name=_('description'))
     image = models.ImageField(upload_to='shops/', verbose_name=_('image'))
@@ -37,7 +37,7 @@ class Shops(models.Model):
 
 class GoodsStorages(models.Model):
     """Склады товаров"""
-    goodsidx = models.ForeignKey(Goods, on_delete=models.CASCADE, verbose_name=_('goods'))
+    goodsidx = models.ForeignKey('Goods', on_delete=models.CASCADE, verbose_name=_('goods'))
     quantity = models.PositiveIntegerField(verbose_name=_('quantity'))
     limited = models.BooleanField(default=False, verbose_name=_('limited edition'))
 
@@ -48,8 +48,8 @@ class GoodsStorages(models.Model):
 
 class GoodsInShops(models.Model):
     """Товары в магазинах"""
-    goodsidx = models.ForeignKey(Goods, on_delete=models.CASCADE, verbose_name=_('goods'))
-    shopidx = models.ForeignKey(Shops, on_delete=models.CASCADE, verbose_name=_('shop'))
+    goodsidx = models.ForeignKey('Goods', on_delete=models.CASCADE, verbose_name=_('goods'))
+    shopidx = models.ForeignKey('Shops', on_delete=models.CASCADE, verbose_name=_('shop'))
     price = models.FloatField(verbose_name=_('price'))
 
     class Meta:
