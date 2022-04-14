@@ -1,18 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Banners</title>
-</head>
-<body>
+{% block banners %}
     {% if context %}
         {% for item in context %}
             <div>
                 <a href="{{ item.bannerlink }}"> <img src="/media/{{ item.bannerimg }}" alt="{{ item.advertisementname }}"> </a>
             </div>
         {% endfor %}
-    {% else %}
-        <p>Здесь ничего нет</p>
     {% endif %}
-</body>
-</html>
+{% endblock %}
