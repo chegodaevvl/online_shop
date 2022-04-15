@@ -1,21 +1,9 @@
 from django.contrib import admin
-from .models import Orders, Discount, DiscountRule, DiscountType, PaymentMethod, ShipmentMethod, ShipmentRules
+from .models import *
 
 
 class OrdersAdmin(admin.ModelAdmin):
     list_display = ['useridx', 'order', 'dt', 'total', 'paid', 'shipment', 'address']
-
-
-class DiscountAdmin(admin.ModelAdmin):
-    list_display = ['discounttypeidx', 'discountruleidx', 'description', 'startdate', 'enddate', 'isactive', 'priority']
-
-
-class DiscountRuleAdmin(admin.ModelAdmin):
-    list_display = ['title', 'discountvalue', 'goodsset']
-
-
-class DiscountTypeAdmin(admin.ModelAdmin):
-    list_display = ['title']
 
 
 class PaymentMethodAdmin(admin.ModelAdmin):
@@ -30,10 +18,32 @@ class ShipmentRulesAdmin(admin.ModelAdmin):
     list_display = ['freenormal', 'paidnormal', 'paidexpress']
 
 
+class DiscountsRulesAdmin(admin.ModelAdmin):
+    list_display = ['percentdiscount', 'normaldiscount', 'fixedprice']
+
+
+class GoodsDiscountsAdmin(admin.ModelAdmin):
+    list_display = ['goodsidx', 'discountruleidx', 'goodsdiscount']
+
+
+class GoodsDiscountsCalendarAdmin(admin.ModelAdmin):
+    list_display = ['goodsidx', 'startdt', 'enddt', 'isactive']
+
+
+class GoodsSetsAdmin(admin.ModelAdmin):
+    list_display = ['goodsidx', 'discountruleidx', 'goodsset', 'setdiscount']
+
+
+class SetsDiscountsCalendarAdmin(admin.ModelAdmin):
+    list_display = ['setidx', 'startdt', 'enddt', 'isactive']
+
+
 admin.site.register(Orders, OrdersAdmin)
-admin.site.register(Discount, DiscountAdmin)
-admin.site.register(DiscountType, DiscountTypeAdmin)
-admin.site.register(DiscountRule, DiscountRuleAdmin)
 admin.site.register(PaymentMethod, PaymentMethodAdmin)
 admin.site.register(ShipmentMethod, ShipmentMethodAdmin)
 admin.site.register(ShipmentRules, ShipmentRulesAdmin)
+admin.site.register(DiscountsRules, DiscountsRulesAdmin)
+admin.site.register(GoodsDiscounts, GoodsDiscountsAdmin)
+admin.site.register(GoodsDiscountsCalendar, GoodsDiscountsCalendarAdmin)
+admin.site.register(GoodsSets, GoodsSetsAdmin)
+admin.site.register(SetsDiscountsCalendar, SetsDiscountsCalendarAdmin)
