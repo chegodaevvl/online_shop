@@ -4,8 +4,8 @@ from django.utils.translation import gettext_lazy as _
 
 class ShipmentMethod(models.Model):
     """ Способ доставки """
-    normal = models.IntegerField(verbose_name=_('normal shipping method '))
-    express = models.IntegerField(verbose_name=_('express shipping method'))
+    normal = models.IntegerField(default=0, verbose_name=_('normal shipping method '))
+    express = models.IntegerField(default=1, verbose_name=_('express shipping method'))
 
     class Meta:
         verbose_name = _('shipment method')
@@ -14,9 +14,9 @@ class ShipmentMethod(models.Model):
 
 class ShipmentRules(models.Model):
     """ Правила доставки """
-    freenormal = models.FloatField(verbose_name=_('free shipping '))
-    paidnormal = models.FloatField(verbose_name=_('standard shipping '))
-    paidexpress = models.FloatField(verbose_name=_('express shipping '))
+    freenormal = models.FloatField(default=2000, verbose_name=_('free shipping'))
+    paidnormal = models.FloatField(default=200, verbose_name=_('standard shipping'))
+    paidexpress = models.FloatField(default=500, verbose_name=_('express shipping'))
 
     class Meta:
         verbose_name = _('shipment rule')
@@ -25,8 +25,8 @@ class ShipmentRules(models.Model):
 
 class PaymentMethod(models.Model):
     """ Способ оплаты """
-    card = models.IntegerField(verbose_name=_('card number'))
-    foreignaccount = models.IntegerField(verbose_name=_('foreign account'))
+    card = models.IntegerField(default=0, verbose_name=_('card number'))
+    foreignaccount = models.IntegerField(default=1, verbose_name=_('foreign account'))
 
     class Meta:
         verbose_name = _('payment rule')
@@ -54,17 +54,18 @@ class Orders(models.Model):
 class DiscountsRules(models.Model):
     """Правила скидок"""
     percentdiscount = models.IntegerField(default=0, verbose_name=_('percent discount'))
-    normaldiscount = models.IntegerField(default=1, verbose_name=_('normal_discount'))
-    fixedprice = models.IntegerField(default=2, verbose_name=_('fixed_price'))
+    normaldiscount = models.IntegerField(default=1, verbose_name=_('normal discount'))
+    fixedprice = models.IntegerField(default=2, verbose_name=_('fixed price'))
 
     class Meta:
         verbose_name = _('discount rule')
-        verbose_name_plural = _('discounts_rules')
+        verbose_name_plural = _('discounts rules')
 
 
 class GoodsDiscounts(models.Model):
     """Скидочные товары"""
-    goodsidx = models.OneToOneField('app_goods.goods', on_delete=models.CASCADE, verbose_name=_('goods'))
+    goodsidx = models.OneToOneField('app_goods.Goods', on_delete=models.CASCADE,
+                                    related_name='discounts', verbose_name=_('goods'))
     discountruleidx = models.ForeignKey('DiscountsRules', on_delete=models.CASCADE, verbose_name=_('discount rule'))
     goodsdiscount = models.FloatField(verbose_name=_('goods discount'))
 
@@ -87,7 +88,8 @@ class GoodsDiscountsCalendar(models.Model):
 
 class GoodsSets(models.Model):
     """Наборы товаров"""
-    goodsidx = models.ForeignKey('app_goods.Goods', on_delete=models.CASCADE, verbose_name=_('goods'))
+    goodsidx = models.ForeignKey('app_goods.Goods', on_delete=models.CASCADE,
+                                 related_name='sets', verbose_name=_('goods'))
     discountruleidx = models.ForeignKey('DiscountsRules', on_delete=models.CASCADE, verbose_name=_('discount rule'))
     goodsset = models.TextField(verbose_name=_('goods set'))
     setdiscount = models.FloatField(verbose_name=_('set discount'))
