@@ -37,7 +37,7 @@ class Shops(models.Model):
 
 class GoodsStorages(models.Model):
     """Склады товаров"""
-    goodsidx = models.ForeignKey('Goods', on_delete=models.CASCADE, verbose_name=_('goods'))
+    goodsidx = models.ForeignKey('Goods', on_delete=models.CASCADE, related_name='storage', verbose_name=_('goods'))
     quantity = models.PositiveIntegerField(verbose_name=_('quantity'))
     limited = models.BooleanField(default=False, verbose_name=_('limited edition'))
 
