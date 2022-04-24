@@ -55,3 +55,12 @@ class GoodsInShops(models.Model):
     class Meta:
         verbose_name = _('goods in shop')
         verbose_name_plural = _('goods in shops')
+
+
+class Offer(models.Model):
+    """таблица для хранения предложения дня"""
+    goodsidx = models.ForeignKey('Goods', on_delete=models.CASCADE, verbose_name=_('goods'))
+    startofferdate = models.DateTimeField(verbose_name=_('date offer start'))
+
+    def __str__(self):
+        return self.goodsidx.goodsname
