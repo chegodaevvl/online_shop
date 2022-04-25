@@ -1,42 +1,36 @@
-from django.db.models import Q
+from django.db.models import Q, Sum
 from .models import Goods, Offer
-from random import choices, sample
-from typing import List
+from random import sample
 from datetime import datetime
 
 
-def get_hot_offers(quantity: int) -> List[Goods]:
+def get_hot_offers(quantity: int):
     hot_offers = list(Goods.objects.filter(Q(discounts__isnull=False) | Q(sets__isnull=False)))
     if len(hot_offers) > quantity:
-        hot_offers = choices(hot_offers, k=quantity)
+        hot_offers = sample(hot_offers, k=quantity)
     return hot_offers
-    pass
 
 
-def get_limited_goods(quantity: int) -> List[Goods]:
-    limited_goods = list(Goods.objects.filter(storage__limited=True))
+def get_limited_goods(quantity: int):
+    limited_goods = list(Goods.objects.filter(Q(storage__limited=True) & Q(offer__isnull=True)))
     if len(limited_goods) > quantity:
-        limited_goods = choices(limited_goods, k=quantity)
+        limited_goods = sample(limited_goods, k=quantity)
     return limited_goods
-    pass
 
 
-def get_sample_limited_goods():
-    limited_goods_in_storage = Goods.objects.filter(storage__limited=True)
-    if len(limited_goods_in_storage) > 0:
-        return sample(list(limited_goods_in_storage), 1)[0]
-    return None
+def get_top_goods(quantity: int):
+    top_goods = Goods.objects.annotate(total_bought=Sum('statistics__quantity')).order_by('-total_bought')[:quantity]
+    return top_goods
 
 
 def get_offer_of_the_day():
-    limited_goods = get_sample_limited_goods()
+    limited_goods = get_limited_goods(quantity=1)
     if limited_goods:
-        Offer.objects.get_or_create(pk=1, defaults={
+        offer = Offer.objects.get_or_create(pk=1, defaults={
                 'goodsidx': limited_goods,
                 'startofferdate': datetime.fromisoformat('1999-01-01')
-            })
-        offer = Offer.objects.get(pk=1)
-        if Offer.objects.get(pk=1).startofferdate.date() != datetime.today().date():
+            })[0]
+        if offer.startofferdate.date() != datetime.today().date():
             offer.goodsidx = limited_goods
             offer.startofferdate = datetime.today().date()
             offer.save()

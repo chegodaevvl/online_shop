@@ -1,0 +1,9 @@
+{% block featured_categories %}
+    <ul>
+        {% for subcategory in featured_categories %}
+            <li>
+                <a href="{{ subcategory.id }}"> {{ subcategory.subcategoryname }} </a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

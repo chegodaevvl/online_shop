@@ -1,0 +1,9 @@
+{% block top_goods %}
+    <ul>
+        {% for goods in top_goods %}
+            <li>
+                <a href="#">{{ goods.goodsname }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
