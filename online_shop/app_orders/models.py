@@ -4,8 +4,8 @@ from django.utils.translation import gettext_lazy as _
 
 class ShipmentMethod(models.Model):
     """ Способ доставки """
-    normal = models.IntegerField(verbose_name=_('normal shipping method '))
-    express = models.IntegerField(verbose_name=_('express shipping method'))
+    normal = models.IntegerField(default=0, verbose_name=_('normal shipping method '))
+    express = models.IntegerField(default=1, verbose_name=_('express shipping method'))
 
     class Meta:
         verbose_name = _('shipment method')
@@ -14,9 +14,9 @@ class ShipmentMethod(models.Model):
 
 class ShipmentRules(models.Model):
     """ Правила доставки """
-    freenormal = models.FloatField(verbose_name=_('free shipping '))
-    paidnormal = models.FloatField(verbose_name=_('standard shipping '))
-    paidexpress = models.FloatField(verbose_name=_('express shipping '))
+    freenormal = models.FloatField(default=2000, verbose_name=_('free shipping'))
+    paidnormal = models.FloatField(default=200, verbose_name=_('standard shipping'))
+    paidexpress = models.FloatField(default=500, verbose_name=_('express shipping'))
 
     class Meta:
         verbose_name = _('shipment rule')
@@ -25,8 +25,8 @@ class ShipmentRules(models.Model):
 
 class PaymentMethod(models.Model):
     """ Способ оплаты """
-    card = models.IntegerField(verbose_name=_('card number'))
-    foreignaccount = models.IntegerField(verbose_name=_('foreign account'))
+    card = models.IntegerField(default=0, verbose_name=_('card number'))
+    foreignaccount = models.IntegerField(default=1, verbose_name=_('foreign account'))
 
     class Meta:
         verbose_name = _('payment rule')
@@ -51,45 +51,61 @@ class Orders(models.Model):
         return self.order
 
 
-class DiscountType(models.Model):
-    """ Типы скидок """
-    title = models.CharField(max_length=50, verbose_name=_('discount type'))
-
-    class Meta:
-        verbose_name = _('discount type')
-        verbose_name_plural = _('discount types')
-
-    def __str__(self):
-        return self.title
-
-
-class DiscountRule(models.Model):
-    """ Правила применения скидки """
-    title = models.CharField(max_length=50, verbose_name=_('discount rule name'))
-    discountvalue = models.FloatField(null=False, verbose_name=_('discount value'))
-    goodsset = models.TextField(null=False, verbose_name=_('goods list for discount'))
+class DiscountsRules(models.Model):
+    """Правила скидок"""
+    percentdiscount = models.IntegerField(default=0, verbose_name=_('percent discount'))
+    normaldiscount = models.IntegerField(default=1, verbose_name=_('normal discount'))
+    fixedprice = models.IntegerField(default=2, verbose_name=_('fixed price'))
 
     class Meta:
         verbose_name = _('discount rule')
-        verbose_name_plural = _('discount_rules')
-
-    def __str__(self):
-        return self.title
+        verbose_name_plural = _('discounts rules')
 
 
-class Discount(models.Model):
-    """ Скидки """
-    discounttypeidx = models.ForeignKey('DiscountType', on_delete=models.CASCADE)
-    discountruleidx = models.ForeignKey('DiscountRule', on_delete=models.CASCADE)
-    description = models.TextField(null=False, verbose_name=_('discount description'))
-    startdate = models.DateField(null=False, verbose_name=_('discount start date'))
-    enddate = models.DateField(null=False, verbose_name=_('discount end date'))
-    isactive = models.BooleanField(default=False, verbose_name=_('discount activity'))
-    priority = models.IntegerField(default=0, null=False, verbose_name=_('discount priority'))
+class GoodsDiscounts(models.Model):
+    """Скидочные товары"""
+    goodsidx = models.OneToOneField('app_goods.Goods', on_delete=models.CASCADE,
+                                    related_name='discounts', verbose_name=_('goods'))
+    discountruleidx = models.ForeignKey('DiscountsRules', on_delete=models.CASCADE, verbose_name=_('discount rule'))
+    goodsdiscount = models.FloatField(verbose_name=_('goods discount'))
 
     class Meta:
-        verbose_name = _('discount')
-        verbose_name_plural = _('discounts')
+        verbose_name = _('goods discount')
+        verbose_name_plural = _('goods discounts')
 
-    def __str__(self):
-        return self.description
+
+class GoodsDiscountsCalendar(models.Model):
+    """Календарь скидок на товары"""
+    goodsidx = models.ForeignKey('app_goods.Goods', on_delete=models.CASCADE, verbose_name=_('goods'))
+    startdt = models.DateTimeField(verbose_name=_('start date'))
+    enddt = models.DateTimeField(verbose_name=_('end date'))
+    isactive = models.BooleanField(verbose_name=_('is active'))
+
+    class Meta:
+        verbose_name = _('goods discount calendar')
+        verbose_name_plural = _('goods discounts calendar')
+
+
+class GoodsSets(models.Model):
+    """Наборы товаров"""
+    goodsidx = models.ForeignKey('app_goods.Goods', on_delete=models.CASCADE,
+                                 related_name='sets', verbose_name=_('goods'))
+    discountruleidx = models.ForeignKey('DiscountsRules', on_delete=models.CASCADE, verbose_name=_('discount rule'))
+    goodsset = models.TextField(verbose_name=_('goods set'))
+    setdiscount = models.FloatField(verbose_name=_('set discount'))
+
+    class Meta:
+        verbose_name = _('goods set')
+        verbose_name_plural = _('goods sets')
+
+
+class SetsDiscountsCalendar(models.Model):
+    """Календарь скидок на наборы"""
+    setidx = models.ForeignKey('GoodsSets', on_delete=models.CASCADE, verbose_name=_('goods'))
+    startdt = models.DateTimeField(verbose_name=_('start date'))
+    enddt = models.DateTimeField(verbose_name=_('end date'))
+    isactive = models.BooleanField(verbose_name=_('active'))
+
+    class Meta:
+        verbose_name = _('set discount calendar')
+        verbose_name_plural = _('sets discounts calendar')

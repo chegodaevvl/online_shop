@@ -1,0 +1,9 @@
+{% block hot_offers %}
+    <ul>
+        {% for goods in hot_offers %}
+            <li>
+                <a href="#">{{ goods.goodsname }}</a>
+            </li>
+        {%  endfor %}
+    </ul>
+{%  endblock %}

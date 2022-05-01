@@ -77,6 +77,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'online_shop.wsgi.application'
 
+FIXTURE_DIRS = (os.path.join(BASE_DIR, 'fixtures'))
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
