@@ -1,0 +1,42 @@
+{#{% extends "shop/base.html" %}#}
+{#{% load static %}#}
+
+{#{% block title %}#}
+{#    {% if category %}{{ category.name }}{% else %}Goods{% endif %}#}
+{#{% endblock %}#}
+
+{% block content %}
+<body>
+    <h4>Goods list:</h4>
+    {% if goods_list %}
+        <table>
+            <tr>
+                <td><b>Магазин</b></td>
+                <td><b>Товар</b></td>
+                <td><b>Количество</b></td>
+                <td><b>Цена</b></td>
+            </tr>
+            {% for g in goods_list %}
+            <tr>
+                <td>
+                    {{ g.shopidx.shopname }}
+                </td>
+                <td>
+                    {{ g.price }}
+                </td>
+                <td>
+                    {{ g.goodsidx.goodsname }}
+                </td>
+                <td>
+                    {{ g.goodsidx.categoryidx.subcategoryname }}
+                </td>
+                <td>
+                    <a href="/goods/goods-list/{{g.id}}">Goods_detail_view</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>Goods list is empty.</p>
+    {% endif %}
+{% endblock %}

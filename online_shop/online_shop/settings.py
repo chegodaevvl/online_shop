@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'app_categories.apps.AppCategoriesConfig',
     'app_banners.apps.AppBannersConfig',
     'app_statistics.apps.AppStatisticsConfig',
+    'app_cart.apps.AppCartConfig',
 ]
 
 MIDDLEWARE = [
@@ -137,3 +138,5 @@ STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+CART_SESSION_ID = 'cart'    # ключ для хранения данных корзины в сессии

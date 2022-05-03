@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <p>
+        Goods detail view
+    </p>
+    <p>
+        {{ object.goodsidx.goodsname }} <br>
+        {{ object.goodsidx.description }} <br>
+        {{ object.price }} <br>
+    </p>
+    <form action="{% url 'app_cart:cart_add' object.pk %}" method="post">
+        {{ cart_product_form }}
+        {% csrf_token %}
+        <input type="submit" value="Add to cart">
+    </form>
+</body>
+</html>
