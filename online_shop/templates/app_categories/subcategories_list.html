@@ -1,0 +1,9 @@
+{% block categories %}
+    <ul>
+        {% for subcategory in subcategories %}
+            <li>
+                <a href="sub-{{ subcategory.id }}"> {{ subcategory.subcategoryname }} </a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

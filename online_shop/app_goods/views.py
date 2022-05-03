@@ -1,6 +1,7 @@
 from django.shortcuts import render
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 from .utils import get_hot_offers, get_limited_goods, get_top_goods, get_offer_of_the_day
+from .models import Goods
 
 
 class HotOffersListView(ListView):
@@ -24,3 +25,8 @@ class TopGoodsListView(ListView):
 def days_offer_view(request):
     context = {'test_context': get_offer_of_the_day()}
     return render(request, 'test_page.html', context)
+
+
+class GoodsDetail(DetailView):
+    model = Goods
+    context_object_name = 'goods'

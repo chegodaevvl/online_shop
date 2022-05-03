@@ -1,0 +1,9 @@
+{% block goods %}
+    <div>
+        <img src="/media/{{ goods.image }}" alt="{{ goods.goodsname }}">
+    </div>
+    <div>
+        <h2>{{ goods.goodsname }}</h2>
+        <p>{{ goods.description }}</p>
+    </div>
+{% endblock %}
