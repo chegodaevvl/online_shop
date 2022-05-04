@@ -1,8 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView
 from .utils import get_hot_offers, get_limited_goods, get_top_goods, get_offer_of_the_day
-from .models import Goods, GoodsInShops, GoodsStorages
-from app_cart.forms import CartAddGoodForm
+from .models import Goods
 
 
 class HotOffersListView(ListView):
@@ -28,14 +27,6 @@ def days_offer_view(request):
     return render(request, 'test_page.html', context)
 
 
-class _GoodsList(ListView):
-    queryset = GoodsInShops.objects.all()
-    context_object_name = 'goods_list'
-    template_name = 'app_goods/goods_list.html'
-
-
-class _GoodsDetail(DetailView):
-    model = GoodsInShops
-    template_name = 'app_goods/goods_detail.html'
-    cart_product_form = CartAddGoodForm()
-    extra_context = {'cart_product_form': cart_product_form}
+class GoodsDetail(DetailView):
+    model = Goods
+    context_object_name = 'goods'
