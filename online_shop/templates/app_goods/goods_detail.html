@@ -1,22 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-    <p>
-        Goods detail view
-    </p>
-    <p>
-        {{ object.goodsidx.goodsname }} <br>
-        {{ object.goodsidx.description }} <br>
-        {{ object.price }} <br>
-    </p>
-    <form action="{% url 'app_cart:cart_add' object.pk %}" method="post">
-        {{ cart_product_form }}
-        {% csrf_token %}
-        <input type="submit" value="Add to cart">
-    </form>
-</body>
-</html>
+{% block goods %}
+    <h2>{{ goods.goodsname }}</h2>
+    <div>
+        <img src="/media/{{ goods.image }}" alt="{{ goods.goodsname }}">
+    </div>
+    <div>
+        <p>{{ goods.description }}</p>
+    </div>
+    <h3>Goods is available</h3>
+    {% if in_store %}
+        <ul>
+            {% for item in in_store %}
+                <li>
+                    <span>Store: {{ item.shopidx.shopname }}</span>
+                    <span>Price: {{ item.price }}</span>
+                    <form action="{% url 'app_cart:cart_add' object.pk %}" method="post">
+                        {% csrf_token %}
+                        {{ cart_product_form }}
+                        <input type="submit" value="Add to cart">
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+        <a href="/cart/">Cart</a>
+    {% else %}
+        <p>Goods is sold out</p>
+    {% endif %}
+{% endblock %}

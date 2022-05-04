@@ -1,9 +1,13 @@
 {% block goods %}
-    <ul>
-        {% for good in goods %}
-            <li>
-                <a href="/goods/{{ good.id }}"> {{ good.goodsname }} </a>
-            </li>
-        {% endfor %}
-    </ul>
+    {% if goods %}
+        <ul>
+            {% for item in goods %}
+                <li>
+                    <a href="/goods/{{ item.id }}"> {{ item.goodsname }} </a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>There are no goods in subcategory</p>
+    {% endif %}
 {% endblock %}

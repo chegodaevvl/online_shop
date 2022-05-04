@@ -1,9 +1,13 @@
 {% block categories %}
-    <ul>
-        {% for subcategory in subcategories %}
-            <li>
-                <a href="sub-{{ subcategory.id }}"> {{ subcategory.subcategoryname }} </a>
-            </li>
-        {% endfor %}
-    </ul>
+    {% if subcategories %}
+        <ul>
+            {% for subcategory in subcategories %}
+                <li>
+                    <a href="sub-{{ subcategory.id }}"> {{ subcategory.subcategoryname }} </a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>There are no subcategories specified</p>
+    {% endif %}
 {% endblock %}

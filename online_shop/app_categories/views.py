@@ -1,4 +1,4 @@
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView
 from django.views import View
 from django.shortcuts import render
 from .models import Categories, Subcategories
@@ -8,6 +8,7 @@ from app_goods.models import Goods
 
 class CategoriesList(ListView):
     model = Categories
+    context_object_name = 'categories'
 
 
 class FeaturedCategoriesListView(ListView):
@@ -19,8 +20,8 @@ class FeaturedCategoriesListView(ListView):
 class SubcategoriesView(View):
 
     def get(self, request, cat_id):
-        linked_subcategories = Subcategories.objects.filter(categoryidx=cat_id)
-        return render(request, 'app_categories/subcategories_list.html', context={'subcategories': linked_subcategories})
+        subcategories = Subcategories.objects.filter(categoryidx=cat_id)
+        return render(request, 'app_categories/subcategories_list.html', context={'subcategories': subcategories})
 
 
 class GoodsList(View):
