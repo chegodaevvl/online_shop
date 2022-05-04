@@ -13,7 +13,7 @@
                 <li>
                     <span>Store: {{ item.shopidx.shopname }}</span>
                     <span>Price: {{ item.price }}</span>
-                    <form action="{% url 'app_cart:cart_add' object.pk %}" method="post">
+                    <form action="{% url 'app_cart:cart_add' item.id %}" method="post">
                         {% csrf_token %}
                         {{ cart_product_form }}
                         <input type="submit" value="Add to cart">
