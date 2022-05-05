@@ -41,13 +41,13 @@ class Cart(object):
 
     def __iter__(self):
         """Проходим по товарам корзины и получаем соответствующие объекты Goods."""
-        #good_ids = self.cart.keys()
-        good_ids = []
-        for i in self.cart.keys():
-            if i.isdigit():
-                good_ids.append(i)
+        good_ids = self.cart.keys()
+        # good_ids = []
+        # for i in self.cart.keys():
+        #     if i.isdigit():
+        #         good_ids.append(i)
 
-        print('***good_ids:', good_ids)
+        print('***good_ids in cart:', good_ids)
         # Получаем объекты модели Goods и передаем их в корзину.
         goods = GoodsInShops.objects.filter(goodsidx__in=good_ids)
         cart = self.cart.copy()
