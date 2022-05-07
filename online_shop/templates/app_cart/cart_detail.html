@@ -51,7 +51,7 @@
         </tbody>
     </table>
     <p class="text-right">
-{#        <a href="{% url "shop:product_list" %}" class="button light">Continue shopping</a>#}
-{#        <a href="#" class="button">Checkout</a>#}
+        <a href="/categories/" class="button light">Continue shopping</a>
+        <a href="{% url "app_orders:order_create" %}" class="button">Create Order</a>
     </p>
 {% endblock %}

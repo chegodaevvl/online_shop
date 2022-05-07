@@ -2,8 +2,15 @@ from django.contrib import admin
 from .models import *
 
 
+class OrderItemInline(admin.TabularInline):
+    model = OrderItem
+    raw_id_fields = ['good']
+
+
 class OrdersAdmin(admin.ModelAdmin):
     list_display = ['useridx', 'order', 'dt', 'total', 'paid', 'shipment', 'address']
+    list_filter = ['paid', 'dt']
+    inlines = [OrderItemInline]
 
 
 class PaymentMethodAdmin(admin.ModelAdmin):
@@ -36,6 +43,8 @@ class GoodsSetsAdmin(admin.ModelAdmin):
 
 class SetsDiscountsCalendarAdmin(admin.ModelAdmin):
     list_display = ['setidx', 'startdt', 'enddt', 'isactive']
+
+
 
 
 admin.site.register(Orders, OrdersAdmin)

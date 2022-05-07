@@ -109,3 +109,22 @@ class SetsDiscountsCalendar(models.Model):
     class Meta:
         verbose_name = _('set discount calendar')
         verbose_name_plural = _('sets discounts calendar')
+
+
+class OrderItem(models.Model):
+    """Состав товаров в заказах"""
+    orderidx = models.ForeignKey(Orders, on_delete=models.CASCADE, verbose_name=_('order'))
+    good = models.ForeignKey('app_goods.Goods', on_delete=models.CASCADE,
+                                    related_name='orderitem', verbose_name=_('orderitem'))
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    quantity = models.PositiveIntegerField(default=1)
+
+    class Meta:
+        verbose_name = _('order item')
+        verbose_name_plural = _('order items')
+
+    def __str__(self):
+        return f'Item for order {self.orderidx}'
+
+    def get_cost(self):
+        return self.price * self.quantity
