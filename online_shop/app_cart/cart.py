@@ -47,7 +47,6 @@ class Cart(object):
         #     if i.isdigit():
         #         good_ids.append(i)
 
-        print('***good_ids in cart:', good_ids)
         # Получаем объекты модели Goods и передаем их в корзину.
         goods = GoodsInShops.objects.filter(goodsidx__in=good_ids)
         cart = self.cart.copy()

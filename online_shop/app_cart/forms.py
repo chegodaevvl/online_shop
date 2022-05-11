@@ -9,7 +9,7 @@ class CartAddGoodForm(forms.Form):
     update = forms.BooleanField(required=False,
                                 initial=False,
                                 widget=forms.HiddenInput)
-    max_quantity = forms.IntegerField(widget=forms.HiddenInput)     #todo  forms.HiddenInput
+    max_quantity = forms.IntegerField()     #todo  widget=forms.HiddenInput скрыть поле
 
     def clean(self):
         super().clean()

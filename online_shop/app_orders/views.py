@@ -1,7 +1,9 @@
 from django.shortcuts import render
-from .models import OrderItem
+from .models import OrderItem, Orders
 from .forms import OrderCreateForm
 from app_cart.cart import Cart
+import json
+from app_goods.models import GoodsStorages
 
 
 def order_create(request):
@@ -11,15 +13,30 @@ def order_create(request):
         form = OrderCreateForm(request.POST)
         if form.is_valid():
             order = form.save()
-            print('***_order: ', order.id, type(order))
+            total_price = 0.00
+            item_dict = {
+                "order": order.id,
+                "items": []
+            }
             for item in cart:
-                print('***_item_order: ', order)
-                print('***_good: ', item['good'])
-
                 OrderItem.objects.create(orderidx=order,
                                          good=item['good'].goodsidx,
                                          price=item['price'],
                                          quantity=item['quantity'])
+                total_price += float(item['price'] * item['quantity'])
+                item_dict["items"].append({
+                    "good": item['good'].goodsidx.goodsname,
+                    "price": str(item['price']),
+                    "quantity": str(item['quantity'])
+                })
+                # уменьшение кол-ва товара на складе
+                storage = GoodsStorages.objects.get(goodsidx=item['good'].goodsidx)
+                storage.quantity -= item['quantity']
+                storage.save()
+
+            order.order = json.dumps(item_dict)
+            order.total = total_price
+            order.save()
             # Очищаем корзину.
             cart.clear()
             # Вывод сообщения об успешном оформлении заказа

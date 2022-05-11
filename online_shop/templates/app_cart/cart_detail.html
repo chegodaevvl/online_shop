@@ -52,6 +52,8 @@
     </table>
     <p class="text-right">
         <a href="/categories/" class="button light">Continue shopping</a>
-        <a href="{% url "app_orders:order_create" %}" class="button">Create Order</a>
+        {% if cart %}
+            <a href="{% url "app_orders:order_create" %}" class="button">Create Order</a>
+        {% endif %}
     </p>
 {% endblock %}
