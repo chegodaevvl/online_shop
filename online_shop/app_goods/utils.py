@@ -31,9 +31,9 @@ def get_offer_of_the_day():
                 'startofferdate': datetime.fromisoformat('1999-01-01')
             })[0]
         if offer.startofferdate.date() != datetime.today().date():
-            offer.goodsidx = limited_goods
+            offer.goodsidx = limited_goods[0]
             offer.startofferdate = datetime.today().date()
             offer.save()
-        return offer
+        return offer.goodsidx
     else:
         return None

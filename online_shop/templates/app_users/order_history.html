@@ -1,0 +1,15 @@
+{% block order_history %}
+    {% if order_history %}
+        <ul>
+            {% for order in order_history %}
+                <li>
+                    <a href="{% url 'order_history_item' order.id %}"><p>{{ order.total }}</p></a>
+                    <p>{{ order.paid }}</p>
+                    <p>{{ order.shipment }}</p>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>The order history is empty</p>
+    {% endif %}
+{% endblock %}

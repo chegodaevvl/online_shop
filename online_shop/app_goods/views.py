@@ -1,8 +1,8 @@
-from django.shortcuts import render
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, TemplateView, DetailView
 from .utils import get_hot_offers, get_limited_goods, get_top_goods, get_offer_of_the_day
 from .models import GoodsInShops, Goods, GoodsStorages
 from app_cart.forms import CartAddGoodForm
+import json
 
 
 class HotOffersListView(ListView):
@@ -23,9 +23,13 @@ class TopGoodsListView(ListView):
     template_name = 'app_goods/top_goods.html'
 
 
-def days_offer_view(request):
-    context = {'test_context': get_offer_of_the_day()}
-    return render(request, 'test_page.html', context)
+class DaysOfferView(TemplateView):
+    template_name = 'app_goods/days_offer.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(DaysOfferView, self).get_context_data(**kwargs)
+        context.update({'days_offer': get_offer_of_the_day()})
+        return context
 
 
 class GoodsDetail(DetailView):
@@ -45,3 +49,19 @@ class GoodsDetail(DetailView):
         context['cart_product_form'] = cart_product_form
 
         return context
+
+    def render_to_response(self, context, **response_kwargs):
+        response = super(GoodsDetail, self).render_to_response(context, **response_kwargs)
+        goods_id = self.get_object().id
+        if 'browsing_history' not in self.request.COOKIES:
+            cookies = [goods_id]
+        else:
+            cookies = json.loads(self.request.COOKIES['browsing_history'])
+            if goods_id in cookies:
+                cookies.remove(goods_id)
+            cookies.insert(0, goods_id)
+            cookies = cookies[:20]
+        cookies = json.dumps(cookies, default=str)
+
+        response.set_cookie(key='browsing_history', value=cookies)
+        return response

@@ -1,0 +1,9 @@
+{% block last_order %}
+    {% if last_order %}
+        <p>{{ last_order.total }}$</p>
+        <p>{{ last_order.order }}</p>
+        <a href="{% url 'order_history' %}">Order history</a>
+    {% else %}
+        <p>The order history is empty</p>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,13 @@
+{% block  browsing_history %}
+    {% if browsing_history %}
+        <ul>
+            {% for goods in browsing_history %}
+                <li>
+                    <a href="{% url 'goods-detail' goods.id %}"><p>{{ goods.goodsname }}</p></a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>The browsing history is empty</p>
+    {% endif %}
+{% endblock %}

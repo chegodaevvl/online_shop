@@ -140,3 +140,9 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 CART_SESSION_ID = 'cart'    # ключ для хранения данных корзины в сессии
+
+# Login urls
+
+LOGIN_REDIRECT_URL = '/users/personal_account'
+
+LOGIN_URL = '/users/login'
