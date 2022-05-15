@@ -18,7 +18,19 @@ def order_create(request):
                 "order": order.id,
                 "items": []
             }
+
+            if cart.item_in_storage_check():
+                # вывод списка товаров отсутствующих на складе
+                return render(request, 'app_orders/no_items_in_storage.html',
+                              {'items': cart.item_in_storage_check()})
+
             for item in cart:
+                storage = GoodsStorages.objects.get(goodsidx=item['good'].goodsidx)
+
+                # уменьшение кол-ва товара на складе
+                storage.quantity -= item['quantity']
+                storage.save()
+
                 OrderItem.objects.create(orderidx=order,
                                          good=item['good'].goodsidx,
                                          price=item['price'],
@@ -29,10 +41,6 @@ def order_create(request):
                     "price": str(item['price']),
                     "quantity": str(item['quantity'])
                 })
-                # уменьшение кол-ва товара на складе
-                storage = GoodsStorages.objects.get(goodsidx=item['good'].goodsidx)
-                storage.quantity -= item['quantity']
-                storage.save()
 
             order.order = json.dumps(item_dict)
             order.total = total_price

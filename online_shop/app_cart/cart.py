@@ -1,8 +1,7 @@
 from decimal import Decimal
-from urllib.request import Request
-
 from django.conf import settings
 from app_goods.models import GoodsInShops
+from app_goods.models import GoodsStorages
 
 
 class Cart(object):
@@ -71,3 +70,13 @@ class Cart(object):
         # Очистка корзины.
         del self.session[settings.CART_SESSION_ID]
         self.save()
+
+    def item_in_storage_check(self) -> list:
+        # проверка доступного количества товара на складе
+        missing_items = []
+        for good_id in self.cart.keys():
+            print('***_', self.cart[good_id])
+            storage = GoodsStorages.objects.get(goodsidx=int(good_id))
+            if storage.quantity < self.cart[good_id]['quantity']:
+                missing_items.append(storage.goodsidx)
+        return missing_items

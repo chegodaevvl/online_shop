@@ -16,6 +16,11 @@ def cart_add(request, good_id):
     if form.is_valid():
         cd = form.cleaned_data
         cart.add(good=good, quantity=cd['quantity'], update_quantity=cd['update'])
+        return redirect('app_cart:cart_detail')
+
+    if form.data['update'] == 'False':
+        return redirect('app_goods:goods-detail', good.goodsidx.id)
+
     return redirect('app_cart:cart_detail')
 
 
