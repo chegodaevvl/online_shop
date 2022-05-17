@@ -75,7 +75,6 @@ class Cart(object):
         # проверка доступного количества товара на складе
         missing_items = []
         for good_id in self.cart.keys():
-            print('***_', self.cart[good_id])
             storage = GoodsStorages.objects.get(goodsidx=int(good_id))
             if storage.quantity < self.cart[good_id]['quantity']:
                 missing_items.append(storage.goodsidx)
