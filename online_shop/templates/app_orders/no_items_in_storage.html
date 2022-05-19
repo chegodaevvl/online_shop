@@ -1,0 +1,14 @@
+{#{% extends "shop/base.html" %}#}
+{% block title %}
+    No items in storage
+{% endblock %}
+{% block content %}
+    <h2>Insufficient quantity of goods in stock!</h2>
+    <p>In your order, the quantity of this product exceeds the quantity in stock:</p><br>
+    {%  for item in items %}
+        <strong>{{ item.goodsname }}</strong><br>
+    {% endfor %}
+    <p>
+        <a href="/cart/" class="button light">Cart</a>
+    </p>
+{% endblock %}

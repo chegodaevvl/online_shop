@@ -5,10 +5,11 @@ from django.utils.translation import gettext_lazy as _
 
 class UserProfiles(models.Model):
     """Профили пользователей"""
-    useridx = models.OneToOneField('auth.User', on_delete=models.CASCADE, verbose_name=_('user'))
+    useridx = models.OneToOneField('auth.User', on_delete=models.CASCADE,
+                                   related_name='profile', verbose_name=_('user'))
     fullname = models.CharField(max_length=50, verbose_name=_('fullname'))
     avatar = models.ImageField(upload_to='avatars/', verbose_name=_('avatar'))
-    phone = models.PositiveIntegerField(verbose_name=_('phone'))
+    phone = models.PositiveIntegerField(verbose_name=_('phone'), null=True)
     email = models.EmailField(verbose_name=_('email'))
 
     class Meta:

@@ -1,9 +1,13 @@
 {% block categories %}
-    <ul>
-        {% for category in object_list %}
-            <li>
-                <a href="{{ category.id }}"> {{ category.categoryname }} </a>
-            </li>
-        {% endfor %}
-    </ul>
+    {% if categories %}
+        <ul>
+            {% for category in categories %}
+                <li>
+                    <a href="cat-{{ category.id }}"> {{ category.categoryname }} </a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>There are no categories specified</p>
+    {% endif %}
 {% endblock %}

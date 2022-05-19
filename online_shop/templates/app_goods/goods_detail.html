@@ -1,0 +1,28 @@
+{% block goods %}
+    <h2>{{ goods.goodsname }}</h2>
+    <div>
+        <img src="/media/{{ goods.image }}" alt="{{ goods.goodsname }}">
+    </div>
+    <div>
+        <p>{{ goods.description }}</p>
+    </div>
+    <h3>Goods is available</h3>
+    {% if in_store %}
+        <ul>
+            {% for item in in_store %}
+                <li>
+                    <span>Store: {{ item.shopidx.shopname }}</span>
+                    <span>Price: {{ item.price }}</span>
+                    <form action="{% url 'app_cart:cart_add' item.id %}" method="post">
+                        {% csrf_token %}
+                        {{ cart_product_form }}
+                        <input type="submit" value="Add to cart">
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+        <a href="/cart/">Cart</a>
+    {% else %}
+        <p>Goods is sold out</p>
+    {% endif %}
+{% endblock %}
