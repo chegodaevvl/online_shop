@@ -6,7 +6,7 @@ class Goods(models.Model):
     """Товары"""
     goodsname = models.CharField(max_length=100, verbose_name=_('goods name'))
     description = models.TextField(verbose_name=_('description'))
-    categoryidx = models.ForeignKey('app_categories.Subcategories',
+    categoryidx = models.ForeignKey('app_categories.Subcategories', related_name='goods',
                                     on_delete=models.CASCADE, verbose_name=_('category'))
     image = models.ImageField(upload_to='goods/', verbose_name=_('image'))
 
@@ -55,3 +55,12 @@ class GoodsInShops(models.Model):
     class Meta:
         verbose_name = _('goods in shop')
         verbose_name_plural = _('goods in shops')
+
+
+class Offer(models.Model):
+    """таблица для хранения предложения дня"""
+    goodsidx = models.ForeignKey('Goods', on_delete=models.CASCADE, related_name='offer', verbose_name=_('goods'))
+    startofferdate = models.DateTimeField(verbose_name=_('date offer start'))
+
+    def __str__(self):
+        return self.goodsidx.goodsname
