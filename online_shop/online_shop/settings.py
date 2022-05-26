@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'app_statistics.apps.AppStatisticsConfig',
     'app_cart.apps.AppCartConfig',
     'django.contrib.postgres',
+    'app_payment.apps.AppPaymentConfig',
 ]
 
 MIDDLEWARE = [
@@ -150,6 +151,7 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 CART_SESSION_ID = 'cart'    # ключ для хранения данных корзины в сессии
+ORDER_SESSION_ID = 'order_id'   # ключ для хранения данных о заказе
 
 # Login urls
 

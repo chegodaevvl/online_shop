@@ -14,6 +14,10 @@ class Cart(object):
             # Сохраняем в сессии пустую корзину.
             cart = self.session[settings.CART_SESSION_ID] = {}
         self.cart = cart
+        current_order = self.session.get(settings.ORDER_SESSION_ID)
+        if not current_order:
+            current_order = self.session[settings.ORDER_SESSION_ID] = {'order_id': 0}
+        self.current_order = current_order
 
     def add(self, good, quantity=1, update_quantity=False):
         """Добавление товара в корзину или обновление его количества."""
@@ -69,6 +73,8 @@ class Cart(object):
     def clear(self):
         # Очистка корзины.
         del self.session[settings.CART_SESSION_ID]
+        # Сброс номера текущего заказа
+        self.current_order['order_id'] = 0
         self.save()
 
     def item_in_storage_check(self) -> list:
@@ -79,3 +85,12 @@ class Cart(object):
             if storage.quantity < self.cart[good_id]['quantity']:
                 missing_items.append(storage.goodsidx)
         return missing_items
+
+    def set_order_id(self, order_id: int):
+        """ Сохранение id заказа """
+        self.current_order['order_id'] = order_id
+        self.save()
+
+    def get_order_id(self):
+        return self.current_order['order_id']
+
