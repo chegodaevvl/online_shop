@@ -2,4 +2,4 @@ from django.shortcuts import render
 
 
 def main_view(request):
-    return render(request, 'index.html')
+    return render(request, 'base.html')
