@@ -1,6 +1,9 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
+from django.contrib.postgres.search import SearchVectorField
+from django.contrib.postgres.indexes import GinIndex
+
 
 class Goods(models.Model):
     """Товары"""
@@ -9,10 +12,15 @@ class Goods(models.Model):
     categoryidx = models.ForeignKey('app_categories.Subcategories', related_name='goods',
                                     on_delete=models.CASCADE, verbose_name=_('category'))
     image = models.ImageField(upload_to='goods/', verbose_name=_('image'))
+    search_vector = SearchVectorField(null=True)
 
     class Meta:
         verbose_name = _('goods')
         verbose_name_plural = _('goods')
+
+        indexes = [
+            GinIndex(fields=['search_vector']),
+        ]
 
     def __str__(self):
         return self.goodsname

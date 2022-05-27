@@ -61,9 +61,9 @@
                 <span class="btn-title">Наш каталог</span>
                 <img src="{% static 'img/arrowSlide.svg' %}" alt="">
             </button>
-            <form class="search-form flex" action="#" method="POST">
+            <form class="search-form flex" action="{% url 'app_goods:find_goods' %}" method="GET">
                 <input class="search-input flex" name="query" type="text" placeholder="Что будем искать...">
-                <button class="search-btn btn-reset flex" type="submit">
+                <button class="search-btn btn-success flex" type="submit">
                     <img class="search-img" src="{% static 'img/search.svg' %}" alt="">
                     <span class="btn-title">Поиск</span>
                 </button>

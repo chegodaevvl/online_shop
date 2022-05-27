@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'app_statistics.apps.AppStatisticsConfig',
     'app_cart.apps.AppCartConfig',
     'django.contrib.postgres',
+    'online_shop',
 ]
 
 MIDDLEWARE = [
@@ -94,8 +95,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'onlineshop',
-        'USER': 'onlineshop',
-        'PASSWORD': '12345',
+        'USER': 'admin',
+        'PASSWORD': '123',
         'HOST': '127.0.0.1',
         'PORT': '5432',
     }
