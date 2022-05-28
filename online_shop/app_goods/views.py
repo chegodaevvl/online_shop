@@ -1,8 +1,16 @@
 from django.views.generic import ListView, TemplateView, DetailView
+
 from .utils import get_hot_offers, get_limited_goods, get_top_goods, get_offer_of_the_day
+
 from .models import GoodsInShops, Goods, GoodsStorages
 from app_cart.forms import CartAddGoodForm
 import json
+
+
+from common.utils.fts import SearchResultsList
+
+from django.db.models import F, Value
+from django.db.models.functions import Concat
 
 
 class HotOffersListView(ListView):
@@ -65,3 +73,12 @@ class GoodsDetail(DetailView):
 
         response.set_cookie(key='browsing_history', value=cookies)
         return response
+
+
+class FindGood(SearchResultsList):
+    model = Goods
+    context_object_name = "goods"
+    vector = ["goodsname", "description"]
+    headline_expression = Concat(F("id"), F("goodsname"), F("image"),
+                                  F("categoryidx_id"))
+    annotate_expression = Concat('categoryidx_id__subcategoryname', Value(''))
