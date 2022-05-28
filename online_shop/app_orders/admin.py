@@ -14,7 +14,7 @@ class OrdersAdmin(admin.ModelAdmin):
 
 
 class PaymentMethodAdmin(admin.ModelAdmin):
-    list_display = ['card', 'foreignaccount']
+    list_display = ['paymentmethodcode', 'paymentmethodtext']
 
 
 class ShipmentMethodAdmin(admin.ModelAdmin):

@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'app_cart.apps.AppCartConfig',
     'django.contrib.postgres',
     'app_payment.apps.AppPaymentConfig',
+    'payments',
 ]
 
 MIDDLEWARE = [
@@ -158,3 +159,26 @@ ORDER_SESSION_ID = 'order_id'   # ключ для хранения данных 
 LOGIN_REDIRECT_URL = '/users/personal_account'
 
 LOGIN_URL = '/users/login'
+
+
+
+# This can be a string or callable, and should return a base host that
+# will be used when receiving callbacks and notifications from payment
+# providers.
+#
+# Keep in mind that if you use `localhost`, external servers won't be
+# able to reach you for webhook notifications.
+PAYMENT_HOST = 'localhost:8000'
+
+# Whether to use TLS (HTTPS). If false, will use plain-text HTTP.
+# Defaults to ``not settings.DEBUG``.
+PAYMENT_USES_SSL = False
+
+# A dotted path to your Payment class (see above).
+PAYMENT_MODEL = 'app_payment.Payment'
+
+PAYMENT_VARIANTS = {
+    'default': ('payments.dummy.DummyProvider', {})
+}
+
+#PAYMENT_VARIANT_FACTORY = "app_payment.provider_factory"

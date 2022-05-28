@@ -1,0 +1,14 @@
+{#{% extends "shop/base.html" %}#}
+{% block title %}
+    Block title
+{% endblock %}
+{% block content %}
+    <h1>Checkout</h1>
+    <div class="order-info">
+        <h3>Payment fail</h3>
+        <p>Payment error code: {{ pay_error }}</p>
+    </div>
+    <p>
+        <a href="/cart/" class="button light">Cart</a>
+    </p>
+{% endblock %}>

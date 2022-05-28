@@ -1,0 +1,16 @@
+{#{% extends "shop/base.html" %}#}
+{% block title %}
+    Block title
+{% endblock %}
+{% block content %}
+    <h1>Payment detail form</h1>
+    <div class="order-info">
+        <h3>Payment data</h3>
+        <p>{{ paument }}</p>
+    </div>
+    <form action="{{ form.action }}" method="{{ form.method }}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <p><input type="submit" value="Proceed" /></p>
+    </form>
+{% endblock %}>

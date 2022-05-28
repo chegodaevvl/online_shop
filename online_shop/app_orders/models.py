@@ -25,12 +25,15 @@ class ShipmentRules(models.Model):
 
 class PaymentMethod(models.Model):
     """ Способ оплаты """
-    card = models.IntegerField(default=0, verbose_name=_('card number'))
-    foreignaccount = models.IntegerField(default=1, verbose_name=_('foreign account'))
+    paymentmethodcode = models.IntegerField(null=False, verbose_name=_('payment method code'))
+    paymentmethodtext = models.TextField(null=False, verbose_name=_('payment method'))
 
     class Meta:
         verbose_name = _('payment rule')
         verbose_name_plural = _('payment methods')
+
+    def __str__(self):
+        return self.paymentmethodtext
 
 
 class Orders(models.Model):
@@ -42,6 +45,7 @@ class Orders(models.Model):
     paid = models.ForeignKey('PaymentMethod', on_delete=models.CASCADE, verbose_name=_('payment method'))
     shipment = models.ForeignKey('ShipmentMethod', on_delete=models.CASCADE, verbose_name=_('shipment method'))
     address = models.CharField(max_length=50, null=False, verbose_name=_('order delivery address'))
+    paymentidx = models.OneToOneField('app_payment.Payment', on_delete=models.CASCADE, verbose_name=_('payment id'), null=True)
 
     class Meta:
         verbose_name = _('order')
