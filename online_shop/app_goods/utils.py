@@ -28,7 +28,7 @@ def get_offer_of_the_day():
     limited_goods = get_limited_goods(quantity=1)
     if limited_goods:
         offer = Offer.objects.get_or_create(pk=1, defaults={
-                'goodsidx': limited_goods,
+                'goodsidx': limited_goods[0],
                 'startofferdate': datetime.fromisoformat('1999-01-01')
             })[0]
         if offer.startofferdate.date() != datetime.today().date():
