@@ -15,7 +15,7 @@ def cart_add(request, good_id):
     form = CartAddGoodForm(request.POST)
     if form.is_valid():
         cd = form.cleaned_data
-        cart.add(good=good, quantity=cd['quantity'], update_quantity=cd['update'])
+        cart.add(good=good, shop_id=good.shopidx.id, quantity=cd['quantity'], update_quantity=cd['update'])
         return redirect('app_cart:cart_detail')
 
     if form.data['update'] == 'False':

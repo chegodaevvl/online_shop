@@ -34,6 +34,7 @@ def order_create(request):
 
 
 def order_created(request):
+    """ Завершие создания заказа - оплата и все проверки пройдены """
     cart = Cart(request)
     order = Orders.objects.get(id=cart.get_order_id())
     total_price = 0.00

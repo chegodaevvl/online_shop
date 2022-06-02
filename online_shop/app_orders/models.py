@@ -2,7 +2,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 
-class ShipmentMethod(models.Model):
+class ShipmentMethod(models.Model): # todo первый вариант доставки - удалить модель
     """ Способ доставки """
     normal = models.IntegerField(default=0, verbose_name=_('normal shipping method '))
     express = models.IntegerField(default=1, verbose_name=_('express shipping method'))
@@ -12,7 +12,7 @@ class ShipmentMethod(models.Model):
         verbose_name_plural = _('shipment methods')
 
 
-class ShipmentRules(models.Model):
+class ShipmentRules(models.Model):  # todo первый вариант доставки - удалить модель
     """ Правила доставки """
     freenormal = models.FloatField(default=2000, verbose_name=_('free shipping'))
     paidnormal = models.FloatField(default=200, verbose_name=_('standard shipping'))
@@ -21,6 +21,23 @@ class ShipmentRules(models.Model):
     class Meta:
         verbose_name = _('shipment rule')
         verbose_name_plural = _('shipment rules')
+
+
+class Shipment(models.Model):
+    """ Правила доставки вариант 2 """
+    deliverymethod = models.CharField(max_length=100, null=False, verbose_name=_('delivery method'))
+    minordervalue = models.DecimalField(default=0, max_digits=8, decimal_places=2,
+                                        verbose_name=_('minimum order value'))
+    shippingcost = models.DecimalField(default=0, max_digits=8, decimal_places=2, verbose_name=_('shipping cost'))
+    addshippingcost = models.DecimalField(default=0, max_digits=8, decimal_places=2,
+                                          verbose_name=_('additional shipping cost'))
+
+    class Meta:
+        verbose_name = _('shipment rule')
+        verbose_name_plural = _('shipment rules')
+
+    def __str__(self):
+        return self.deliverymethod
 
 
 class PaymentMethod(models.Model):
@@ -43,7 +60,7 @@ class Orders(models.Model):
     dt = models.DateTimeField(auto_now=True, null=False, verbose_name=_('order date'))
     total = models.DecimalField(default=0, max_digits=8, decimal_places=2, verbose_name=_('order total price'))
     paid = models.ForeignKey('PaymentMethod', on_delete=models.CASCADE, verbose_name=_('payment method'))
-    shipment = models.ForeignKey('ShipmentMethod', on_delete=models.CASCADE, verbose_name=_('shipment method'))
+    shipment = models.ForeignKey('Shipment', on_delete=models.CASCADE, verbose_name=_('shipment method'))
     address = models.CharField(max_length=50, null=False, verbose_name=_('order delivery address'))
     paymentidx = models.OneToOneField('app_payment.Payment', on_delete=models.CASCADE, verbose_name=_('payment id'), null=True)
 

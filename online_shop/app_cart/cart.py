@@ -2,6 +2,8 @@ from decimal import Decimal
 from django.conf import settings
 from app_goods.models import GoodsInShops
 from app_goods.models import GoodsStorages
+from app_goods.models import Shops
+from app_orders.models import Shipment
 
 
 class Cart(object):
@@ -19,12 +21,12 @@ class Cart(object):
             current_order = self.session[settings.ORDER_SESSION_ID] = {'order_id': 0}
         self.current_order = current_order
 
-    def add(self, good, quantity=1, update_quantity=False):
+    def add(self, good, shop_id, quantity=1, update_quantity=False):
         """Добавление товара в корзину или обновление его количества."""
 
         good_id = str(good.goodsidx.id)
         if good_id not in self.cart:
-            self.cart[good_id] = {'quantity': 0, 'price': str(good.price)}
+            self.cart[good_id] = {'quantity': 0, 'price': str(good.price), 'shop_id': shop_id}
         if update_quantity:
             self.cart[good_id]['quantity'] = quantity
         else:
@@ -58,6 +60,7 @@ class Cart(object):
         for item in cart.values():
             item['price'] = Decimal(item['price'])
             item['total_price'] = item['price'] * item['quantity']
+            item['shopname'] = Shops.objects.get(id=item['shop_id']).shopname
             yield item
 
     def __len__(self):
@@ -94,3 +97,19 @@ class Cart(object):
     def get_order_id(self):
         return self.current_order['order_id']
 
+    def check_diff_shops(self):
+        """ проверка, если в корзине товары из разных магазинов, то возвращает - True """
+        shops = set()
+        for item in self.cart.values():
+            shops.add(item['shop_id'])
+        if len(shops) > 1:
+            return True
+        return False
+
+    def get_delivery_cost(self, shipment_id):
+        """ Расчет стоимости доставки """
+        shipment = Shipment.objects.get(id=shipment_id)
+        if self.get_total_price() < shipment.minordervalue or self.check_diff_shops():
+            return shipment.shippingcost + shipment.addshippingcost
+        elif self.get_total_price() > shipment.minordervalue and not self.check_diff_shops():
+            return shipment.addshippingcost

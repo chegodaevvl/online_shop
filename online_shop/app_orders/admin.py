@@ -17,6 +17,10 @@ class PaymentMethodAdmin(admin.ModelAdmin):
     list_display = ['paymentmethodcode', 'paymentmethodtext']
 
 
+class ShipmentAdmin(admin.ModelAdmin):
+    list_display = ['deliverymethod', 'minordervalue', 'shippingcost', 'addshippingcost']
+
+
 class ShipmentMethodAdmin(admin.ModelAdmin):
     list_display = ['normal', 'express']
 
@@ -46,7 +50,6 @@ class SetsDiscountsCalendarAdmin(admin.ModelAdmin):
 
 
 
-
 admin.site.register(Orders, OrdersAdmin)
 admin.site.register(PaymentMethod, PaymentMethodAdmin)
 admin.site.register(ShipmentMethod, ShipmentMethodAdmin)
@@ -56,3 +59,4 @@ admin.site.register(GoodsDiscounts, GoodsDiscountsAdmin)
 admin.site.register(GoodsDiscountsCalendar, GoodsDiscountsCalendarAdmin)
 admin.site.register(GoodsSets, GoodsSetsAdmin)
 admin.site.register(SetsDiscountsCalendar, SetsDiscountsCalendarAdmin)
+admin.site.register(Shipment, ShipmentAdmin)

@@ -35,7 +35,7 @@ def payment(request):
             payment = Payment.objects.create(
                 variant='default',  # this is the variant from PAYMENT_VARIANTS
                 description='online_shop purchase',
-                total=Decimal(cart.get_total_price()),
+                total=Decimal(cart.get_total_price() + cart.get_delivery_cost(order.shipment.id)),
                 currency='USD',
                 billing_first_name=request.user.first_name,
                 billing_last_name=request.user.last_name,
@@ -76,6 +76,8 @@ def payment(request):
                 return render(request, 'app_payment/payment_fail.html', {'pay_error': pay_error})
     else:
         form = PaymentDataRequestForm()
+        delivery_cost = cart.get_delivery_cost(order.shipment.id)
         return render(request, 'app_payment/payment_data_request.html', {'cart': cart,
                                                                          'form': form,
+                                                                         'delivery_cost': delivery_cost,
                                                                          'payment_method': order.paid.paymentmethodcode})

@@ -9,6 +9,7 @@
             <tr>
                 <th>Image</th>
                 <th>Good name</th>
+                <th>Shop name</th>
                 <th>Quantity</th>
                 <th>Remove</th>
                 <th>Unit price</th>
@@ -26,6 +27,7 @@
 {#                            </a>#}
                         </td>
                         <td>{{ item.good.goodsidx.goodsname }}</td>
+                        <td> {{ item.shopname }}</td>
                         <td>
                             <form action="{% url "app_cart:cart_add" item.good.pk %}" method="post">
                                 {{ item.update_quantity_form.quantity }}
@@ -52,7 +54,7 @@
     </table>
     <p class="text-right">
         <a href="/categories/" class="button light">Continue shopping</a>
-        {% if cart %}
+        {% if cart and request.user.is_authenticated%}
             <a href="{% url "app_orders:order_create" %}" class="button">Create Order</a>
         {% endif %}
     </p>
