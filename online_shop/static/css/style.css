@@ -157,11 +157,47 @@ img {
   align-items: center;
 }
 
+.menu__wrapper {
+  position: relative;
+}
+
+.menu__cats {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  padding: 0 15px;
+  z-index: 10;
+  background-color: #fff;
+  border-left: 2px solid #0063d1;
+  border-right: 2px solid #0063d1;
+  border-bottom: 2px solid #0063d1;
+}
+
+.menu-active {
+  display: block;
+}
+
+.cat__item {
+  padding: 10px 0;
+  color: #555;
+  font-size: 16px;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 1.4px;
+  cursor: pointer;
+}
+
+.cat__item:not(:last-child) {
+  border-bottom: 1px solid #ebebeb;
+}
+
 .header__btn {
   padding: 29px 34px 25px 34px;
   background-color: #1f2126;
   align-items: center;
-  margin-right: 50px;
+  cursor: pointer;
 }
 
 .btn-img {

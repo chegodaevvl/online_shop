@@ -56,11 +56,18 @@
             </div>
         </div>
         <div class="header__search flex">
-            <button class="header__btn btn-reset flex">
-                <img class="btn-img" src="{% static 'img/allDep.svg' %}" alt="">
-                <span class="btn-title">Наш каталог</span>
-                <img src="{% static 'img/arrowSlide.svg' %}" alt="">
-            </button>
+            <div class="menu__wrapper">
+                <button class="header__btn btn-reset flex">
+                    <img class="btn-img" src="{% static 'img/allDep.svg' %}" alt="">
+                    <span class="btn-title">Наш каталог</span>
+                    <img src="{% static 'img/arrowSlide.svg' %}" alt="">
+                </button>
+                <ul class=" list-reset menu__cats">
+                    {% for category in categories %}
+                    <li class="cat__item">{{ category.categoryname }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
             <form class="search-form flex" action="{% url 'app_goods:find_goods' %}" method="GET">
                 <input class="search-input flex" name="query" type="text" placeholder="Что будем искать...">
                 <button class="search-btn btn-success flex" type="submit">
