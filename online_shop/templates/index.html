@@ -12,6 +12,7 @@
                     </p>
                 </div>
                 <img src="img/videoca.png" alt="категория">
+                <a href="/sub-{{ subcat.id }}" class="cat-link"></a>
             </li>
             {% endfor %}
             </ul>
@@ -20,16 +21,17 @@
                 Популярные товары
             </h3>
             <ul class="popular-goods list-reset flex">
-                {% for top_good in top_goods %}
+                {% for item in top_goods %}
                 <li class="good__card flex">
                     <img class="goods-img" src="img/card.jpg" alt="">
                     <h4 class="goods-title header-reset">
-                        {{ top_good.goodsname }}
+                        {{ item.goodsname }}
                     </h4>
-                    <span class="goods-price">{{ top_good.price }}</span>
+                    <span class="goods-price">{{ item.price }}</span>
                     <span class="goods-cat">Игры / приставки</span>
-                {% endfor %}
+                    <a href="/goods/{{ item.id }}" class="card-link"></a>
                 </li>
+                {% endfor %}
             </ul>
         </div>
         <div class="content__limited">
@@ -38,14 +40,15 @@
             </h3>
             <div class="swiper goodsSwiper">
                 <div class="swiper-wrapper">
-                {% for limited_good in limited_goods %}
+                {% for item in limited_goods %}
                   <div class="swiper-slide good__card flex">
-                        <img class="goods-img" src="img/card.jpg" alt="">
-                        <h4 class="goods-title header-reset">
-                            {{ limited_good.goodsname }}
-                        </h4>
-                        <span class="goods-price">{{ limited_good.price }}</span>
-                        <span class="goods-cat">Игры / приставки</span>
+                    <img class="goods-img" src="img/card.jpg" alt="">
+                    <h4 class="goods-title header-reset">
+                      {{ item.goodsname }}
+                    </h4>
+                    <span class="goods-price">{{ item.price }}</span>
+                    <span class="goods-cat">Игры / приставки</span>
+                    <a href="/goods/{{ item.id }}" class="card-link"></a>
                   </div>
                 {% endfor %}
                 </div>

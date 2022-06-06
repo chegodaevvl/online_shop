@@ -233,6 +233,7 @@ img {
   background-color: #f3f4f9;
   justify-content: space-between;
   align-items: center;
+  position: relative;
 }
 
 .category__title {
@@ -251,6 +252,14 @@ img {
 .price {
   color: #0063d1;
   font-weight: 600;
+}
+
+.cat-link {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 }
 
 .section__title {
@@ -278,6 +287,15 @@ img {
   margin-bottom: 50px;
   border: 1px solid #e0e0e0;
   box-shadow: 0 3px 0 rgba(0,0,0,0.05);
+  position: relative;
+}
+
+.card-link {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 }
 
 .goods-img {
