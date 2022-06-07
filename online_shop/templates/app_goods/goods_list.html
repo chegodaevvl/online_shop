@@ -1,13 +1,19 @@
-{% block goods %}
-    {% if goods %}
-        <ul>
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+    <div class="content__popular">
+        <ul class="goods-list list-reset flex">
             {% for item in goods %}
-                <li>
-                    <a href="/goods/{{ item.id }}"> {{ item.goodsname }} </a>
-                </li>
+            <li class="good__card flex">
+                <img class="goods-img" src="img/card.jpg" alt="">
+                <h4 class="goods-title header-reset">
+                    {{ item.goodsname }}
+                </h4>
+                <span class="goods-price">{{ item.price }}</span>
+                <span class="goods-cat">Игры / приставки</span>
+                <a href="/goods/{{ item.id }}" class="card-link"></a>
+            </li>
             {% endfor %}
         </ul>
-    {% else %}
-        <p>There are no goods in subcategory</p>
-    {% endif %}
+    </div>
 {% endblock %}

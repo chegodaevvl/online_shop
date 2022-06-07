@@ -1,14 +1,18 @@
-{}
-{% block categories %}
-    {% if subcategories %}
-        <ul>
-            {% for subcategory in subcategories %}
-                <li>
-                    <a href="sub-{{ subcategory.id }}"> {{ subcategory.subcategoryname }} </a>
-                </li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>There are no subcategories specified</p>
-    {% endif %}
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+    <ul  class="content__subcat list-reset flex">
+        {% for subcat in subcategories %}
+        <li class="content__category subcat-item flex">
+            <div class="category__desc">
+                <strong class="category__title header-reset">{{ subcat.subcategoryname }}</strong>
+                <p class="category__price">
+                    от <span class="price">100 рублей</span>
+                </p>
+            </div>
+            <img src="img/videoca.png" alt="категория">
+            <a href="/categories/sub-{{ subcat.id }}" class="cat-link"></a>
+        </li>
+        {% endfor %}
+    </ul>
 {% endblock %}

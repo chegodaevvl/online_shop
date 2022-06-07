@@ -181,6 +181,7 @@ img {
 
 .cat__item {
   padding: 10px 0;
+  position: relative;
   color: #555;
   font-size: 16px;
   font-weight: 400;
@@ -191,6 +192,15 @@ img {
 
 .cat__item:not(:last-child) {
   border-bottom: 1px solid #ebebeb;
+}
+
+.cat__link{
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  padding: 10px 0;
 }
 
 .header__btn {
@@ -261,6 +271,13 @@ img {
   width: 100%;
   justify-content: space-between;
   margin-bottom: 50px;
+  flex-wrap: wrap;
+}
+
+.content__subcat {
+  width: 100%;
+  margin-bottom: 15px;
+  flex-wrap: wrap;
 }
 
 .content__category {
@@ -270,6 +287,14 @@ img {
   justify-content: space-between;
   align-items: center;
   position: relative;
+}
+
+.subcat-item:not(:nth-child(3n)) {
+  margin-right: 34px;
+}
+
+.subcat-item {
+  margin-bottom: 35px;
 }
 
 .category__title {
@@ -308,9 +333,8 @@ img {
   margin-bottom: 50px;
 }
 
-.popular-goods {
+.goods-list {
   width: 100%;
-  justify-content: space-between;
   flex-wrap: wrap;
 }
 
@@ -324,6 +348,10 @@ img {
   border: 1px solid #e0e0e0;
   box-shadow: 0 3px 0 rgba(0,0,0,0.05);
   position: relative;
+}
+
+.good__card:not(:nth-child(4n)) {
+  margin-right: 40px;
 }
 
 .card-link {

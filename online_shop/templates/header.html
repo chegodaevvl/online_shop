@@ -64,7 +64,9 @@
                 </button>
                 <ul class=" list-reset menu__cats">
                     {% for category in categories %}
-                    <li class="cat__item">{{ category.categoryname }}</li>
+                    <li class="cat__item">
+                        <a class="header-link" href="/categories/{{ category.id }}">{{ category.categoryname }}</a>
+                    </li>
                     {% endfor %}
                 </ul>
             </div>

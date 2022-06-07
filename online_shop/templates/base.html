@@ -15,8 +15,10 @@
 </head>
 <body>
     {% include "header.html" %}
+    <section class="content container">
     {% block content %}
     {% endblock %}
+    </section>
     {% include "footer.html" %}
 </body>
 </html>

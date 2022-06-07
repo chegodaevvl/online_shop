@@ -1,61 +1,59 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
-    <section class="content container">
-        <ul  class="content__categories list-reset flex">
-            {% for subcat in subcats %}
-            <li class="content__category flex">
-                <div class="category__desc">
-                    <strong class="category__title header-reset">{{ subcat.subcategoryname }}</strong>
-                    <p class="category__price">
-                        от <span class="price">100 рублей</span>
-                    </p>
-                </div>
-                <img src="img/videoca.png" alt="категория">
-                <a href="/sub-{{ subcat.id }}" class="cat-link"></a>
+    <ul  class="content__categories list-reset flex">
+        {% for subcat in subcats %}
+        <li class="content__category flex">
+            <div class="category__desc">
+                <strong class="category__title header-reset">{{ subcat.subcategoryname }}</strong>
+                <p class="category__price">
+                    от <span class="price">100 рублей</span>
+                </p>
+            </div>
+            <img src="img/videoca.png" alt="категория">
+            <a href="/categories/sub-{{ subcat.id }}" class="cat-link"></a>
+        </li>
+        {% endfor %}
+    </ul>
+    <div class="content__popular">
+        <h3 class="section__title header-reset">
+            Популярные товары
+        </h3>
+        <ul class="goods-list list-reset flex">
+            {% for item in top_goods %}
+            <li class="good__card flex">
+                <img class="goods-img" src="img/card.jpg" alt="">
+                <h4 class="goods-title header-reset">
+                    {{ item.goodsname }}
+                </h4>
+                <span class="goods-price">{{ item.price }}</span>
+                <span class="goods-cat">Игры / приставки</span>
+                <a href="/goods/{{ item.id }}" class="card-link"></a>
             </li>
             {% endfor %}
-            </ul>
-        <div class="content__popular">
-            <h3 class="section__title header-reset">
-                Популярные товары
-            </h3>
-            <ul class="popular-goods list-reset flex">
-                {% for item in top_goods %}
-                <li class="good__card flex">
-                    <img class="goods-img" src="img/card.jpg" alt="">
-                    <h4 class="goods-title header-reset">
-                        {{ item.goodsname }}
-                    </h4>
-                    <span class="goods-price">{{ item.price }}</span>
-                    <span class="goods-cat">Игры / приставки</span>
-                    <a href="/goods/{{ item.id }}" class="card-link"></a>
-                </li>
-                {% endfor %}
-            </ul>
-        </div>
-        <div class="content__limited">
-            <h3 class="section__title header-reset">
-                Ограниченный тираж
-            </h3>
-            <div class="swiper goodsSwiper">
-                <div class="swiper-wrapper">
-                {% for item in limited_goods %}
-                  <div class="swiper-slide good__card flex">
-                    <img class="goods-img" src="img/card.jpg" alt="">
-                    <h4 class="goods-title header-reset">
-                      {{ item.goodsname }}
-                    </h4>
-                    <span class="goods-price">{{ item.price }}</span>
-                    <span class="goods-cat">Игры / приставки</span>
-                    <a href="/goods/{{ item.id }}" class="card-link"></a>
-                  </div>
-                {% endfor %}
-                </div>
-                <div class="swiper-pagination"></div>
-                <div class="swiper-button-prev"></div>
-                <div class="swiper-button-next"></div>
+        </ul>
+    </div>
+    <div class="content__limited">
+        <h3 class="section__title header-reset">
+            Ограниченный тираж
+        </h3>
+        <div class="swiper goodsSwiper">
+            <div class="swiper-wrapper">
+            {% for item in limited_goods %}
+              <div class="swiper-slide good__card flex">
+                <img class="goods-img" src="img/card.jpg" alt="">
+                <h4 class="goods-title header-reset">
+                  {{ item.goodsname }}
+                </h4>
+                <span class="goods-price">{{ item.price }}</span>
+                <span class="goods-cat">Игры / приставки</span>
+                <a href="/goods/{{ item.id }}" class="card-link"></a>
               </div>
-        </div>
-    </section>
+            {% endfor %}
+            </div>
+            <div class="swiper-pagination"></div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
+          </div>
+    </div>
 {% endblock %}
