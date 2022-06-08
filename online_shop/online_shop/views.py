@@ -1,5 +1,5 @@
 from django.views.generic import TemplateView
-from common.utils.views import get_subcategories, get_categories
+from common.utils.views import get_subcategories, get_categories, get_cart_info
 from app_goods.utils import get_limited_goods, get_top_goods
 
 

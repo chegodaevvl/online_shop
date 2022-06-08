@@ -133,8 +133,32 @@ img {
   margin-right: auto;
 }
 
-.header__compare {
+.header__block {
+  position: relative;
   margin-right: 30px;
+}
+
+.header__count {
+  position: absolute;
+  background-color: #0063d1;
+  right: -14px;
+  top: 0px;
+  min-width: 23px;
+  font-size: 12px;
+  letter-spacing: -0.6px;
+  color: #fff;
+  padding: 2px;
+  line-height: 1.2em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid #fff;
+  border-radius: 100px;
+}
+
+.header__price {
+  font-size: 16px;
+  color: #424650;
 }
 
 .header__menu {

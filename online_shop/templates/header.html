@@ -51,12 +51,19 @@
                     </li>
                 </ul>
             </nav>
-            <div class="header__compare">
+            <div class="header__block">
                 <a href="http://#"><img src="{% static 'img/exchange.svg' %}" alt="Корзина"></a>
+                <div class="header__count">
+                    <span class="count_text">0</span>
+                </div>
             </div>
-            <div class="header__cart">
+            <div class="header__block">
                 <a href="http://#"><img src="{% static 'img/cart.svg' %}" alt="Корзина"></a>
+                <div class="header__count">
+                    <span class="count_text">0</span>
+                </div>
             </div>
+            <span class="header__price">0.00 руб.</span>
         </div>
         <div class="header__search flex">
             <div class="menu__wrapper">
