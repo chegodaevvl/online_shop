@@ -22,11 +22,11 @@ class ProfileForm(forms.ModelForm):
             if phone < 10000000:
                 raise ValidationError(message='Phone number must be at least 8 characters long')
             if UserProfiles.objects.exclude(useridx=self.cleaned_data['useridx']).filter(phone=phone).exists():
-                return ValidationError(message='User with this phone is already registered')
+                raise ValidationError(message='User with this phone is already registered')
             return phone
 
     def clean_email(self):
         email = self.cleaned_data['email']
         if UserProfiles.objects.exclude(useridx=self.cleaned_data['useridx']).filter(email=email).exists():
-            return ValidationError(message='User with this email is already registered')
+            raise ValidationError(message='User with this email is already registered')
         return email

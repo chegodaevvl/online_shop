@@ -1,9 +1,13 @@
 {% block limited_goods %}
-    <ul>
-        {% for goods in limited_goods %}
-            <li>
-                <a href="#">{{ goods.goodsname }}</a>
-            </li>
-        {% endfor %}
-    </ul>
+    {% if goods %}
+        <ul>
+            {% for goods in limited_goods %}
+                <li>
+                    <a href="#">{{ goods.goodsname }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>There are no limited goods</p>
+    {% endif %}
 {%  endblock %}

@@ -5,14 +5,18 @@ from datetime import datetime
 
 
 def get_hot_offers(quantity: int):
-    hot_offers = list(Goods.objects.filter(Q(discounts__isnull=False) | Q(sets__isnull=False)))
+    hot_offers = list(Goods.objects.filter(
+        (Q(discounts__isnull=False) | Q(sets__isnull=False)) & Q(storage__quantity__gt=0)
+    ))
     if len(hot_offers) > quantity:
         hot_offers = sample(hot_offers, k=quantity)
     return hot_offers
 
 
 def get_limited_goods(quantity: int):
-    limited_goods = list(Goods.objects.filter(Q(storage__limited=True) & Q(offer__isnull=True)))
+    limited_goods = list(Goods.objects.filter(
+        Q(storage__limited=True) & Q(offer__isnull=True) & Q(storage__quantity__gt=0)
+    ))
     if len(limited_goods) > quantity:
         limited_goods = sample(limited_goods, k=quantity)
     return limited_goods
