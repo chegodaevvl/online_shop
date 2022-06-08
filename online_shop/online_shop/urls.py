@@ -24,7 +24,6 @@ urlpatterns = [
     path('', MainView.as_view(), name='main'),
     path('users/', include('app_users.urls')),
     path('goods/', include('app_goods.urls')),
-    path('banners/', include('app_banners.urls')),
     path('categories/', include('app_categories.urls')),
     path('cart/', include('app_cart.urls', namespace='app_cart')),
     path('orders/', include('app_orders.urls', namespace='app_orders')),

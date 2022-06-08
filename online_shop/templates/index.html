@@ -1,7 +1,21 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
-    <ul  class="content__categories list-reset flex">
+    <div class="content__banners">
+        <div class="swiper banners-swiper">
+            <div class="swiper-wrapper">
+            {% for item in banners %}
+              <div class="swiper-slide banner-card flex">
+                  <a href="{{ item.bannerlink }}"> <img src="/media/{{ item.bannerimg }}" alt="{{ item.advertisementname }}"> </a>
+              </div>
+            {% endfor %}
+            </div>
+            <div class="swiper-pagination banners-pagination"></div>
+            <div class="swiper-button-prev banner-prev"></div>
+            <div class="swiper-button-next banner-next"></div>
+          </div>
+    </div>
+    <ul  class="content__categories list-reset content flex">
         {% for subcat in subcats %}
         <li class="content__category flex">
             <div class="category__desc">
@@ -15,7 +29,7 @@
         </li>
         {% endfor %}
     </ul>
-    <div class="content__popular">
+    <div class="content__popular content">
         <h3 class="section__title header-reset">
             Популярные товары
         </h3>
@@ -33,11 +47,11 @@
             {% endfor %}
         </ul>
     </div>
-    <div class="content__limited">
+    <div class="content__limited content">
         <h3 class="section__title header-reset">
             Ограниченный тираж
         </h3>
-        <div class="swiper goodsSwiper">
+        <div class="swiper goods-swiper">
             <div class="swiper-wrapper">
             {% for item in limited_goods %}
               <div class="swiper-slide good__card flex">
@@ -51,9 +65,9 @@
               </div>
             {% endfor %}
             </div>
-            <div class="swiper-pagination"></div>
-            <div class="swiper-button-prev"></div>
-            <div class="swiper-button-next"></div>
+            <div class="swiper-pagination goods-pagination"></div>
+            <div class="swiper-button-prev goods-prev"></div>
+            <div class="swiper-button-next goods-next"></div>
           </div>
     </div>
 {% endblock %}

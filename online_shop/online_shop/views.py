@@ -1,5 +1,5 @@
 from django.views.generic import TemplateView
-from common.utils.views import get_subcategories, get_categories, get_cart_info
+from common.utils.views import get_subcategories, get_categories, get_banners
 from app_goods.utils import get_limited_goods, get_top_goods
 
 
@@ -8,6 +8,7 @@ class MainView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context.update({'banners': get_banners()})
         context.update({'subcats': get_subcategories()})
         context.update({'top_goods': get_top_goods(8)})
         context.update({'limited_goods': get_limited_goods(16)})

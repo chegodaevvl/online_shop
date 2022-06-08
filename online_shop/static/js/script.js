@@ -1,20 +1,33 @@
 window.addEventListener('DOMContentLoaded', function() {
 
-    var swiper = new Swiper(".goodsSwiper", {
-        direction: 'horizontal',
-        slidesPerView: 3,
-        spaceBetween: 50,
+  var bannersSwiper = new Swiper(".banners-swiper", {
+      loop: true,
 
-        pagination: {
-          el: '.swiper-pagination',
-        },
+      pagination: {
+        el: '.banners-pagination',
+      },
 
-        navigation: {
-          nextEl: '.swiper-button-next',
-          prevEl: '.swiper-button-prev',
-        },
+      navigation: {
+        nextEl: '.banner-next',
+        prevEl: '.banner-prev',
+      },
 
-    });
+  });
+
+  var goodsSwiper = new Swiper(".goods-swiper", {
+      slidesPerView: 3,
+      spaceBetween: 50,
+
+      pagination: {
+        el: '.goods-pagination',
+      },
+
+      navigation: {
+        nextEl: '.goods-next',
+        prevEl: '.goods-prev',
+      },
+
+  });
 
   document.querySelector(".header__btn").addEventListener("click", function() {
     document.querySelector(".menu__cats").classList.toggle("menu-active");

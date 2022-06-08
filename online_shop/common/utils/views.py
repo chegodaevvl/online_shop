@@ -2,16 +2,12 @@ from random import sample
 from typing import Set
 
 from app_categories.models import Categories, Subcategories
-from app_goods.models import Goods
-from app_cart.cart import Cart
+from app_banners.models import Banners
 
 
-def get_cart_info():
-    cart = Cart()
-    cart_info = {'quantity': len(cart),
-                 'total': cart.get_total_price(),
-                 }
-    return cart_info
+def get_banners() -> list:
+    banners = list(Banners.objects.filter(isactive=True))
+    return sample(banners, 3)
 
 
 def get_subcategories() -> list:
