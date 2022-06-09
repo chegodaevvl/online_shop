@@ -16,4 +16,7 @@ def get_subcategories() -> list:
 
 
 def get_categories() -> Set:
-    return Categories.objects.all()
+    result = Categories.objects.all()
+    for item in result:
+        item.child = item.categories_set.all()
+    return result

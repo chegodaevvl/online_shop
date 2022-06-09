@@ -5,6 +5,13 @@ from django.utils.translation import gettext_lazy as _
 class Categories(models.Model):
     """Категории"""
     categoryname = models.CharField(max_length=50, verbose_name=_('category name'))
+    parent = models.ForeignKey('Categories', on_delete=models.DO_NOTHING, null=True,
+                               blank=True, verbose_name=_('parent'))
+    categoryimg = models.ImageField(upload_to='img/', null=True, blank=True,
+                                    default=None, verbose_name=_('category image'))
+    is_active = models.BooleanField(default=False, verbose_name=_('active'))
+    goodscharacteristics = models.TextField(default=None, null=True,
+                                            blank=True, verbose_name=_('list of characteristics'))
 
     class Meta:
         verbose_name = _('category')

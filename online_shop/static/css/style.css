@@ -189,7 +189,7 @@ img {
   position: relative;
 }
 
-.menu__cats {
+.menu-cats {
   display: none;
   position: absolute;
   top: 100%;
@@ -207,7 +207,7 @@ img {
   display: block;
 }
 
-.cat__item {
+.cat-item {
   padding: 10px 0;
   position: relative;
   color: #555;
@@ -218,8 +218,12 @@ img {
   cursor: pointer;
 }
 
-.cat__item:not(:last-child) {
+.cat-item:not(:last-child) {
   border-bottom: 1px solid #ebebeb;
+}
+
+.cat-item:hover .submenu-cats {
+  display: block;
 }
 
 .cat__link{
@@ -230,6 +234,22 @@ img {
   right: 0;
   padding: 10px 0;
 }
+
+.cat-item__img {
+  margin-right: 20px;
+}
+
+.submenu-cats {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 100%;
+  width: 100%;
+  padding: 0 15px;
+  z-index: 10;
+  background-color: #fff;
+}
+
 
 .header__btn {
   padding: 29px 34px 25px 34px;

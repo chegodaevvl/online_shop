@@ -30,13 +30,13 @@ window.addEventListener('DOMContentLoaded', function() {
   });
 
   document.querySelector(".header__btn").addEventListener("click", function() {
-    document.querySelector(".menu__cats").classList.toggle("menu-active");
+    document.querySelector(".menu-cats").classList.toggle("menu-active");
   });
 
   document.addEventListener("click", function(e) {
     let target = e.target;
     if (!target.closest(".header__btn")) {
-      document.querySelector(".menu__cats").classList.remove("menu-active");
+      document.querySelector(".menu-cats").classList.remove("menu-active");
     }
   });
 
