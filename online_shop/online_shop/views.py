@@ -1,6 +1,6 @@
 from django.views.generic import TemplateView
 from common.utils.utils import get_favorite_categories, get_banners
-from app_goods.utils import get_limited_goods, get_top_goods
+from app_goods.utils import get_limited_goods, get_top_goods, get_hot_offers
 
 
 class MainView(TemplateView):
@@ -11,5 +11,7 @@ class MainView(TemplateView):
         context.update({'banners': get_banners()})
         context.update({'favorite_categories': get_favorite_categories()})
         context.update({'top_goods': get_top_goods(8)})
+        # context.update({'hot_goods': get_hot_offers(9)})
+        context.update({'hot_goods': get_top_goods(9)})
         context.update({'limited_goods': get_limited_goods(16)})
         return context

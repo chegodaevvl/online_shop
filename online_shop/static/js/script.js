@@ -5,11 +5,30 @@ window.addEventListener('DOMContentLoaded', function() {
 
       pagination: {
         el: '.banners-pagination',
+        clickable: true,
       },
 
       navigation: {
         nextEl: '.banner-next',
         prevEl: '.banner-prev',
+      },
+
+  });
+
+  var hotSwiper = new Swiper(".hot-swiper", {
+      loop: true,
+      slidesPerView: 3,
+      spaceBetween: 20,
+      slidesPerGroup: 3,
+
+      pagination: {
+        el: '.goods-pagination',
+        clickable: true,
+      },
+
+      navigation: {
+        nextEl: '.goods-next',
+        prevEl: '.goods-prev',
       },
 
   });
@@ -20,6 +39,7 @@ window.addEventListener('DOMContentLoaded', function() {
 
       pagination: {
         el: '.goods-pagination',
+        clickable: true,
       },
 
       navigation: {
