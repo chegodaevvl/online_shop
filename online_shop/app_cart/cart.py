@@ -143,8 +143,9 @@ class Cart(object):
     def get_discount_on_set(self, good: Goods) -> int:
         """ проверка участвует ли товар в скидках 2-го типа """
 
-        subcategories = Subcategories.objects.get(id=good.goodsidx.categoryidx.id)
-        categories_id = Categories.objects.get(id=subcategories.categoryidx.id).id
+        # subcategories = Subcategories.objects.get(id=good.goodsidx.categoryidx.id)
+        subcategories = Categories.objects.get(id=good.goodsidx.categoryidx.id)
+        categories_id = Categories.objects.get(id=subcategories.parent.id).id
         active_discount_good = Discounts.objects.filter(active=True, type=2, goodsset__goodsidx=good.goodsidx.id). \
             order_by('priority').last()
         active_discount_category = Discounts.objects.filter(active=True, type=2,

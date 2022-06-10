@@ -71,8 +71,9 @@ class GoodsInShops(models.Model):
         """ вычисление стоимости товара со скидкой по 1-му типу - Скидки на товар """
         #  тип скидки - скидка на товар type=1
         good_id = self.goodsidx.id
-        subcategories = Subcategories.objects.get(id=self.goodsidx.categoryidx.id)
-        categories_id = Categories.objects.get(id=subcategories.categoryidx.id).id
+        #subcategories = Subcategories.objects.get(id=self.goodsidx.categoryidx.id)
+        subcategories = Categories.objects.get(id=self.goodsidx.categoryidx.id)
+        categories_id = Categories.objects.get(id=subcategories.parent.id).id
         active_discount_good = Discounts.objects.filter(active=True, type=1, goodsset__goodsidx=good_id).\
             order_by('priority').last()
         active_discount_category = Discounts.objects.filter(active=True, type=1,
