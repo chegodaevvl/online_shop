@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
+{% load humanize %}
+{% load l10n %}
 {% block content %}
     <div class="content__banners">
         <div class="swiper banners-swiper">
@@ -16,15 +18,15 @@
           </div>
     </div>
     <ul  class="content__categories list-reset content flex">
-        {% for subcat in subcats %}
+        {% for category in favorite_categories %}
         <li class="content__category flex">
             <div class="category__desc">
-                <strong class="category__title header-reset">{{ subcat.subcategoryname }}</strong>
+                <strong class="category__title header-reset">{{ category.categoryname }}</strong>
                 <p class="category__price">
-                    от <span class="price">100 рублей</span>
+                    от <span class="price">{{ category.min_price|floatformat:2|intcomma }} рублей</span>
                 </p>
             </div>
-            <img src="img/videoca.png" alt="категория">
+            <img src="media/{{ category.categoryimg }} " alt="категория">
             <a href="/categories/sub-{{ subcat.id }}" class="cat-link"></a>
         </li>
         {% endfor %}
@@ -36,7 +38,7 @@
         <ul class="goods-list list-reset flex">
             {% for item in top_goods %}
             <li class="good__card flex">
-                <img class="goods-img" src="img/card.jpg" alt="">
+                <img class="goods-img" src="media/{{ item.goodsimg }}" alt="item.goodsname">
                 <h4 class="goods-title header-reset">
                     {{ item.goodsname }}
                 </h4>

@@ -237,6 +237,8 @@ img {
 
 .cat-item__img {
   margin-right: 20px;
+  width: 16px;
+  height: 16px;
 }
 
 .submenu-cats {

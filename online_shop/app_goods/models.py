@@ -9,7 +9,7 @@ class Goods(models.Model):
     """Товары"""
     goodsname = models.CharField(max_length=100, verbose_name=_('goods name'))
     description = models.TextField(verbose_name=_('description'))
-    categoryidx = models.ForeignKey('app_categories.Subcategories', related_name='goods',
+    categoryidx = models.ForeignKey('app_categories.Categories', related_name='goods',
                                     on_delete=models.CASCADE, verbose_name=_('category'))
     image = models.ImageField(upload_to='goods/', verbose_name=_('image'))
     search_vector = SearchVectorField(null=True)
