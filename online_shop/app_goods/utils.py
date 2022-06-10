@@ -1,5 +1,5 @@
 from django.db.models import Q, Sum, Min
-from .models import Goods, Offer
+from .models import Goods, Offer, GoodsInShops
 from random import sample
 from datetime import datetime
 
@@ -36,6 +36,7 @@ def get_offer_of_the_day():
         if offer.startofferdate.date() != datetime.today().date():
             offer.goodsidx = limited_goods[0]
             offer.startofferdate = datetime.today().date()
+            offer.goodsidx.price = GoodsInShops.objects.filter(goodsidx=offer.goodsidx.id).aggregate(Min('price'))
             offer.save()
         return offer.goodsidx
     else:

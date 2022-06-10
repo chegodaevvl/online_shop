@@ -421,7 +421,7 @@ img {
 }
 
 .good__card {
-  width: 23%;
+  width: 21%;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
@@ -572,6 +572,12 @@ img {
 .goods-card-horiz:hover .goods-right .goods-bottom .goods-btns {
   display: flex;
   transform: translate(0, 0);
+}
+
+.day-offer {
+  width: 20%;
+  margin-right: 50px;
+  flex-direction: column;
 }
 
 /* Footer */

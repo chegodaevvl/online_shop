@@ -31,7 +31,31 @@
         </li>
         {% endfor %}
     </ul>
-    <div class="content__popular content">
+    <div class="day-popular content flex">
+        {% if day_offer %}
+            <div class="day-offer flex">
+                <div class="goods-top flex">
+                    <a href="/goods/{{ day_offer.id }}" class="card-link">
+                        <img class="goods-img" src="media/{{ day_offer.image }}" alt="day_offer.goodsname">
+                    </a>
+                    <strogn class="goods-title header-reset">
+                        <a href="/goods/{{ day_offer.id }}" class="card-link">
+                            {{ day_offer.goodsname }}
+                        </a>
+                    </strogn>
+                </div>
+                <div class="goods-bottom flex">
+                    <span class="goods-price">{{ day_offer.price|floatformat:2|intcomma }} рублей</span>
+                    <span class="goods-cat">
+                        {% if day_offer.categoryidx.parent %}
+                            {{ day_offer.categoryidx.parent.categoryname }} /
+                        {% endif %}
+                        {{ day_offer.categoryidx.categoryname }}
+                    </span>
+                </div>
+            </div>
+        {% endif %}
+        <div class="content__popular">
         <h3 class="section__title header-reset">
             Популярные товары
         </h3>
@@ -77,6 +101,7 @@
             </li>
             {% endfor %}
         </ul>
+    </div>
     </div>
     <div class="content__hot">
         <h3 class="section__title header-reset content">
