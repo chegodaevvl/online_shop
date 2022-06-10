@@ -76,17 +76,17 @@
                     {% for category in categories %}
                         {% if category.child or not category.parent %}
                             <li class="cat-item">
-                                <a class="header-link" href="/categories/{{ category.id }}">
                                     <img class="cat-item__img" src="media/{{ category.categoryimg }}">
                                     <span> {{ category.categoryname }} </span>
-                                </a>
+                                    {% if not category.child %}
+                                        <a class="header-link" href="/categories/{{ category.id }}"> </a>
+                                    {% endif %}
                                 <ul class=" list-reset submenu-cats">
                                     {% for child in category.child %}
                                     <li class="cat-item">
-                                        <a class="header-link" href="/categories/{{ child.id }}">
                                             <img class="cat-item__img" src="media/{{ child.categoryimg }}">
                                             <span> {{ child.categoryname }} </span>
-                                        </a>
+                                            <a class="header-link" href="/categories/{{ child.id }}"></a>
                                     </li>
                                     {% endfor %}
                                 </ul>
