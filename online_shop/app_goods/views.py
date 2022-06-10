@@ -7,7 +7,6 @@ from .models import GoodsInShops, Goods, GoodsStorages
 from app_cart.forms import CartAddGoodForm
 import json
 
-
 from common.utils.fts import SearchResultsList
 
 from django.db.models import F, Value
