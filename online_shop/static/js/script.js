@@ -15,8 +15,8 @@ window.addEventListener('DOMContentLoaded', function() {
   });
 
   var goodsSwiper = new Swiper(".goods-swiper", {
-      slidesPerView: 3,
-      spaceBetween: 50,
+      slidesPerView: 4,
+      spaceBetween: 20,
 
       pagination: {
         el: '.goods-pagination',

@@ -1,5 +1,5 @@
 from django.views.generic import TemplateView
-from common.utils.utils import get_favorite_categories, get_categories, get_banners
+from common.utils.utils import get_favorite_categories, get_banners
 from app_goods.utils import get_limited_goods, get_top_goods
 
 
@@ -12,5 +12,4 @@ class MainView(TemplateView):
         context.update({'favorite_categories': get_favorite_categories()})
         context.update({'top_goods': get_top_goods(8)})
         context.update({'limited_goods': get_limited_goods(16)})
-        context.update({'categories': get_categories()})
         return context
