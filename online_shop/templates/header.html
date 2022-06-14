@@ -96,11 +96,26 @@
                     <span class="btn-title">Наш каталог</span>
                     <img src="{% static 'img/arrowSlide.svg' %}" alt="">
                 </button>
-                <ul class=" list-reset menu__cats">
+                <ul class=" list-reset menu-cats">
                     {% for category in categories %}
-                    <li class="cat__item">
-                        <a class="header-link" href="/categories/{{ category.id }}">{{ category.categoryname }}</a>
-                    </li>
+                        {% if category.child or not category.parent %}
+                            <li class="cat-item">
+                                    <img class="cat-item__img" src="media/{{ category.categoryimg }}">
+                                    <span> {{ category.categoryname }} </span>
+                                    {% if not category.child %}
+                                        <a class="header-link" href="/categories/{{ category.id }}"> </a>
+                                    {% endif %}
+                                <ul class=" list-reset submenu-cats">
+                                    {% for child in category.child %}
+                                    <li class="cat-item">
+                                            <img class="cat-item__img" src="media/{{ child.categoryimg }}">
+                                            <span> {{ child.categoryname }} </span>
+                                            <a class="header-link" href="/categories/{{ child.id }}"></a>
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                        {% endif %}
                     {% endfor %}
                 </ul>
             </div>

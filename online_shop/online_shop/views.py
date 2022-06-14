@@ -1,6 +1,6 @@
 from django.views.generic import TemplateView
-from common.utils.views import get_subcategories, get_categories, get_banners
-from app_goods.utils import get_limited_goods, get_top_goods
+from common.utils.utils import get_favorite_categories, get_banners
+from app_goods.utils import get_limited_goods, get_top_goods, get_hot_offers, get_offer_of_the_day
 
 
 class MainView(TemplateView):
@@ -9,8 +9,10 @@ class MainView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context.update({'banners': get_banners()})
-        context.update({'subcats': get_subcategories()})
+        context.update({'favorite_categories': get_favorite_categories()})
+        context.update({'day_offer': get_offer_of_the_day()})
         context.update({'top_goods': get_top_goods(8)})
+        # context.update({'hot_goods': get_hot_offers(9)})
+        context.update({'hot_goods': get_top_goods(9)})
         context.update({'limited_goods': get_limited_goods(16)})
-        context.update({'categories': get_categories()})
         return context

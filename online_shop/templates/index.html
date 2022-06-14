@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
+{% load humanize %}
+{% load l10n %}
 {% block content %}
     <div class="content__banners">
         <div class="swiper banners-swiper">
@@ -16,36 +18,146 @@
           </div>
     </div>
     <ul  class="content__categories list-reset content">
-        {% for subcat in subcats %}
+        {% for category in favorite_categories %}
         <li class="content__category flex">
             <div class="category__desc">
-                <strong class="category__title header-reset">{{ subcat.subcategoryname }}</strong>
+                <strong class="category__title header-reset">{{ category.categoryname }}</strong>
                 <p class="category__price">
-                    от <span class="price">100 рублей</span>
+                    от <span class="price">{{ category.min_price|floatformat:2|intcomma }} рублей</span>
                 </p>
             </div>
-            <img src="img/videoca.png" alt="категория">
-            <a href="/categories/sub-{{ subcat.id }}" class="cat-link"></a>
+            <img src="media/{{ category.categoryimg }} " alt="категория">
+            <a href="/categories/{{ category.id }}" class="cat-link"></a>
         </li>
         {% endfor %}
     </ul>
-    <div class="content__popular content">
+    <div class="day-popular content flex">
+        {% if day_offer %}
+            <div class="day-offer flex">
+                <div class="goods-top flex">
+                    <a href="/goods/{{ day_offer.id }}" class="card-link">
+                        <img class="goods-img" src="media/{{ day_offer.image }}" alt="day_offer.goodsname">
+                    </a>
+                    <strogn class="goods-title header-reset">
+                        <a href="/goods/{{ day_offer.id }}" class="card-link">
+                            {{ day_offer.goodsname }}
+                        </a>
+                    </strogn>
+                </div>
+                <div class="goods-bottom flex">
+                    <span class="goods-price">{{ day_offer.price|floatformat:2|intcomma }} рублей</span>
+                    <span class="goods-cat">
+                        {% if day_offer.categoryidx.parent %}
+                            {{ day_offer.categoryidx.parent.categoryname }} /
+                        {% endif %}
+                        {{ day_offer.categoryidx.categoryname }}
+                    </span>
+                </div>
+            </div>
+        {% endif %}
+        <div class="content__popular">
         <h3 class="section__title header-reset">
             Популярные товары
         </h3>
         <ul class="goods-list list-reset flex">
             {% for item in top_goods %}
             <li class="good__card flex">
-                <img class="goods-img" src="img/card.jpg" alt="">
-                <h4 class="goods-title header-reset">
-                    {{ item.goodsname }}
-                </h4>
-                <span class="goods-price">{{ item.price }}</span>
-                <span class="goods-cat">Игры / приставки</span>
-                <a href="/goods/{{ item.id }}" class="card-link"></a>
+                <div class="goods-top flex">
+                    <a href="/goods/{{ item.id }}" class="card-link">
+                        <img class="goods-img" src="media/{{ item.image }}" alt="item.goodsname">
+                    </a>
+                    <strogn class="goods-title header-reset">
+                        <a href="/goods/{{ item.id }}" class="card-link">
+                            {{ item.goodsname }}
+                        </a>
+                    </strogn>
+                </div>
+                <div class="goods-bottom flex">
+                    <span class="goods-price">{{ item.price|floatformat:2|intcomma }} рублей</span>
+                    <span class="goods-cat">
+                        {% if item.categoryidx.parent %}
+                        {{ item.categoryidx.parent.categoryname }} /
+                        {% endif %}
+                        {{ item.categoryidx.categoryname }}
+                    </span>
+                    <ul class="goods-btns list-reset flex">
+                        <li class="goods-btn flex">
+                            <a href="/goods/{{ item.id }}">
+                                <img src="{% static 'img/bookmark.svg' %}">
+                            </a>
+                        </li>
+                        <li class="goods-btn flex">
+                            <a href="#">
+                                <img src="{% static 'img/change.svg' %}">
+                            </a>
+                        </li>
+                        <li class="goods-btn flex">
+                            <a href="#">
+                                <img src="{% static 'img/cart.svg' %}">
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </li>
             {% endfor %}
         </ul>
+    </div>
+    </div>
+    <div class="content__hot">
+        <h3 class="section__title header-reset content">
+            Горящие предложения
+        </h3>
+        <div class="content">
+            <div class="swiper hot-swiper">
+                <div class="swiper-wrapper">
+                {% for item in hot_goods %}
+                  <div class="swiper-slide goods-card-horiz flex">
+                    <div class="goods-left flex">
+                        <a href="/goods/{{ item.id }}" class="card-link">
+                            <img class="goods-img_horiz" src="media/{{ item.image }}" alt="item.goodsname">
+                        </a>
+                    </div>
+                    <div class="goods-right flex">
+                        <strogn class="goods-title header-reset">
+                            <a href="/goods/{{ item.id }}" class="card-link">
+                                {{ item.goodsname }}
+                            </a>
+                        </strogn>
+                        <div class="goods-bottom flex">
+                            <span class="goods-price">{{ item.price|floatformat:2|intcomma }} рублей</span>
+                            <span class="goods-cat">
+                                {% if item.categoryidx.parent %}
+                                {{ item.categoryidx.parent.categoryname }} /
+                                {% endif %}
+                                {{ item.categoryidx.categoryname }}
+                            </span>
+                            <ul class="goods-btns list-reset flex">
+                                <li class="goods-btn flex">
+                                    <a href="/goods/{{ item.id }}">
+                                        <img src="{% static 'img/bookmark.svg' %}">
+                                    </a>
+                                </li>
+                                <li class="goods-btn flex">
+                                    <a href="#">
+                                        <img src="{% static 'img/change.svg' %}">
+                                    </a>
+                                </li>
+                                <li class="goods-btn flex">
+                                    <a href="#">
+                                        <img src="{% static 'img/cart.svg' %}">
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                  </div>
+                {% endfor %}
+                </div>
+                <div class="swiper-pagination goods-pagination"></div>
+                <div class="swiper-button-prev goods-prev"></div>
+                <div class="swiper-button-next goods-next"></div>
+              </div>
+        </div>
     </div>
     <div class="content__limited content">
         <h3 class="section__title header-reset">
@@ -55,13 +167,42 @@
             <div class="swiper-wrapper">
             {% for item in limited_goods %}
               <div class="swiper-slide good__card flex">
-                <img class="goods-img" src="img/card.jpg" alt="">
-                <h4 class="goods-title header-reset">
-                  {{ item.goodsname }}
-                </h4>
-                <span class="goods-price">{{ item.price }}</span>
-                <span class="goods-cat">Игры / приставки</span>
-                <a href="/goods/{{ item.id }}" class="card-link"></a>
+                <div class="goods-top flex">
+                    <a href="/goods/{{ item.id }}" class="card-link">
+                        <img class="goods-img" src="media/{{ item.image }}" alt="item.goodsname">
+                    </a>
+                    <strogn class="goods-title header-reset">
+                        <a href="/goods/{{ item.id }}" class="card-link">
+                            {{ item.goodsname }}
+                        </a>
+                    </strogn>
+                </div>
+                <div class="goods-bottom flex">
+                    <span class="goods-price">{{ item.price|floatformat:2|intcomma }} рублей</span>
+                    <span class="goods-cat">
+                        {% if item.categoryidx.parent %}
+                        {{ item.categoryidx.parent.categoryname }} /
+                        {% endif %}
+                        {{ item.categoryidx.categoryname }}
+                    </span>
+                    <ul class="goods-btns list-reset flex">
+                        <li class="goods-btn flex">
+                            <a href="/goods/{{ item.id }}">
+                                <img src="{% static 'img/bookmark.svg' %}">
+                            </a>
+                        </li>
+                        <li class="goods-btn flex">
+                            <a href="#">
+                                <img src="{% static 'img/change.svg' %}">
+                            </a>
+                        </li>
+                        <li class="goods-btn flex">
+                            <a href="#">
+                                <img src="{% static 'img/cart.svg' %}">
+                            </a>
+                        </li>
+                    </ul>
+                </div>
               </div>
             {% endfor %}
             </div>
