@@ -49,6 +49,34 @@ window.addEventListener('DOMContentLoaded', function() {
 
   });
 
+  document.querySelectorAll('.header__block-menu-button').forEach(function(element) {
+        element.addEventListener('click', function(event) {
+            const menu = document.querySelector('.header__nav_menu')
+            if (menu.classList.contains('active')){
+                document.querySelectorAll('.header__nav_menu').forEach(function(content) {
+                content.classList.remove('active')
+            })
+            }
+            else {
+                document.querySelector('.header__nav_menu').classList.add('active')
+            }
+        })
+    });
+
+  document.querySelectorAll('.search-form-menu-btn').forEach(function(element) {
+        element.addEventListener('click', function(event) {
+            const menu = document.querySelector('.search-form_menu')
+            if (menu.classList.contains('active-flex')){
+                document.querySelectorAll('.search-form_menu').forEach(function(content) {
+                content.classList.remove('active-flex')
+            })
+            }
+            else {
+                document.querySelector('.search-form_menu').classList.add('active-flex')
+            }
+        })
+    })
+
   document.querySelector(".header__btn").addEventListener("click", function() {
     document.querySelector(".menu-cats").classList.toggle("menu-active");
   });
