@@ -629,8 +629,38 @@ img {
 
 .day-offer {
   width: 20%;
+  height: 100%;
+  padding: 20px;
   margin-right: 50px;
   flex-direction: column;
+  border: 1px solid #e0e0e0;
+  box-shadow: 0 3px 0 rgba(0,0,0,0.05);
+}
+
+.timer__item:not(:last-child) {
+  margin-right: 5px;
+}
+
+.digit-box {
+  width: 55px;
+  height: 55px;
+  justify-content: center;
+  align-items: center;
+  background-color: #ebebeb;
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1.2em;
+  letter-spacing: 1.1px;
+  color: #424650;
+}
+
+.block-label {
+  color: #747880;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.2em;
+  text-transform: uppercase;
+  text-align: center;
 }
 
 /* Footer */

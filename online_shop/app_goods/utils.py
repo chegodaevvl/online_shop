@@ -28,16 +28,16 @@ def get_top_goods(quantity: int):
 
 def get_offer_of_the_day():
     limited_goods = get_limited_goods(quantity=1)
-    if limited_goods:
-        offer = Offer.objects.get_or_create(pk=1, defaults={
-                'goodsidx': limited_goods[0],
-                'startofferdate': datetime.fromisoformat('1999-01-01')
-            })[0]
-        if offer.startofferdate.date() != datetime.today().date():
-            offer.goodsidx = limited_goods[0]
-            offer.startofferdate = datetime.today().date()
-            offer.goodsidx.price = GoodsInShops.objects.filter(goodsidx=offer.goodsidx.id).aggregate(Min('price'))
-            offer.save()
-        return offer.goodsidx
-    else:
-        return None
+    # if limited_goods:
+    #     offer = Offer.objects.get_or_create(pk=1, defaults={
+    #             'goodsidx': limited_goods[0],
+    #             'startofferdate': datetime.fromisoformat('1999-01-01')
+    #         })[0]
+    #     if offer.startofferdate.date() != datetime.today().date():
+    #         offer.goodsidx = limited_goods[0]
+    #         offer.startofferdate = datetime.today().date()
+    #         offer.save()
+    #     return offer.goodsidx
+    return limited_goods[0]
+    # else:
+    #     return None
