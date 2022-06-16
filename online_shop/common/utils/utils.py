@@ -22,7 +22,7 @@ def get_favorite_categories() -> list:
 
 
 def get_categories() -> Set:
-    result = Categories.objects.all()
+    result = Categories.objects.filter(is_active=True)
     for item in result:
         item.child = item.categories_set.all()
     return result
