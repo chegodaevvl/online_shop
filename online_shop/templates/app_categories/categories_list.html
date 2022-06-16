@@ -1,13 +1,19 @@
-{% block categories %}
-    {% if categories %}
-        <ul>
-            {% for category in categories %}
-                <li>
-                    <a href="cat-{{ category.id }}"> {{ category.categoryname }} </a>
-                </li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>There are no categories specified</p>
-    {% endif %}
-{% endblock %}
+{% load static %}
+{% load humanize %}
+{% load l10n %}
+{% if favorite_categories %}
+    <ul  class="content__categories list-reset content flex">
+        {% for category in favorite_categories %}
+            <li class="content__category flex">
+                <div class="category__desc">
+                    <strong class="category__title header-reset">{{ category.categoryname }}</strong>
+                        <p class="category__price">
+                        от <span class="price">{{ category.min_price|floatformat:2|intcomma }} рублей</span>
+                        </p>
+                </div>
+                <img src="media/{{ category.categoryimg }} " alt="категория">
+                <a href="/categories/{{ category.id }}" class="cat-link"></a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endif %}

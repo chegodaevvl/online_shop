@@ -31,7 +31,7 @@ class TopGoodsListView(ListView):
 
 
 class DaysOfferView(TemplateView):
-    template_name = 'app_goods/days_offer.html'
+    template_name = 'app_goods/day_offer.html'
 
     def get_context_data(self, **kwargs):
         context = super(DaysOfferView, self).get_context_data(**kwargs)

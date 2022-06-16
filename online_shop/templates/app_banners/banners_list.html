@@ -1,0 +1,17 @@
+{% load static %}
+{% if banners %}
+    <div class="content__banners">
+        <div class="swiper banners-swiper">
+            <div class="swiper-wrapper">
+                {% for item in banners %}
+                    <div class="swiper-slide banner-card flex">
+                        <a href="{{ item.bannerlink }}"> <img src="/media/{{ item.bannerimg }}" alt="{{ item.advertisementname }}"> </a>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="swiper-pagination banners-pagination"></div>
+            <div class="swiper-button-prev banner-prev"></div>
+            <div class="swiper-button-next banner-next"></div>
+        </div>
+    </div>
+{% endif %}

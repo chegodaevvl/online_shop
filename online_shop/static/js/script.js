@@ -22,13 +22,13 @@ window.addEventListener('DOMContentLoaded', function() {
       slidesPerGroup: 3,
 
       pagination: {
-        el: '.goods-pagination',
+        el: '.hot-pagination',
         clickable: true,
       },
 
       navigation: {
-        nextEl: '.goods-next',
-        prevEl: '.goods-prev',
+        nextEl: '.hot-next',
+        prevEl: '.hot-prev',
       },
 
   });
