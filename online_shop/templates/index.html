@@ -19,7 +19,7 @@
     </div>
     <ul  class="content__categories list-reset content">
         {% for category in favorite_categories %}
-        <li class="content__category flex">
+        <li class="content__category">
             <div class="category__desc">
                 <strong class="category__title header-reset">{{ category.categoryname }}</strong>
                 <p class="category__price">
@@ -31,10 +31,10 @@
         </li>
         {% endfor %}
     </ul>
-    <div class="day-popular content flex">
+    <div class="day-popular content">
         {% if day_offer %}
-            <div class="day-offer flex">
-                <div class="goods-top flex">
+            <div class="day-offer">
+                <div class="goods-top ">
                     <a href="/goods/{{ day_offer.id }}" class="card-link">
                         <img class="goods-img" src="media/{{ day_offer.image }}" alt="day_offer.goodsname">
                     </a>
@@ -59,18 +59,18 @@
         <h3 class="section__title header-reset">
             Популярные товары
         </h3>
-        <ul class="goods-list list-reset flex">
+        <ul class="goods-list list-reset">
             {% for item in top_goods %}
             <li class="good__card flex">
                 <div class="goods-top flex">
                     <a href="/goods/{{ item.id }}" class="card-link">
                         <img class="goods-img" src="media/{{ item.image }}" alt="item.goodsname">
                     </a>
-                    <strogn class="goods-title header-reset">
+                    <strong class="goods-title header-reset">
                         <a href="/goods/{{ item.id }}" class="card-link">
                             {{ item.goodsname }}
                         </a>
-                    </strogn>
+                    </strong>
                 </div>
                 <div class="goods-bottom flex">
                     <span class="goods-price">{{ item.price|floatformat:2|intcomma }} рублей</span>
@@ -111,7 +111,7 @@
             <div class="swiper hot-swiper">
                 <div class="swiper-wrapper">
                 {% for item in hot_goods %}
-                  <div class="swiper-slide goods-card-horiz flex">
+                  <div class="swiper-slide goods-card-horiz">
                     <div class="goods-left flex">
                         <a href="/goods/{{ item.id }}" class="card-link">
                             <img class="goods-img_horiz" src="media/{{ item.image }}" alt="item.goodsname">
