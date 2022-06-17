@@ -804,6 +804,59 @@ img {
   letter-spacing: 0.8px;
 }
 
+.goodslist-content {
+  width: 100%;
+}
+
+.goodslist-swiper {
+  width: 100%;
+  height: 1100px;
+}
+
+.goodslist-card {
+  max-height: 450px;
+}
+
+.goodslist-sort {
+  align-items: center;
+  margin-bottom: 50px;
+}
+
+.sort-title {
+  color: #aaa;
+  font-size: 18px;
+  margin-right: 10px;
+}
+
+.sort-rule {
+  width: 100%;
+  color: #71747a;
+  font-size: 18px;
+  align-items: center;
+}
+
+.sort-rule:not(:last-child) {
+  margin-right: 10px;
+}
+
+.sort-direction {
+  width: 10%;
+  height: auto;
+  visibility: hidden;
+}
+
+.sort-link {
+  align-items: center;
+}
+
+.sort-active {
+  color: #0063d1;
+}
+
+.sort-active .sort-link .sort-direction {
+  visibility: visible;
+}
+
 /* Footer */
 
 .footer__contact {

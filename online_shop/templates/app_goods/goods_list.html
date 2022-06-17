@@ -1,19 +1,93 @@
 {% extends "base.html" %}
 {% load static %}
+{% load humanize %}
+{% load l10n %}
 {% block content %}
-    <div class="content__popular">
-        <ul class="goods-list list-reset flex">
-            {% for item in goods %}
-            <li class="good__card flex">
-                <img class="goods-img" src="img/card.jpg" alt="">
-                <h4 class="goods-title header-reset">
-                    {{ item.goodsname }}
-                </h4>
-                <span class="goods-price">{{ item.price }}</span>
-                <span class="goods-cat">Игры / приставки</span>
-                <a href="/goods/{{ item.id }}" class="card-link"></a>
-            </li>
-            {% endfor %}
-        </ul>
+    <div class="catalogue-header flex">
+        <h2 class="catalogue-title header-reset">Наш каталог</h2>
+        <div class="catalogue-nav">
+            <a class="home-link" href="">домой</a>
+            <span class="delimetr">/</span>
+            <span>Каталог</span>
+        </div>
     </div>
+    {% if goods %}
+        <div class="goods-section content flex">
+            <div class="goods-panel flex">
+                <div class="goods-filter">
+                    <h2 class="section__title header-reset">Фильтр</h2>
+                    <form class="goods-form">
+                        <input class="filter-input" name="query" type="text" placeholder="Цена">
+                        <input class="filter-input" name="goodsname" type="text" placeholder="Название">
+                        <select class="filter-input">
+                            <option value="seller" selected="selected" disabled="disabled">Продавец</option>
+                            <option value="123">123</option>
+                            <option value="234">234</option>
+                        </select>
+                        <label class="filter-label flex">
+                            <input class="custom-checkbox" type="checkbox" id="is_available" name="availability" value="is_available">
+                            <span></span>
+                            <span class="label-text">Только товары в наличии</span>
+                        </label>
+                        <label class="filter-label flex">
+                            <input class="custom-checkbox" type="checkbox" id="delivery" name="delivery" value="free">
+                            <span></span>
+                            <span class="label-text">Бесплатная доставка</span>
+                        </label>
+                        <button class="filter-btn btn-success btn-reset" type="submit">
+                            <span class="filter-btn-title">Отфильтровать</span>
+                        </button>
+                    </form>
+                </div>
+                <div class="goods-tags">
+                    <h2 class="section__title">Популярные тэги</h2>
+                </div>
+            </div>
+            <div class="goodslist-content">
+                <div class="goodslist-sort flex">
+                    <span class="sort-title">Сортировать по:</span>
+                    <ul class="sort-rules list-reset flex">
+                        <li class="sort-rule sort-active">
+                            <a href="#" class="sort-link flex">
+                                <span>Популярности</span>
+                                <img class="sort-direction" src="{% static 'img/upArrow.svg' %}">
+                            </a>
+                        </li>
+                        <li class="sort-rule">
+                            <a href="#" class="sort-link flex">
+                                <span>Цене</span>
+                                <img class="sort-direction" src="{% static 'img/upArrow.svg' %}">
+                            </a>
+                        </li>
+                        <li class="sort-rule">
+                            <a href="#" class="sort-link flex">
+                                <span>Отзывам</span>
+                                <img class="sort-direction" src="{% static 'img/upArrow.svg' %}">
+                            </a>
+                        </li>
+                        <li class="sort-rule">
+                            <a href="#" class="sort-link flex">
+                                <span>Новизне</span>
+                                <img class="sort-direction" src="{% static 'img/upArrow.svg' %}">
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="swiper goodslist-swiper">
+                    <div class="swiper-wrapper">
+                        {% for item in goods %}
+                            <div class="swiper-slide good__card goodslist-card flex">
+                                {% include "app_goods/goods_card.html" %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div class="swiper-pagination goodslist-pagination"></div>
+                    <div class="swiper-button-prev goodslist-prev"></div>
+                    <div class="swiper-button-next goodslist-next"></div>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <h2 class="empty-title">Здесь пока пусто</h2>
+    {% endif %}
 {% endblock %}

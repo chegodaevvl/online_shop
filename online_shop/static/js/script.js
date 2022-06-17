@@ -88,6 +88,26 @@ window.addEventListener('DOMContentLoaded', function() {
 
   });
 
+  var goodslistSwiper = new Swiper('.goodslist-swiper', {
+      slidesPerView: 4,
+      grid: {
+        rows: 2,
+      },
+      spaceBetween: 20,
+
+  pagination: {
+    el: ".goodslist-pagination",
+    clickable: true,
+    type: "fraction",
+  },
+
+  navigation: {
+    nextEl: ".goodslist-next",
+    prevEl: ".goodslist-prev",
+  },
+
+  });
+
   document.querySelectorAll('.header__block-menu-button').forEach(function(element) {
         element.addEventListener('click', function(event) {
             const menu = document.querySelector('.header__nav_menu')
