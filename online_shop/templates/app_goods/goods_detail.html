@@ -13,7 +13,7 @@
                 <li>
                     <span>Store: {{ item.shopidx.shopname }}</span>
                     <span>Price: {{ item.price }}</span>
-                    <span>DiscountPrice: {{ item.discountprice }}</span>
+                    <span>DiscountPrice: {{ item.get_price_for_discount_type1 }}</span>
                     <form action="{% url 'app_cart:cart_add' item.id %}" method="post">
                         {% csrf_token %}
                         {{ cart_product_form }}

@@ -13,7 +13,8 @@
                 <th>Quantity</th>
                 <th>Remove</th>
                 <th>Unit price</th>
-                <th>Price</th>
+                <th>Unit discount price</th>
+                <th>Total price</th>
             </tr>
         </thead>
         <tbody>
@@ -41,6 +42,7 @@
                             <a href="{% url "app_cart:cart_remove" item.good.pk %}">Remove</a>
                         </td>
                         <td class="num">${{ item.price }}</td>
+                        <td class="num">${{ item.discount_price }}</td>
                         <td class="num">${{ item.total_price }}</td>
                     </tr>
                 {% endwith %}

@@ -61,17 +61,15 @@ class GoodsInShops(models.Model):
     """Товары в магазинах"""
     goodsidx = models.ForeignKey('Goods', on_delete=models.CASCADE, verbose_name=_('goods'))
     shopidx = models.ForeignKey('Shops', on_delete=models.CASCADE, verbose_name=_('shop'))
-    price = models.FloatField(verbose_name=_('price'))
+    price = models.DecimalField(decimal_places=2, max_digits=10, default=0, verbose_name=_('price'))
 
     class Meta:
         verbose_name = _('goods in shop')
         verbose_name_plural = _('goods in shops')
 
-    def discountprice(self):
-        """ вычисление стоимости товара со скидкой по 1-му типу - Скидки на товар """
-        #  тип скидки - скидка на товар type=1
+    def get_discount_type1(self):
+        """ проверка на выполнения условия скидки по 1-му типу - Скидка на товар """
         good_id = self.goodsidx.id
-        #subcategories = Subcategories.objects.get(id=self.goodsidx.categoryidx.id)
         subcategories = Categories.objects.get(id=self.goodsidx.categoryidx.id)
         categories_id = Categories.objects.get(id=subcategories.parent.id).id
         active_discount_good = Discounts.objects.filter(active=True, type=1, goodsset__goodsidx=good_id).\
@@ -79,7 +77,7 @@ class GoodsInShops(models.Model):
         active_discount_category = Discounts.objects.filter(active=True, type=1,
                                                             categoriesset__categoriesidx=categories_id).\
             order_by('priority').last()
-        # если есть активные скидки на товар, то эта скидка приоритетней чем скидка на категорию
+        # если есть активные скидки на товар, то эта скидка приоритетней чем скидка на категорию товара
         if active_discount_good:
             active_discount = active_discount_good
         elif active_discount_category:
@@ -87,16 +85,15 @@ class GoodsInShops(models.Model):
         else:
             active_discount = None
 
-        if active_discount:
-            if active_discount.discountpercentage > 0:
-                return self.price * (100 - active_discount.discountpercentage) / 100
-            elif active_discount.discountamount > 0:
-                if active_discount.discountamount >= self.price:
-                    return 1
-                return self.price - active_discount.discountamount
-            elif active_discount.fixedcost > 0:
-                return active_discount.fixedcost
-        return self.price
+        return active_discount
+
+    def get_price_for_discount_type1(self):
+        discount_type1 = self.get_discount_type1()
+        if discount_type1:
+            return Discounts.objects.get(id=discount_type1.id).get_discount_price(
+                GoodsInShops.objects.get(goodsidx=self.goodsidx, shopidx=self.shopidx).price
+            )
+        return None
 
 
 class Offer(models.Model):

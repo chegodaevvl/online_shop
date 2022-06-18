@@ -72,64 +72,64 @@ class Orders(models.Model):
         return self.order
 
 
-class DiscountsRules(models.Model):
-    """Правила скидок"""
-    percentdiscount = models.IntegerField(default=0, verbose_name=_('percent discount'))
-    normaldiscount = models.IntegerField(default=1, verbose_name=_('normal discount'))
-    fixedprice = models.IntegerField(default=2, verbose_name=_('fixed price'))
-
-    class Meta:
-        verbose_name = _('discount rule')
-        verbose_name_plural = _('discounts rules')
-
-
-class GoodsDiscounts(models.Model):
-    """Скидочные товары"""
-    goodsidx = models.OneToOneField('app_goods.Goods', on_delete=models.CASCADE,
-                                    related_name='discounts', verbose_name=_('goods'))
-    discountruleidx = models.ForeignKey('DiscountsRules', on_delete=models.CASCADE, verbose_name=_('discount rule'))
-    goodsdiscount = models.FloatField(verbose_name=_('goods discount'))
-
-    class Meta:
-        verbose_name = _('goods discount')
-        verbose_name_plural = _('goods discounts')
+# class DiscountsRules(models.Model):
+#     """Правила скидок"""
+#     percentdiscount = models.IntegerField(default=0, verbose_name=_('percent discount'))
+#     normaldiscount = models.IntegerField(default=1, verbose_name=_('normal discount'))
+#     fixedprice = models.IntegerField(default=2, verbose_name=_('fixed price'))
+#
+#     class Meta:
+#         verbose_name = _('discount rule')
+#         verbose_name_plural = _('discounts rules')
 
 
-class GoodsDiscountsCalendar(models.Model):
-    """Календарь скидок на товары"""
-    goodsidx = models.ForeignKey('app_goods.Goods', on_delete=models.CASCADE, verbose_name=_('goods'))
-    startdt = models.DateTimeField(verbose_name=_('start date'))
-    enddt = models.DateTimeField(verbose_name=_('end date'))
-    isactive = models.BooleanField(verbose_name=_('is active'))
-
-    class Meta:
-        verbose_name = _('goods discount calendar')
-        verbose_name_plural = _('goods discounts calendar')
-
-
-class GoodsSets(models.Model):
-    """Наборы товаров"""
-    goodsidx = models.ForeignKey('app_goods.Goods', on_delete=models.CASCADE,
-                                 related_name='sets', verbose_name=_('goods'))
-    discountruleidx = models.ForeignKey('DiscountsRules', on_delete=models.CASCADE, verbose_name=_('discount rule'))
-    goodsset = models.TextField(verbose_name=_('goods set'))
-    setdiscount = models.FloatField(verbose_name=_('set discount'))
-
-    class Meta:
-        verbose_name = _('goods set')
-        verbose_name_plural = _('goods sets')
+# class GoodsDiscounts(models.Model):
+#     """Скидочные товары"""
+#     goodsidx = models.OneToOneField('app_goods.Goods', on_delete=models.CASCADE,
+#                                     related_name='discounts', verbose_name=_('goods'))
+#     discountruleidx = models.ForeignKey('DiscountsRules', on_delete=models.CASCADE, verbose_name=_('discount rule'))
+#     goodsdiscount = models.FloatField(verbose_name=_('goods discount'))
+#
+#     class Meta:
+#         verbose_name = _('goods discount')
+#         verbose_name_plural = _('goods discounts')
 
 
-class SetsDiscountsCalendar(models.Model):
-    """Календарь скидок на наборы"""
-    setidx = models.ForeignKey('GoodsSets', on_delete=models.CASCADE, verbose_name=_('goods'))
-    startdt = models.DateTimeField(verbose_name=_('start date'))
-    enddt = models.DateTimeField(verbose_name=_('end date'))
-    isactive = models.BooleanField(verbose_name=_('active'))
+# class GoodsDiscountsCalendar(models.Model):
+#     """Календарь скидок на товары"""
+#     goodsidx = models.ForeignKey('app_goods.Goods', on_delete=models.CASCADE, verbose_name=_('goods'))
+#     startdt = models.DateTimeField(verbose_name=_('start date'))
+#     enddt = models.DateTimeField(verbose_name=_('end date'))
+#     isactive = models.BooleanField(verbose_name=_('is active'))
+#
+#     class Meta:
+#         verbose_name = _('goods discount calendar')
+#         verbose_name_plural = _('goods discounts calendar')
 
-    class Meta:
-        verbose_name = _('set discount calendar')
-        verbose_name_plural = _('sets discounts calendar')
+
+# class GoodsSets(models.Model):
+#     """Наборы товаров"""
+#     goodsidx = models.ForeignKey('app_goods.Goods', on_delete=models.CASCADE,
+#                                  related_name='sets', verbose_name=_('goods'))
+#     discountruleidx = models.ForeignKey('DiscountsRules', on_delete=models.CASCADE, verbose_name=_('discount rule'))
+#     goodsset = models.TextField(verbose_name=_('goods set'))
+#     setdiscount = models.FloatField(verbose_name=_('set discount'))
+#
+#     class Meta:
+#         verbose_name = _('goods set')
+#         verbose_name_plural = _('goods sets')
+
+
+# class SetsDiscountsCalendar(models.Model):
+#     """Календарь скидок на наборы"""
+#     setidx = models.ForeignKey('GoodsSets', on_delete=models.CASCADE, verbose_name=_('goods'))
+#     startdt = models.DateTimeField(verbose_name=_('start date'))
+#     enddt = models.DateTimeField(verbose_name=_('end date'))
+#     isactive = models.BooleanField(verbose_name=_('active'))
+#
+#     class Meta:
+#         verbose_name = _('set discount calendar')
+#         verbose_name_plural = _('sets discounts calendar')
 
 
 class OrderItem(models.Model):
@@ -170,8 +170,9 @@ class Discounts(models.Model):
     startdate = models.DateTimeField(verbose_name=_('discount start date'))
     stopdate = models.DateTimeField(verbose_name=_('discount stop date'))
     discountpercentage = models.PositiveSmallIntegerField(default=0, verbose_name=_('discount value in percent'))
-    discountamount = models.PositiveSmallIntegerField(default=0, verbose_name=_('fixed amount of discount'))
-    fixedcost = models.PositiveSmallIntegerField(default=0, verbose_name=_('fixed cost'))
+    discountamount = models.DecimalField(decimal_places=2, max_digits=10, default=0,
+                                         verbose_name=_('fixed amount of discount'))
+    fixedcost = models.DecimalField(decimal_places=2, max_digits=10, default=0, verbose_name=_('fixed cost'))
     minimumvalue = models.DecimalField(default=0, max_digits=10, decimal_places=2,
                                        verbose_name=_('minimum value of items in the cart'))
     numberofitems = models.IntegerField(default=0, verbose_name=_('number of items in the cart'))
@@ -183,21 +184,19 @@ class Discounts(models.Model):
     def __str__(self):
         return self.name
 
-    def get_discount_on_cart(self, total, items):
-        """ расчет скидки 3-го типа на корзину """
-        if self.active:
-            if (0 < self.minimumvalue <= total) or (0 < self.numberofitems <= items):
-
-                if self.discountpercentage > 0:
-                    return total * (100 - self.discountpercentage) / 100
-                elif self.discountamount > 0:
-                    if self.discountamount >= total:
-                        return 1
-                    return total - self.discountamount
-                elif self.fixedcost > 0:
-                    return self.fixedcost
-
-        return total
+    def get_discount_price(self, price):
+        """ расчет скидочной стоимости """
+        discount_price = 0
+        if self.discountpercentage > 0:
+            discount_price = round(price * (100 - self.discountpercentage) / 100, 2)
+        elif self.discountamount > 0:
+            if self.discountamount >= price:
+                discount_price = 1
+            else:
+                discount_price = price - self.discountamount
+        elif self.fixedcost > 0:
+            discount_price = self.fixedcost
+        return discount_price
 
 
 SET_NUMBER = [

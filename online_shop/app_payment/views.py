@@ -30,12 +30,12 @@ def payment(request):
         form = PaymentDataRequestForm(request.POST)
         if form.is_valid():
             # заполнение данных платежа
-
+            print('*** payment:', type(cart.get_total_price()), type(cart.get_delivery_cost(order.shipment.id)))
             Payment = get_payment_model()
             payment = Payment.objects.create(
                 variant='default',  # this is the variant from PAYMENT_VARIANTS
                 description='online_shop purchase',
-                total=Decimal(cart.get_total_price() + cart.get_delivery_cost(order.shipment.id)),
+                total=Decimal(Decimal(cart.get_total_price()) + cart.get_delivery_cost(order.shipment.id)),
                 currency='USD',
                 billing_first_name=request.user.first_name,
                 billing_last_name=request.user.last_name,
