@@ -857,6 +857,97 @@ img {
   visibility: visible;
 }
 
+/* Account */
+
+.account__panel {
+  flex-direction: column;
+  margin-right: 30px;
+}
+
+.account__header {
+  margin-bottom: 25px;
+}
+
+.account__nav {
+  color: #424650;
+  font-weight: 800;
+  font-size: 14px;
+}
+
+.account__item:not(:last-child) {
+  margin-bottom: 10px;
+}
+
+.account__detail {
+  width: 100%;
+}
+
+.user-img {
+  border: 1px solid #e0e0e0;
+  margin-right: 20px;
+}
+
+.user-detail {
+  flex-direction: column;
+  justify-content: flex-start;
+  margin-bottom: 20px;
+}
+
+.user-name {
+  font-size: 36px;
+  font-weight: 400;
+  color: #424650;
+  margin-bottom: 10px;
+}
+
+.order-info {
+  width: 100%;
+  padding: 15px;
+  border: 1px solid #e0e0e0;
+  margin-bottom: 25px;
+}
+
+.order-title {
+  width: 50%;
+  flex-direction: column;
+}
+
+.order-header {
+  font-size: 22px;
+  color: #424650;
+  margin-bottom: 15px;
+}
+
+.order-property {
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.order-property:not(:last-child) {
+  margin-bottom: 15px;
+}
+
+.property-name {
+  color: #424650;
+  margin-right: 10px;
+}
+
+.property-value {
+  color: #71747a;
+}
+
+.property-paid {
+  color: #0063d1;
+}
+
+.viewed-goods {
+  flex-direction: column;
+}
+
+.viewed-link {
+  align-self: flex-end;
+}
+
 /* Footer */
 
 .footer__contact {

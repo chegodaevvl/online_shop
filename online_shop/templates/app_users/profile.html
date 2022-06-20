@@ -1,10 +1,9 @@
-{% block profile_mini %}
-    {% if user.profile.avatar %}
-        <img src="/media/{{ user.profile.avatar }}" alt="{{ user.profile.username }}" width="150px">
-    {% endif %}
-    {% if user.profile.fullname %}
-        <p>{{ user.profile.fullname }}</p>
-    {% endif %}
-    <a href="{% url 'profile_update' %}">Profile update</a>
-{% endblock %}
-
+{% load static %}
+<div class="user_info flex">
+    <div class="user-detail flex">
+        {% if user.profile.fullname %}
+            <h2 class="user-name">{{ user.profile.fullname }}</h2>
+        {% endif %}
+        <a href="{% url 'profile_update' %}">Profile update</a>
+    </div>
+</div>

@@ -1,6 +1,39 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
-    {% include 'app_users/profile.html' %}
-    {% include 'app_users/last_order.html' %}
-    {% include 'app_users/last_viewed_goods.html' %}
+    <div class="catalogue-header flex">
+        <h2 class="catalogue-title header-reset">Личный кабинет</h2>
+        <div class="catalogue-nav">
+            <a class="home-link" href="">домой</a>
+            <span class="delimetr">/</span>
+            <span>Личный кабинет</span>
+        </div>
+    </div>
+    <div class="account content flex">
+        <div class="account__panel flex">
+            <h2 class="section__title header-reset account__header">
+                Навигация
+            </h2>
+            <ul class="account__nav list-reset">
+                <li class="account__item">
+                    <a class="account__link" href="#">Личный кабинет</a>
+                </li>
+                <li class="account__item">
+                    <a class="account__link" href="#">Профиль</a>
+                </li>
+                <li class="account__item">
+                    <a class="account__link" href="#">История заказов</a>
+                </li>
+                <li class="account__item">
+                    <a class="account__link" href="#">История просмотров</a>
+                </li>
+            </ul>
+        </div>
+        <div class="account__detail">
+            {% include 'app_users/profile.html' %}
+            {% include 'app_users/last_order.html' %}
+            {% include 'app_users/last_viewed_goods.html' %}
+        </div>
+    </div>
+
 {% endblock %}

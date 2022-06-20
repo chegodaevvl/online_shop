@@ -1,14 +1,16 @@
-{% block last_viewed_goods %}
+{% load static %}
+<div class="viewed-goods flex">
     {% if last_viewed_goods %}
-        <ul>
-            {% for goods in last_viewed_goods %}
-                <li>
-                    <a href="{% url 'goods-detail' goods.id %}"><p>{{ goods.goodsname }}</p></a>
+        <h3 class="section__title header-reset">История просмотров</h3>
+        <ul class="viewed_goods list-reset">
+            {% for item in last_viewed_goods %}
+                <li class="good__card flex">
+                    {% include "app_goods/goods_card.html" %}
                 </li>
             {% endfor %}
         </ul>
-        <a href="{% url 'browsing_history' %}">Browsing history</a>
+        <a class="viewed-link" href="{% url 'browsing_history' %}">Browsing history</a>
     {% else %}
-        <p>The browsing history is empty</p>
+        <h2 class="empty-title">The browsing history is empty</h2>
     {% endif %}
-{% endblock %}
+</div>
