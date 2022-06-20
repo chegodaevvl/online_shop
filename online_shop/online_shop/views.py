@@ -13,7 +13,7 @@ class MainView(TemplateView):
         context.update({'categories': get_categories()})
         context.update({'day_offer': get_offer_of_the_day()})
         context.update({'top_goods': get_top_goods(8)})
-        # context.update({'hot_goods': get_hot_offers(9)})
-        context.update({'hot_goods': get_top_goods(9)})
+        context.update({'hot_goods': get_hot_offers(9)})
+        # context.update({'hot_goods': get_top_goods(9)})
         context.update({'limited_goods': get_limited_goods(16)})
         return context
