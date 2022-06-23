@@ -1,16 +1,69 @@
+{% extends "base.html" %}
 {% load static %}
-<div class="viewed-goods flex">
-    {% if last_viewed_goods %}
-        <h3 class="section__title header-reset">История просмотров</h3>
-        <ul class="viewed_goods list-reset">
-            {% for item in last_viewed_goods %}
-                <li class="good__card flex">
-                    {% include "app_goods/goods_card.html" %}
-                </li>
-            {% endfor %}
-        </ul>
-        <a class="viewed-link" href="{% url 'browsing_history' %}">Browsing history</a>
-    {% else %}
-        <h2 class="empty-title">The browsing history is empty</h2>
-    {% endif %}
-</div>
+{% load humanize %}
+{% load l10n %}
+{% block content %}
+ <!-- TODO натянуть модель на вёрстку -->
+    <div class="Middle Middle_top">
+    <div class="Middle-top">
+      <div class="wrap">
+        <div class="Middle-header">
+          <h1 class="Middle-title">История просмотра
+          </h1>
+          <ul class="breadcrumbs Middle-breadcrumbs">
+            <li class="breadcrumbs-item"><a href="index.html">home</a>
+            </li>
+            <li class="breadcrumbs-item breadcrumbs-item_current"><span>История просмотра</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="Section Section_column Section_columnLeft">
+      <div class="wrap">
+        <div class="Section-column">
+          <div class="Section-columnSection">
+            <header class="Section-header">
+              <strong class="Section-title">Навигация
+              </strong>
+            </header>
+            <div class="Section-columnContent">
+              <div class="NavigateProfile">
+                <ul class="menu menu_vt">
+                  <li class="menu-item"><a class="menu-link" href="account.html">Личный кабинет</a>
+                  </li>
+                  <li class="menu-item"><a class="menu-link" href="profile.html">Профиль</a>
+                  </li>
+                  <li class="menu-item"><a class="menu-link" href="historyorder.html">История заказов</a>
+                  </li>
+                  <li class="menu-item_ACTIVE menu-item"><a class="menu-link" href="historyview.html">История просмотра</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="Section-content">
+          <div class="Cards">
+            <div class="Card"><a class="Card-picture" href="#"><img src="assets/img/content/home/card.jpg" alt="card.jpg"/></a>
+              <div class="Card-content">
+                <strong class="Card-title"><a href="#">Corsair Carbide Series Arctic White Steel</a>
+                </strong>
+                <div class="Card-description">
+                  <div class="Card-cost"><span class="Card-priceOld">$115.00</span><span class="Card-price">$85.00</span>
+                  </div>
+                  <div class="Card-category">Games / xbox
+                  </div>
+                  <div class="Card-hover"><a class="Card-btn" href="#"><img src="assets/img/icons/card/bookmark.svg" alt="bookmark.svg"/></a><a class="Card-btn" href="#"><img src="assets/img/icons/card/cart.svg" alt="cart.svg"/></a><a class="Card-btn" href="#"><img src="assets/img/icons/card/change.svg" alt="change.svg"/></a>
+                  </div>
+                </div>
+              </div>
+              <div class="Card-sale">-60%
+              </div>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+{% endblock %}
