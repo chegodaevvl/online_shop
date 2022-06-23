@@ -1,8 +1,9 @@
-{#{% extends "shop/base.html" %}#}
-{% block title %}
-    Thank you
-{% endblock %}
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+{% load l10n %}
 {% block content %}
+<!-- TODO натянуть модель на вёрстку -->
     <h1>Thank you</h1>
     <p>Your order has been successfully completed. Your order number is
     <strong>{{ order.id }}</strong>.</p>
