@@ -2,18 +2,29 @@
 {% load humanize %}
 {% load l10n %}
 {% if favorite_categories %}
-    <ul  class="content__categories list-reset content flex">
+  <div class="Section">
+    <div class="wrap">
+      <div class="BannersHome">
         {% for category in favorite_categories %}
-            <li class="content__category flex">
-                <div class="category__desc">
-                    <strong class="category__title header-reset">{{ category.categoryname }}</strong>
-                        <p class="category__price">
-                        от <span class="price">{{ category.min_price|floatformat:2|intcomma }} рублей</span>
-                        </p>
+          <a class="BannersHomeBlock" href="/categories/{{ category.id }}">
+            <div class="BannersHomeBlock-row">
+              <div class="BannersHomeBlock-block">
+                <strong class="BannersHomeBlock-title">
+                  {{ category.categoryname }}
+                </strong>
+                <div class="BannersHomeBlock-content">
+                  от&#32;<span class="BannersHomeBlock-price">{{ category.min_price|floatformat:2|intcomma }} рублей</span>
                 </div>
-                <img src="media/{{ category.categoryimg }} " alt="категория">
-                <a href="/categories/{{ category.id }}" class="cat-link"></a>
-            </li>
+              </div>
+              <div class="BannersHomeBlock-block">
+                <div class="BannersHomeBlock-img">
+                  <img src="media/{{ category.categoryimg }}" alt="{{ category.categoryname }}"/>
+                </div>
+              </div>
+            </div>
+          </a>
         {% endfor %}
-    </ul>
+      </div>
+    </div>
+  </div>
 {% endif %}

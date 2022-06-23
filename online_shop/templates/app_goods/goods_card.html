@@ -1,54 +1,45 @@
 {% load static %}
 {% load humanize %}
 {% load l10n %}
-<div class="goods-img-section flex">
-    <a href="/goods/{{ item.id }}" class="card-link">
-        <img class="goods-img" src="/media/{{ item.image }}" alt="{{ item.goodsname }}">
-    </a>
-</div>
-<div class="goods-description flex">
-    <strogn class="goods-title header-reset">
-        <a href="/goods/{{ item.id }}" class="card-link">
-            {{ item.goodsname }}
-        </a>
-    </strogn>
-    <div class="goods-bottom flex">
-        <div class="goods-price flex">
-            {% if item.discount %}
-                <span class="usual-price">{{ item.price|floatformat:2|intcomma }}</span>
-                <span>{{ item.discountprice|floatformat:2|intcomma }}</span>
-            {% else %}
-                <span>{{ item.price|floatformat:2|intcomma }}</span>
-            {% endif %}
-            <span>рублей</span>
+<div class="Card">
+  <a class="Card-picture" href="/goods/{{ item.id }}">
+    <img src="/media/{{ item.image }}" alt="{{ item.goodsname }}"/>
+  </a>
+  <div class="Card-content">
+    <strong class="Card-title">
+      <a href="/goods/{{ item.id }}">
+        {{ item.goodsname }}
+      </a>
+    </strong>
+    <div class="Card-description">
+      <div class="Card-cost">
+          {% if item.discount %}
+            <span class="Card-priceOld">{{ item.price|floatformat:2|intcomma }}</span>
+            <span class="Card-price">{{ item.discountprice|floatformat:2|intcomma }}</span>
+          {% else %}
+            <span class="Card-price">{{ item.price|floatformat:2|intcomma }}</span>
+          {% endif %}
         </div>
-        <span class="goods-cat">
-            {% if item.categoryidx.parent %}
-                {{ item.categoryidx.parent.categoryname }} /
-            {% endif %}
-            {{ item.categoryidx.categoryname }}
-        </span>
-        <ul class="goods-btns list-reset flex">
-            <li class="goods-btn flex">
-                <a href="/goods/{{ item.id }}">
-                    <img src="{% static 'img/bookmark.svg' %}">
-                </a>
-            </li>
-            <li class="goods-btn flex">
-                <a href="#">
-                    <img src="{% static 'img/change.svg' %}">
-                </a>
-            </li>
-            <li class="goods-btn flex">
-                <a href="#">
-                    <img src="{% static 'img/cart.svg' %}">
-                </a>
-            </li>
-        </ul>
+      <div class="Card-category">
+          {% if item.categoryidx.parent %}
+            {{ item.categoryidx.parent.categoryname }} /
+          {% endif %}
+          {{ item.categoryidx.categoryname }}
+        </div>
+      <div class="Card-hover">
+        <a class="Card-btn" href="#">
+          <img src="{% static 'assets/img/icons/card/bookmark.svg' %}" alt="bookmark.svg"/>
+        </a>
+        <a class="Card-btn" href="#">
+          <img src="{% static 'assets/img/icons/card/cart.svg' %}" alt="cart.svg"/>
+        </a>
+        <a class="Card-btn" href="compare.html">
+          <img src="{% static 'assets/img/icons/card/change.svg' %}" alt="change.svg"/>
+        </a>
+      </div>
     </div>
+  </div>
+  {% if item.discount %}
+    <div class="Card-sale">-{{ item.discount }}%</div>
+  {% endif %}
 </div>
-{% if item.discount %}
-    <div class="goods-discount flex">
-        <span>- {{ item.discount }} %</span>
-    </div>
-{% endif %}

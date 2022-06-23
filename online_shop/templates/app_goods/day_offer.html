@@ -2,50 +2,59 @@
 {% load humanize %}
 {% load l10n %}
 {% if day_offer %}
-    <div class="day-offer flex">
-        <h3 class="section__title header-reset">
-            Предложение дня
-        </h3>
-        <div class="goods-img-section flex">
-            <a href="/goods/{{ day_offer.id }}" class="card-link">
-                <img class="goods-img" src="media/{{ day_offer.image }}" alt="day_offer.goodsname">
+  <div class="Section-column">
+        <div class="Section-columnSection Section-columnSection_mark">
+          <header class="Section-columnHeader">
+            <strong class="Section-columnTitle">
+              Предложение дня
+            </strong>
+          </header>
+          <div class="Card">
+            <a class="Card-picture" href="/goods/{{ day_offer.id }}">
+              <img src="media/{{ day_offer.image }}" alt="{{ day_offer.goodsname }}"/>
             </a>
-        </div>
-        <div class="goods-description flex">
-            <strogn class="goods-title header-reset">
-                <a href="/goods/{{ day_offer.id }}" class="card-link">
-                    {{ day_offer.goodsname }}
-                </a>
-            </strogn>
-            <div class="goods-price flex">
-                {% if item.discount %}
-                    <span class="usual-price">{{ day_offer.price|floatformat:2|intcomma }}</span>
-                    <span>{{ day_offer.discountprice|floatformat:2|intcomma }}</span>
-                {% else %}
-                    <span>{{ day_offer.price|floatformat:2|intcomma }}</span>
-                {% endif %}
-                <span>рублей</span>
+            <div class="Card-content">
+              <strong class="Card-title">
+                  <a href="/goods/{{ day_offer.id }}">{{ day_offer.goodsname }}</a>
+              </strong>
+              <div class="Card-description">
+                <div class="Card-cost">
+                  {% if day_offer.discount %}
+                    <span class="Card-priceOld">{{ day_offer.price|floatformat:2|intcomma }}</span>
+                    <span class="Card-price">{{ day_offer.discountprice|floatformat:2|intcomma }}</span>
+                  {% else %}
+                    <span class="Card-price">{{ day_offer.price|floatformat:2|intcomma }}</span>
+                  {% endif %}
+                </div>
+                <div class="Card-category">
+                  {% if day_offer.categoryidx.parent %}
+                    {{ day_offer.categoryidx.parent.categoryname }} /
+                  {% endif %}
+                  {{ day_offer.categoryidx.categoryname }}
+                </div>
+              </div>
+              <div class="CountDown" data-date="23.06.2022 23:59">
+                <div class="CountDown-block">
+                  <div class="CountDown-wrap">
+                    <div class="CountDown-hours"></div>
+                    <span class="CountDown-label">hours</span>
+                  </div>
+                </div>
+                <div class="CountDown-block">
+                  <div class="CountDown-wrap">
+                    <div class="CountDown-minutes"></div>
+                    <span class="CountDown-label">mins</span>
+                  </div>
+                </div>
+                <div class="CountDown-block">
+                  <div class="CountDown-wrap">
+                    <div class="CountDown-secs"></div>
+                    <span class="CountDown-label">secs</span>
+                  </div>
+                </div>
+              </div>
             </div>
-            <span class="goods-cat">
-            {% if day_offer.categoryidx.parent %}
-                {{ day_offer.categoryidx.parent.categoryname }} /
-            {% endif %}
-            {{ day_offer.categoryidx.categoryname }}
-            </span>
+          </div>
         </div>
-        <ul class="timer list-reset flex">
-            <li class="timer__item">
-                <div class="digit-box flex hrs" id="hrs"></div>
-                <div class="block-label">часов</div>
-            </li>
-            <li class="timer__item">
-                <div class="digit-box flex" id="mins"></div>
-                <div class="block-label">минут</div>
-            </li>
-            <li class="timer__item">
-                <div class="digit-box flex" id="secs"></div>
-                <div class="block-label">секунд</div>
-            </li>
-        </ul>
-    </div>
+      </div>
 {% endif %}

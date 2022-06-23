@@ -1,139 +1,142 @@
 {% load static %}
-<footer class="footer container">
-    <div class="footer__contact">
-        <div class="footer__section flex">
-            <a href="#" class="footer__logo"><img src="{% static 'img/logo_footer.png' %}" alt=""></a>
-            <p class="about-descr">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Possimus sapiente quis omnis dolorum culpa eaque adipisci porro iure nemo eum impedit ea libero labore ducimus, esse similique vero necessitatibus quasi?</p>
-            <ul class="footer__socials list-reset flex">
-                <li class="social-item">
-                    <a href="http://facebook.com"><img src="{% static 'img/f_fb.svg' %}" alt="Мы в facebook"></a>
-                </li>
-                <li class="social-item">
-                    <a href="http://twitter.com"><img src="{% static 'img/f_tw.svg' %}" alt="Мы в twitter"></a>
-                </li>
-                <li class="social-item">
-                    <a href="http://linkedin.com"><img src="{% static 'img/f_in.svg' %}" alt="Мы в linkedin"></a>
-                </li>
-                <li class="social-item">
-                    <a href="http://pinterest.com"><img src="{% static 'img/f_pt.svg' %}" alt="Мы в pinterest"></a>
-                </li>
-                <li class="social-item">
-                    <a href="#"><img src="{% static 'img/f_mail.svg' %}" alt=""></a>
-                </li>
-            </ul>
+  <footer class="Footer">
+    <div class="wrap">
+      <div class="row Footer-main">
+        <div class="row-block">
+          <a class="logo Footer-logo" href="index.html">
+            <img class="logo-image" src="{% static 'assets/img/logo_footer.png' %}" alt="logo_footer.png"/>
+          </a>
+          <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincid  unt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad
+          </p>
+          <ul class="menu menu_img menu_smallImg Footer-menuSoc">
+            <li class="menu-item">
+              <a class="menu-link" href="#">
+                <img src="{% static 'assets/img/icons/socialFooter/fb.svg' %}" alt="fb.svg"/>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a class="menu-link" href="#">
+                <img src="{% static 'assets/img/icons/socialFooter/tw.svg' %}" alt="tw.svg"/>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a class="menu-link" href="#">
+                <img src="{% static 'assets/img/icons/socialFooter/in.svg' %}" alt="in.svg"/>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a class="menu-link" href="#">
+                <img src="{% static 'assets/img/icons/socialFooter/pt.svg' %}" alt="pt.svg"/>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a class="menu-link" href="#">
+                <img src="{% static 'assets/img/icons/socialFooter/mail.svg' %}" alt="mail.svg"/>
+              </a>
+            </li>
+          </ul>
         </div>
-        <div class="footer__section flex">
-            <strong class="footer__title header-reset">
-                Полезное
-            </strong>
-            <ul class="footer__links list-reset">
-                <li class="footer__link">
-                    <a href="#">Оформить заказ</a>
-                </li>
-                <li class="footer__link">
-                    <a href="#">Корзина</a>
-                </li>
-                <li class="footer__link">
-                    <a href="#">Доставка</a>
-                </li>
-                <li class="footer__link">
-                    <a href="#">Заказ</a>
-                </li>
-                <li class="footer__link">
-                    <a href="#">Термины</a>
-                </li>
-                <li class="footer__link">
-                    <a href="#">Условия</a>
-                </li>
-            </ul>
+        <div class="row-block">
+          <strong class="Footer-title">Полезные ссылки
+          </strong>
+          <ul class="menu menu_vt Footer-menu">
+            <li class="menu-item">
+              <a class="menu-link" href="#">Оформить заказ</a>
+            </li>
+            <li class="menu-item">
+              <a class="menu-link" href="#">Моя корзина</a>
+            </li>
+            <li class="menu-item">
+              <a class="menu-link" href="#">Доставка</a>
+            </li>
+            <li class="menu-item">
+              <a class="menu-link" href="#">Заказ</a>
+            </li>
+            <li class="menu-item">
+              <a class="menu-link" href="#">Правила</a>
+            </li>
+            <li class="menu-item">
+              <a class="menu-link" href="#">Условия</a>
+            </li>
+          </ul>
         </div>
-        <div class="footer__section flex">
-            <strong class="footer__title header-reset">
-                Аккаунт
-            </strong>
-            <ul class="footer__links list-reset">
-                <li class="footer__link">
-                    <a href="#">Аксессуары</a>
-                </li>
-                <li class="footer__link">
-                    <a href="#">Сумки</a>
-                </li>
-                <li class="footer__link">
-                    <a href="#">Камеры</a>
-                </li>
-                <li class="footer__link">
-                    <a href="#">Одежда</a>
-                </li>
-                <li class="footer__link">
-                    <a href="#">Электроника</a>
-                </li>
-                <li class="footer__link">
-                    <a href="#">Мода</a>
-                </li>
-            </ul>
+        <div class="row-block">
+          <strong class="Footer-title">Личный кабинет
+          </strong>
+          <ul class="menu menu_vt Footer-menu">
+            <li class="menu-item">
+              <a class="menu-link" href="#">Аксесуары</a>
+            </li>
+            <li class="menu-item">
+              <a class="menu-link" href="#">Сумки</a>
+            </li>
+            <li class="menu-item">
+              <a class="menu-link" href="#">Фото/Видео</a>
+            </li>
+            <li class="menu-item">
+              <a class="menu-link" href="#">Одежда</a>
+            </li>
+            <li class="menu-item">
+              <a class="menu-link" href="#">Электроника</a>
+            </li>
+            <li class="menu-item">
+              <a class="menu-link" href="#">Мода</a>
+            </li>
+          </ul>
         </div>
-        <div class="footer__section flex">
-            <strong class="footer__title header-reset">
-                Наши контакты
-            </strong>
-            <ul class="footer__links list-reset">
-                <li class="footer__address">
-                    <span>Телефон: </span>
-                    <a href="tel:+70000000">+7 (000) 00-0000</a>
-                </li>
-                <li class="footer__address">
-                    <span>Email: </span>
-                    <a href="mailto:info@online_shop.ru">info@online_shop.ru</a>
-                </li>
-                <li class="footer__address">
-                    <span>Skype: </span>
-                    <a href="#">techno</a>
-                </li>
-                <li class="footer__address">
-                    <span>Адрес: г. Москва, ул. Большая Якиманка, д. 190</span>
-                </li>
-            </ul>
+        <div class="row-block">
+          <strong class="Footer-title">Наши контакты
+          </strong>
+          <p>Телефон: +7 (000) 00-0000<br>
+            Email: info@online_shop.ru<br>
+            Skype: techno<br>
+            Адрес: г. Москва,<br>
+            ул. Большая Якиманка<br>
+            д. 190
+          </p>
         </div>
+      </div>
     </div>
-    <div class="footer__copy">
-        <div class="footer__rights">
-            © Copyleft
-            <a class="rights-link" href="#">Online Shop</a>
-            Все права защищены
+    <div class="Footer-copy">
+      <div class="wrap">
+        <div class="row row_space">
+          <div class="row-block">© Copyleft&#32;
+            <a href="#">Online Shop.</a>
+            &#32;Все права защищены.
+          </div>
+          <div class="row-block">
+            <span>Можно платить:</span>
+            <div class="Footer-payments">
+              <div>
+                <img src="{% static 'assets/img/payments/visa.png' %}" alt="visa.png"/>
+              </div>
+              <div>
+                <img src="{% static 'assets/img/payments/mastercard.png' %}" alt="mastercard.png"/>
+              </div>
+              <div>
+                <img src="{% static 'assets/img/payments/paypal.png' %}" alt="paypal.png"/>
+              </div>
+              <div>
+                <img src="{% static 'assets/img/payments/american.png' %}" alt="american.png"/>
+              </div>
+              <div>
+                <img src="{% static 'assets/img/payments/electron.png' %}" alt="electron.png"/>
+              </div>
+              <div>
+                <img src="{% static 'assets/img/payments/maestro.png' %}" alt="maestro.png"/>
+              </div>
+              <div>
+                <img src="{% static 'assets/img/payments/delta.png' %}" alt="delta.png"/>
+              </div>
+              <div>
+                <img src="{% static 'assets/img/payments/e.png' %}" alt="e.png"/>
+              </div>
+              <div>
+                <img src="{% static 'assets/img/payments/dk.png' %}" alt="dk.png"/>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="footer__payments">
-            <span class="payments-title">
-                Можно платить:
-            </span>
-            <ul class="footer__payments-list list-reset flex">
-                <li class="footer__payment">
-                    <img src="{% static 'img/visa.png' %}" alt="">
-                </li>
-                <li class="footer__payment">
-                    <img src="{% static 'img/mastercard.png' %}" alt="">
-                </li>
-                <li class="footer__payment">
-                    <img src="{% static 'img/paypal.png' %}" alt="">
-                </li>
-                <li class="footer__payment">
-                    <img src="{% static 'img/american.png' %}" alt="">
-                </li>
-                <li class="footer__payment">
-                    <img src="{% static 'img/electron.png' %}" alt="">
-                </li>
-                <li class="footer__payment">
-                    <img src="{% static 'img/maestro.png' %}" alt="">
-                </li>
-                <li class="footer__payment">
-                    <img src="{% static 'img/delta.png' %}" alt="">
-                </li>
-                <li class="footer__payment">
-                    <img src="{% static 'img/e.png' %}" alt="">
-                </li>
-                <li class="footer__payment">
-                    <img src="{% static 'img/dk.png' %}" alt="">
-                </li>
-            </ul>
-        </div>
+      </div>
     </div>
-</footer>
+  </footer>
