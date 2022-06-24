@@ -3,7 +3,6 @@
 {% load humanize %}
 {% load l10n %}
 {% block content %}
-<!-- TODO натянуть модель на вёрстку -->
     <div class="Middle Middle_top">
     <div class="Middle-top">
       <div class="wrap">
@@ -15,7 +14,7 @@
             </li>
             <li class="breadcrumbs-item"><a href="historyorder.html">История заказов</a>
             </li>
-            <li class="breadcrumbs-item breadcrumbs-item_current"><span>Заказ №200</span>
+            <li class="breadcrumbs-item breadcrumbs-item_current"><span>Заказ №{{ order.id }}</span>
             </li>
           </ul>
         </div>
@@ -34,25 +33,25 @@
                     <div class="Order-info Order-info_date">
                       <div class="Order-infoType">Дата заказа:
                       </div>
-                      <div class="Order-infoContent">21.07.20
+                      <div class="Order-infoContent">{{ order.date }}
                       </div>
                     </div>
                     <div class="Order-info">
                       <div class="Order-infoType">ФИО:
                       </div>
-                      <div class="Order-infoContent">Иванов Иван Иванович
+                      <div class="Order-infoContent">{{ order.person }}
                       </div>
                     </div>
                     <div class="Order-info">
                       <div class="Order-infoType">Телефон:
                       </div>
-                      <div class="Order-infoContent">+7000000000
+                      <div class="Order-infoContent">{{ order.phone }}
                       </div>
                     </div>
                     <div class="Order-info">
                       <div class="Order-infoType">E-mail:
                       </div>
-                      <div class="Order-infoContent">send@test.test
+                      <div class="Order-infoContent">{{ order.email }}
                       </div>
                     </div>
                   </div>
@@ -60,53 +59,56 @@
                     <div class="Order-info Order-info_delivery">
                       <div class="Order-infoType">Тип доставки:
                       </div>
-                      <div class="Order-infoContent">Обычная доставка
+                      <div class="Order-infoContent">{{ order.shipment }}
                       </div>
                     </div>
                     <div class="Order-info">
                       <div class="Order-infoType">Город:
                       </div>
-                      <div class="Order-infoContent">Москва
+                      <div class="Order-infoContent">{{ order.city }}
                       </div>
                     </div>
                     <div class="Order-info">
                       <div class="Order-infoType">Адрес:
                       </div>
-                      <div class="Order-infoContent">Ул. Академика Арцимовича, д. 10, кв. 10
+                      <div class="Order-infoContent">{{ order.adress }}
                       </div>
                     </div>
                     <div class="Order-info Order-info_pay">
                       <div class="Order-infoType">Оплата:
                       </div>
-                      <div class="Order-infoContent">Онлайн картой
+                      <div class="Order-infoContent">{{ order.paymentidx }}
                       </div>
                     </div>
                     <div class="Order-info Order-info_status">
                       <div class="Order-infoType">Статус:
                       </div>
-                      <div class="Order-infoContent">Не оплачен
+                      <div class="Order-infoContent">{{ order.status }}
                       </div>
                     </div>
+                    {% if not order.status  %}
                     <div class="Order-info Order-info_error">
                       <div class="Order-infoType">Оплата не прошла:
                       </div>
                       <div class="Order-infoContent">Оплата не выполнена, т.к. вы подозреваетесь в нетолерантности
                       </div>
                     </div>
+                    {% endif %}
                   </div>
                 </div>
               </div>
               <div class="Cart Cart_order">
+                {% for product in cart %}
                 <div class="Cart-product">
                   <div class="Cart-block Cart-block_row">
-                    <div class="Cart-block Cart-block_pict"><a class="Cart-pict" href="#"><img class="Cart-img" src="assets/img/content/home/card.jpg" alt="card.jpg"/></a>
+                    <div class="Cart-block Cart-block_pict"><a class="Cart-pict" href="#"><img class="Cart-img" src="mdeia/{{ product.img }}" alt="card.jpg"/></a>
                     </div>
-                    <div class="Cart-block Cart-block_info"><a class="Cart-title" href="#">Ноутбук</a>
-                      <div class="Cart-desc">Это супер ноутбук, 3 гб. 4 ядра
+                    <div class="Cart-block Cart-block_info"><a class="Cart-title" href="#">{{ order.name }}</a>
+                      <div class="Cart-desc"> {{ order.desc }}
                       </div>
                     </div>
                     <div class="Cart-block Cart-block_price">
-                      <div class="Cart-price">80.00$
+                      <div class="Cart-price">{{ order.price }}$
                       </div>
                     </div>
                   </div>
@@ -114,66 +116,17 @@
                     <div class="Cart-block Cart-block_seller">
                       <div>Продавец:
                       </div>
-                      <div>shop good
+                      <div>{{ order.shop }}
                       </div>
                     </div>
-                    <div class="Cart-block Cart-block_amount">1 шт.
+                    <div class="Cart-block Cart-block_amount">{{ order.quantity }} шт.
                     </div>
                   </div>
                 </div>
-                <div class="Cart-product">
-                  <div class="Cart-block Cart-block_row">
-                    <div class="Cart-block Cart-block_pict"><a class="Cart-pict" href="#"><img class="Cart-img" src="assets/img/content/sale/product.png" alt="product.png"/></a>
-                    </div>
-                    <div class="Cart-block Cart-block_info"><a class="Cart-title" href="#">Планшет</a>
-                      <div class="Cart-desc">Это планшет с современным железом. Процессор последнего поколения
-                      </div>
-                    </div>
-                    <div class="Cart-block Cart-block_price">
-                      <div class="Cart-price_old">60.99$
-                      </div>
-                      <div class="Cart-price">40.99$
-                      </div>
-                    </div>
-                  </div>
-                  <div class="Cart-block Cart-block_row">
-                    <div class="Cart-block Cart-block_seller">
-                      <div>Продавец:
-                      </div>
-                      <div>shop kke ываыва ыа ываыв а
-                      </div>
-                    </div>
-                    <div class="Cart-block Cart-block_amount">1 шт.
-                    </div>
-                  </div>
-                </div>
-                <div class="Cart-product">
-                  <div class="Cart-block Cart-block_row">
-                    <div class="Cart-block Cart-block_pict"><a class="Cart-pict" href="#"><img class="Cart-img" src="assets/img/content/home/card.jpg" alt="card.jpg"/></a>
-                    </div>
-                    <div class="Cart-block Cart-block_info"><a class="Cart-title" href="#">Ноутбук</a>
-                      <div class="Cart-desc">Это супер ноутбук, 3 гб. 4 ядра
-                      </div>
-                    </div>
-                    <div class="Cart-block Cart-block_price">
-                      <div class="Cart-price">80.00$
-                      </div>
-                    </div>
-                  </div>
-                  <div class="Cart-block Cart-block_row">
-                    <div class="Cart-block Cart-block_seller">
-                      <div>Продавец:
-                      </div>
-                      <div>shop good
-                      </div>
-                    </div>
-                    <div class="Cart-block Cart-block_amount">1 шт.
-                    </div>
-                  </div>
-                </div>
+                {% endfor %}
                 <div class="Cart-total">
                   <div class="Cart-block Cart-block_total">
-                    <strong class="Cart-title">Итого:<span class="Cart-price">200.99$</span><span class="Cart-price_old">250.99$</span>
+                    <strong class="Cart-title">Итого:<span class="Cart-price">{{ cart.price }}$</span><span class="Cart-price_old">{{ cart.price_old }}$</span>
                     </strong>
                   </div>
                   <div class="Cart-block"><a class="btn btn_primary btn_lg" href="#">Оплатить</a>
