@@ -1,0 +1,57 @@
+      <h1>Your shopping cart</h1>
+    <table class="cart">
+        <thead>
+            <tr>
+                <th>Image</th>
+                <th>Good name</th>
+                <th>Shop name</th>
+                <th>Quantity</th>
+                <th>Remove</th>
+                <th>Unit price</th>
+                <th>Unit discount price</th>
+                <th>Total price</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in cart %}
+                {% with good=item.goodsname %}
+                    <tr>
+                        <td>
+{#                            <a href="{{ product.get_absolute_url }}">#}
+{#                                <img src="{% if product.image %}{{ product.image.url }}#}
+{#                                {% else %}{% static "img/no_image.png" %}{% endif %}">#}
+{#                            </a>#}
+                        </td>
+                        <td>{{ item.good.goodsidx.goodsname }}</td>
+                        <td> {{ item.shopname }}</td>
+                        <td>
+                            <form action="{% url "app_cart:cart_add" item.good.pk %}" method="post">
+                                {{ item.update_quantity_form.quantity }}
+                                {{ item.update_quantity_form.update }}
+                                {{ item.update_quantity_form.max_quantity }}
+                                <input type="submit" value="Update">
+                                {% csrf_token %}
+                            </form>
+                        </td>
+                        <td>
+                            <a href="{% url "app_cart:cart_remove" item.good.pk %}">Remove</a>
+                        </td>
+                        <td class="num">${{ item.price }}</td>
+                        <td class="num">${{ item.discount_price }}</td>
+                        <td class="num">${{ item.total_price }}</td>
+                    </tr>
+                {% endwith %}
+            {% endfor %}
+            <tr class="total">
+                <td>Total</td>
+                <td colspan="4"></td>
+                <td class="num">${{ cart.get_total_price }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <p class="text-right">
+        <a href="/categories/" class="button light">Continue shopping</a>
+        {% if cart and request.user.is_authenticated%}
+            <a href="{% url "app_orders:order_create" %}" class="button">Create Order</a>
+        {% endif %}
+    </p>
