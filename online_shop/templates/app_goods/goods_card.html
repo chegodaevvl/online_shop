@@ -15,7 +15,7 @@
       <div class="Card-cost">
           {% if item.discount %}
             <span class="Card-priceOld">{{ item.price|floatformat:2|intcomma }}</span>
-            <span class="Card-price">{{ item.discountprice|floatformat:2|intcomma }}</span>
+            <span class="Card-price">{{ item.discount_price|floatformat:2|intcomma }}</span>
           {% else %}
             <span class="Card-price">{{ item.price|floatformat:2|intcomma }}</span>
           {% endif %}

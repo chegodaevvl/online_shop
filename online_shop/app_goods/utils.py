@@ -24,7 +24,7 @@ def get_limited_goods(quantity: int):
 
 def get_top_goods(quantity: int):
     top_goods = Goods.objects.annotate(
-        total_bought=Sum('statistics__quantity'), price=Avg('goodsinshops__price')).order_by('-total_bought')[:quantity]
+        total_bought=Sum('statistics__quantity')).order_by('-total_bought')[:quantity]
     return top_goods
 
 

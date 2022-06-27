@@ -158,6 +158,7 @@
       <div class="Header-search">
         <div class="search">
           <form class="form form_search" action="{% url 'app_goods:find_goods' %}" method="GET">
+            {% csrf_token %}
             <input class="search-input" id="query" name="query" type="text" placeholder="Что будем искать ..."/>
             <button class="search-button" type="submit" name="search" id="search">
               <img src="{% static 'assets/img/icons/search.svg' %}" alt="search.svg"/>Поиск

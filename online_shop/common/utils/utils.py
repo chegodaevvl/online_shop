@@ -1,6 +1,6 @@
 from random import sample
 from typing import Set
-from django.db.models import Min
+from django.db.models import Avg
 
 from app_categories.models import Categories
 from app_banners.models import Banners
@@ -13,7 +13,7 @@ def get_banners() -> list:
 
 
 def get_favorite_categories() -> list:
-    categories = Categories.objects.annotate(min_price=Min('goods__goodsinshops__price'))
+    categories = Categories.objects.annotate(min_price=Avg('goods__goodsinshops__price'))
     result = list()
     for item in categories:
         if not item.categories_set.all():
