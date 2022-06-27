@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from django.db.models import Avg
 
 from django.contrib.postgres.search import SearchVectorField
 from django.contrib.postgres.indexes import GinIndex
@@ -27,6 +28,19 @@ class Goods(models.Model):
 
     def __str__(self):
         return self.goodsname
+
+    def discount(self):
+        active_discount_good = Discounts.objects.filter(active=True, type=1, goodsset__goodsidx=self.id).\
+            order_by('priority').last()
+        if not active_discount_good:
+            return None
+        return active_discount_good.discountpercentage
+
+    def price(self):
+        return GoodsInShops.objects.filter(goodsidx=self.id).aggregate(Avg('price'))['price__avg']
+
+    def discount_price(self):
+        return self.price() * (100 - self.discount()) / 100
 
 
 class Shops(models.Model):

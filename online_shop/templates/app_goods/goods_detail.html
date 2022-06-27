@@ -27,9 +27,11 @@
           <div class="ProductCard">
             <div class="ProductCard-look">
               <div class="ProductCard-photo">
-                <div class="ProductCard-sale">
-                  -15%
-                </div>
+                {% if goods.discount %}
+                  <div class="ProductCard-sale">
+                    -{{ goods.discount }}%
+                  </div>
+                {% endif %}
                 <img src="/media/{{ goods.image }}" alt="{{ goods.goodsname }}"/>
               </div>
               <div class="ProductCard-picts">
@@ -51,16 +53,16 @@
                 </h2>
                 <div class="ProductCard-info">
                   <div class="ProductCard-cost">
-                    {% if item.discount %}
-                      <div class="Card-price">
-                        {{ item.discountprice|floatformat:2|intcomma }}
+                    {% if goods.discount %}
+                      <div class="ProductCard-price">
+                        {{ goods.discount_price|floatformat:2|intcomma }}
                       </div>
-                      <div class="Card-priceOld">
-                        {{ item.price|floatformat:2|intcomma }}
+                      <div class="ProductCard-priceOld">
+                        {{ goods.price|floatformat:2|intcomma }}
                       </div>
                     {% else %}
-                      <div class="Card-price">
-                        {{ item.price|floatformat:2|intcomma }}
+                      <div class="ProductCard-price">
+                        {{ goods.price|floatformat:2|intcomma }}
                       </div>
                     {% endif %}
                   </div>
