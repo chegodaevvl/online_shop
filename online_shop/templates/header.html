@@ -93,9 +93,11 @@
       </nav>
       <div class="row-block">
         <div class="CartBlock">
-          <a class="CartBlock-block" href="compare.html">
+          <a class="CartBlock-block" href="/compare">
             <img class="CartBlock-img" src="{% static 'assets/img/icons/exchange.svg' %}" alt="exchange.svg"/>
-            <span class="CartBlock-amount">4</span>
+            {% if compare_count > 0 %}
+              <span class="CartBlock-amount">{{ compare_count }}</span>
+            {% endif %}
           </a>
           <a class="CartBlock-block" href="/cart">
             <img class="CartBlock-img" src="{% static 'assets/img/icons/cart.svg' %}" alt="cart.svg"/>

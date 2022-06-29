@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'app_payment.apps.AppPaymentConfig',
     'payments',
     'online_shop',
+    'app_compare',
 ]
 
 MIDDLEWARE = [
@@ -159,6 +160,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 CART_SESSION_ID = 'cart'    # ключ для хранения данных корзины в сессии
 ORDER_SESSION_ID = 'order_id'   # ключ для хранения данных о заказе
+COMPARE_SESSION_ID = 'compare_goods'   # ключ для хранения товаров, выбранных для сравнения
+LAST_VIEWED = 'last_viewed'     # ключ для хранения последних просмотренных товаров
 
 # Login urls
 

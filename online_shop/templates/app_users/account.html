@@ -1,0 +1,97 @@
+{% extends 'app_users/personal_account.html' %}
+{% load static %}
+{% block account_content %}
+  <div class="Account">
+    <div class="Account-group">
+      <div class="Account-column">
+        <div class="Account-avatar">
+          <img src="/media/{{ user.profile.avatar }}" alt="user.profile.fullname"/>
+        </div>
+      </div>
+      <div class="Account-column">
+        <div class="Account-name">
+          {{ user.profile.fullname }}
+        </div>
+        <a class="Account-editLink" href="profile.html">Редактировать профиль</a>
+      </div>
+    </div>
+    <div class="Account-group">
+      <div class="Account-column Account-column_full">
+        <div class="Order Order_anons">
+          {% if last_order %}
+            <div class="Order-personal">
+            <div class="row">
+              <div class="row-block">
+                <a class="Order-title" href="oneorder.html">
+                  Заказ&#32;<span class="Order-numberOrder">№{{ last_order.id }}</span>
+                  &#32;от&#32;<span class="Order-dateOrder">{{ last_order.dt }}</span>
+                </a>
+                <div class="Account-editLink">
+                  <a href="historyorder.html">История заказов</a>
+                </div>
+              </div>
+              <div class="row-block">
+                <div class="Order-info Order-info_delivery">
+                  <div class="Order-infoType">
+                    Тип доставки:
+                  </div>
+                  <div class="Order-infoContent">
+                    {{ last_order.shipment }}
+                  </div>
+                </div>
+                <div class="Order-info Order-info_pay">
+                  <div class="Order-infoType">
+                    Оплата:
+                  </div>
+                  <div class="Order-infoContent">
+                    {{ last_order.paymentidx }}
+                  </div>
+                </div>
+                <div class="Order-info">
+                  <div class="Order-infoType">
+                    Общая стоимость:
+                  </div>
+                  <div class="Order-infoContent">
+                    {{ last_order.total }}
+                  </div>
+                </div>
+                <div class="Order-info Order-info_status">
+                  <div class="Order-infoType">
+                    Статус:
+                  </div>
+                  <div class="Order-infoContent">
+                    {{ last_order.paid }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% else %}
+            <p>Вы пока ничего не заказывали</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    <div class="Account-group">
+      <div class="Account-column Account-column_full">
+        <header class="Section-header">
+          <h2 class="Section-title">
+            Просмотренные товары
+          </h2>
+        </header>
+        {% if short_last_viewed %}
+          <div class="Cards Cards_account">
+            {% for item in short_last_viewed %}
+              {% include "app_goods/goods_card.html" %}
+            {% endfor %}
+          </div>
+          <div class="Account-editLink Account-editLink_view">
+            <a href="/goods/last-viewed">Показать полный список</a>
+          </div>
+        {% else %}
+          <p>Вы пока не просматривали товары</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+{% endblock %}

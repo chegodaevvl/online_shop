@@ -1,7 +1,7 @@
 from django.db.models.functions import Concat
 from django.views.generic import ListView, TemplateView, DetailView
 
-from .utils import get_hot_offers, get_limited_goods, get_top_goods, get_offer_of_the_day
+from .utils import get_hot_offers, get_limited_goods, get_top_goods, get_offer_of_the_day, LastViewed
 
 from .models import GoodsInShops, Goods, GoodsStorages
 from app_cart.forms import CartAddGoodForm
@@ -45,6 +45,8 @@ class GoodsDetail(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data()
+        last_viewed = LastViewed(self.request)
+        last_viewed.add(context['goods'].id)
         in_store = GoodsInShops.objects.filter(goodsidx=context['goods'])
         context['in_store'] = in_store
 
@@ -81,3 +83,12 @@ class FindGood(SearchResultsList):
     headline_expression = Concat(F("id"), F("goodsname"), F("image"),
                                   F("categoryidx_id"))
     annotate_expression = Concat('categoryidx_id__subcategoryname', Value(''))
+
+
+class LastViewedView(TemplateView):
+    template_name = 'app_goods/last_viewed_goods.html'
+
+    def get_context_data(self, **kwargs):
+        context = dict()
+        context['last_viewed'] = LastViewed(self.request)
+        return context

@@ -9,6 +9,7 @@ from django.contrib.auth import update_session_auth_hash
 from .forms import ProfileForm
 from .utils import get_browsing_history
 from app_orders.models import Orders
+from app_goods.utils import LastViewed
 
 
 class LoginView(views.LoginView):
@@ -115,4 +116,17 @@ class BrowsingHistoryListView(ListView):
 
 
 class PersonalAccountView(LoginRequiredMixin, TemplateView):
-    template_name = 'app_users/personal_account.html'
+    template_name = 'app_users/account.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        last_viewed = LastViewed(self.request)
+        short_last_viewed = list()
+        stop_value = 0
+        for item in last_viewed:
+            if stop_value == 3:
+                break
+            short_last_viewed.append(item)
+            stop_value += 1
+        context['short_last_viewed'] = short_last_viewed
+        return context

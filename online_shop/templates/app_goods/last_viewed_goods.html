@@ -1,0 +1,13 @@
+{% extends 'app_users/personal_account.html' %}
+{% load static %}
+{% block account_content %}
+  {% if last_viewed %}
+    <div class="Cards">
+      {% for item in last_viewed %}
+        {% include "app_goods/goods_card.html" %}
+      {% endfor %}
+    </div>
+  {% else %}
+    <p>The view history is empty</p>
+  {% endif %}
+{% endblock %}

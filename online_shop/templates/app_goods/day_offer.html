@@ -21,7 +21,7 @@
                 <div class="Card-cost">
                   {% if day_offer.discount %}
                     <span class="Card-priceOld">{{ day_offer.price|floatformat:2|intcomma }}</span>
-                    <span class="Card-price">{{ day_offer.discountprice|floatformat:2|intcomma }}</span>
+                    <span class="Card-price">{{ day_offer.discountprice }}</span>
                   {% else %}
                     <span class="Card-price">{{ day_offer.price|floatformat:2|intcomma }}</span>
                   {% endif %}
@@ -33,7 +33,7 @@
                   {{ day_offer.categoryidx.categoryname }}
                 </div>
               </div>
-              <div class="CountDown" data-date="23.06.2022 23:59">
+              <div class="CountDown" data-date="27.06.2022 23:59">
                 <div class="CountDown-block">
                   <div class="CountDown-wrap">
                     <div class="CountDown-hours"></div>

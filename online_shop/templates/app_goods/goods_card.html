@@ -14,10 +14,10 @@
     <div class="Card-description">
       <div class="Card-cost">
           {% if item.discount %}
-            <span class="Card-priceOld">{{ item.price|floatformat:2|intcomma }}</span>
-            <span class="Card-price">{{ item.discount_price|floatformat:2|intcomma }}</span>
+            <span class="Card-priceOld">{{ item.price|floatformat:2 }}</span>
+            <span class="Card-price">{{ item.discount_price|floatformat:2 }}</span>
           {% else %}
-            <span class="Card-price">{{ item.price|floatformat:2|intcomma }}</span>
+            <span class="Card-price">{{ item.price|floatformat:2 }}</span>
           {% endif %}
         </div>
       <div class="Card-category">
@@ -27,13 +27,13 @@
           {{ item.categoryidx.categoryname }}
         </div>
       <div class="Card-hover">
-        <a class="Card-btn" href="#">
+        <a class="Card-btn" href="/goods/{{ item.id }}">
           <img src="{% static 'assets/img/icons/card/bookmark.svg' %}" alt="bookmark.svg"/>
         </a>
         <a class="Card-btn" href="/cart/add/{{ item.id }}">
           <img src="{% static 'assets/img/icons/card/cart.svg' %}" alt="cart.svg"/>
         </a>
-        <a class="Card-btn" href="compare.html">
+        <a class="Card-btn" href="/compare/add/{{ item.id }}">
           <img src="{% static 'assets/img/icons/card/change.svg' %}" alt="change.svg"/>
         </a>
       </div>

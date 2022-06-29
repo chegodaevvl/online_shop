@@ -1,7 +1,38 @@
 from django.db.models import Q, Sum, Avg
+from django.conf import settings
+
 from .models import Goods, Offer, GoodsInShops
 from random import sample
 from datetime import datetime
+
+
+class LastViewed(object):
+
+    def __init__(self, request):
+        self.session = request.session
+        last_viewed = self.session.get(settings.LAST_VIEWED)
+        if not last_viewed:
+            last_viewed = self.session[settings.LAST_VIEWED] = list()
+        self.last_viewed = last_viewed
+
+    def add(self, goods_id):
+        if goods_id in self.last_viewed:
+            self.last_viewed.remove(goods_id)
+        elif len(self.last_viewed) == 20:
+            self.last_viewed.pop(0)
+        self.last_viewed.append(goods_id)
+        self.save()
+
+    def save(self):
+        self.session.modified = True
+
+    def __iter__(self):
+        goods = Goods.objects.filter(id__in=self.last_viewed[::-1])
+        for item in goods:
+            yield item
+
+    def __len__(self):
+        return len(self.last_viewed)
 
 
 def get_hot_offers(quantity: int):
