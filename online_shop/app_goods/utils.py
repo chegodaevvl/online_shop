@@ -27,9 +27,8 @@ class LastViewed(object):
         self.session.modified = True
 
     def __iter__(self):
-        goods = Goods.objects.filter(id__in=self.last_viewed[::-1])
-        for item in goods:
-            yield item
+        for goods_id in self.last_viewed[::-1]:
+            yield Goods.objects.get(id=goods_id)
 
     def __len__(self):
         return len(self.last_viewed)
