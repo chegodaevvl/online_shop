@@ -10,18 +10,44 @@ def add_goods_to_comparation(request, goods_id):
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
+def remove_goods(request, goods_id):
+    comparation = Comparation(request)
+    comparation.remove(goods_id)
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
 class GoodsCompare(TemplateView):
     template_name = 'app_compare/compare.html'
 
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        row_number = 0
+        characteristics_list = ['header', 'goods_name', 'price']
+        context = dict()
         comparation_set = Comparation(self.request)
-        if len(comparation_set) == 0:
+        if len(comparation_set) < 2:
             return None
-        context.update({row_number: ['', '', 'Цена']})
-        for goods in comparation_set:
-            row_number += 1
-            context.update({row_number: [goods.goodsname, goods.image, goods.price]})
-        print(context)
+        comparation_rows = list()
+        for characteristic in characteristics_list:
+            comparation_row = dict()
+            if characteristic == 'header':
+                comparation_row['name'] = characteristic
+                comparation_row['title'] = None
+                comparation_row['values'] = list()
+                for item in comparation_set:
+                    comparation_row['values'].append({'goods_name': item.goodsname,
+                                                      'goods_image': item.image})
+            elif characteristic == 'goods_name':
+                comparation_row['name'] = characteristic
+                comparation_row['title'] = None
+                comparation_row['values'] = list()
+                for item in comparation_set:
+                    comparation_row['values'].append({'goods_name': item.goodsname,
+                                                      'goods_id': item.id})
+            else:
+                comparation_row['name'] = characteristic
+                comparation_row['title'] = characteristic
+                comparation_row['values'] = list()
+                for item in comparation_set:
+                    comparation_row['values'].append(getattr(item, characteristic))
+            comparation_rows.append(comparation_row)
+        context['comparation_rows'] = comparation_rows
         return context
