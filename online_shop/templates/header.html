@@ -50,7 +50,7 @@
               {% if request.user.is_authenticated %}
                 <a class="ControlPanel-title" href="{% url 'personal_account' %}">личный кабинет {{user.username}} </a>
               {% else %}
-                  <a class="ControlPanel-title" href="#">ВХОД</a>
+                  <a class="ControlPanel-title" href="/users/login">ВХОД</a>
               {% endif %}
             </div>
           </div>
@@ -61,7 +61,7 @@
   <div class="wrap">
     <div class="row Header-rowMain">
       <div class="row-block Header-logo">
-        <a class="logo" href="index.html">
+        <a class="logo" href="/index.html">
           <img class="logo-image" src="{% static 'assets/img/logo.png' %}" alt="logo.png"/>
         </a>
       </div>
@@ -69,7 +69,7 @@
         <div class="menuModal" id="navigate">
           <ul class="menu menu_main">
             <li class="menu-item">
-              <a class="menu-link" href="index.html">Домой</a>
+              <a class="menu-link" href="/index.html">Домой</a>
             </li>
             <li class="menu-item">
               <span class="menu-label menu-label_danger">Новинки</span>
