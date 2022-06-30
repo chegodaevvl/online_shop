@@ -13,6 +13,7 @@ class Cart(object):
         self.cart = cart
 
     def add(self, goods_id, shop_id=None, quantity=1):
+        goods_id = str(goods_id)
         if shop_id:
             goods_in_shop = GoodsInShops.objects.get(goodsidx=goods_id, shopidx=shop_id)
         else:
@@ -35,7 +36,8 @@ class Cart(object):
         self.session.modified = True
 
     def remove(self, goods_id):
-        if goods_id in self.cart.keys():
+        goods_id = str(goods_id)
+        if goods_id in self.cart:
             del self.cart[goods_id]
         self.save()
 

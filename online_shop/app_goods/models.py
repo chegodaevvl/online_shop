@@ -40,7 +40,7 @@ class Goods(models.Model):
         return float(GoodsInShops.objects.filter(goodsidx=self.id).aggregate(Avg('price'))['price__avg'])
 
     def discount_price(self):
-        return float(self.price() * (1 - self.discount() / 100))
+        return self.price() * (1 - self.discount() / 100)
 
 
 class Shops(models.Model):

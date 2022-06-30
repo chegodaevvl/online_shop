@@ -35,9 +35,8 @@ def cart_add(request, good_id):
 def cart_remove(request, good_id):
     """Обработчик для удаления товара из корзины"""
     cart = Cart(request)
-    good = get_object_or_404(GoodsInShops, id=good_id)
-    cart.remove(good)
-    return redirect('app_cart:cart_detail')
+    cart.remove(good_id)
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
 # def cart_detail(request):
