@@ -10,9 +10,10 @@ class MainView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        cart = Cart(self.request)
         context.update({'compare_count': len(Comparation(self.request))})
-        context.update({'cart_count': len(Cart(self.request))})
-        context.update({'cart_cost': Cart(self.request).total_cost()})
+        context.update({'cart_count': len(cart)})
+        context.update({'cart_cost': cart.total_cost()})
         context.update({'banners': get_banners()})
         context.update({'favorite_categories': get_favorite_categories()})
         context.update({'categories': get_categories()})

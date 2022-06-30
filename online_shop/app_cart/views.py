@@ -29,7 +29,6 @@ def cart_add(request, good_id):
     """Обработчик для добавления товара в корзину"""
     cart = Cart(request)
     cart.add(good_id)
-    print(cart)
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 

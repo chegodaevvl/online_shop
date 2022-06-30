@@ -106,7 +106,7 @@
             {% endif %}
           </a>
           <div class="CartBlock-block">
-            <span class="CartBlock-price">{{ cart_cost }}</span>
+            <span class="CartBlock-price">{{ cart_cost|floatformat:2 }}</span>
           </div>
         </div>
       </div>
