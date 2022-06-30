@@ -101,10 +101,12 @@
           </a>
           <a class="CartBlock-block" href="/cart">
             <img class="CartBlock-img" src="{% static 'assets/img/icons/cart.svg' %}" alt="cart.svg"/>
-            <span class="CartBlock-amount">0</span>
+            {% if cart_count %}
+              <span class="CartBlock-amount">{{ cart_count }}</span>
+            {% endif %}
           </a>
           <div class="CartBlock-block">
-            <span class="CartBlock-price">0.00$</span>
+            <span class="CartBlock-price">{{ cart_cost }}</span>
           </div>
         </div>
       </div>

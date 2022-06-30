@@ -37,10 +37,10 @@ class Goods(models.Model):
         return active_discount_good.discountpercentage
 
     def price(self):
-        return GoodsInShops.objects.filter(goodsidx=self.id).aggregate(Avg('price'))['price__avg']
+        return float(GoodsInShops.objects.filter(goodsidx=self.id).aggregate(Avg('price'))['price__avg'])
 
     def discount_price(self):
-        return self.price() * (100 - self.discount()) / 100
+        return float(self.price() * (1 - self.discount() / 100))
 
 
 class Shops(models.Model):
