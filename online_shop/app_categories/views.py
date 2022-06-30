@@ -3,7 +3,7 @@ from django.views import View
 from django.shortcuts import render
 from django.core.paginator import Paginator
 from .models import Categories
-from .utils import get_featured_categories
+from .utils import get_featured_categories, get_max_price, get_min_price
 from app_goods.models import Goods
 from common.utils.utils import get_categories
 
@@ -26,3 +26,9 @@ class GoodsList(ListView):
 
     def get_queryset(self):
         return Goods.objects.filter(categoryidx=self.kwargs['cat_id'])
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update({'min_price': get_min_price(context['goods'])})
+        context.update({'max_price': get_max_price(context['goods'])})
+        return context
