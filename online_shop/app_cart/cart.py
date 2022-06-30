@@ -1,6 +1,6 @@
 from random import choice
 from django.conf import settings
-from app_goods.models import GoodsInShops
+from app_goods.models import GoodsInShops, Goods
 
 
 class Cart(object):
@@ -40,8 +40,14 @@ class Cart(object):
         self.save()
 
     def __iter__(self):
-        goods = GoodsInShops.objects.filter(goodsidx__in=self.cart.keys())
-        for item in goods:
+        for goods_id in self.cart:
+            item = dict()
+            goods_in_shops = GoodsInShops.objects.filter(goodsidx=goods_id)
+            item['goods'] = Goods.objects.get(id=goods_id)
+            item['quantity'] = self.cart[goods_id]['quantity']
+            item['price'] = self.cart[goods_id]['price']
+            item['shop_id'] = self.cart[goods_id]['shop_id']
+            item['stores'] = GoodsInShops.objects.filter(goodsidx=goods_id)
             yield item
 
     def __len__(self):

@@ -40,15 +40,27 @@ def cart_remove(request, good_id):
     return redirect('app_cart:cart_detail')
 
 
+# def cart_detail(request):
+#     """Отображение корзины"""
+#     cart = Cart(request)
+#     for item in cart:
+#         good_storage_quantity = GoodsStorages.objects.get(goodsidx=item['good'].goodsidx).quantity
+#         item['update_quantity_form'] = CartAddGoodForm(
+#             initial={'quantity': item['quantity'],
+#                      'update': True,
+#                      'max_quantity': good_storage_quantity})
+#     return render(request, 'app_cart/cart_detail.html', {'cart': cart})
+
+
 def cart_detail(request):
     """Отображение корзины"""
     cart = Cart(request)
-    for item in cart:
-        good_storage_quantity = GoodsStorages.objects.get(goodsidx=item['good'].goodsidx).quantity
-        item['update_quantity_form'] = CartAddGoodForm(
-            initial={'quantity': item['quantity'],
-                     'update': True,
-                     'max_quantity': good_storage_quantity})
+    # for item in cart:
+    #     good_storage_quantity = GoodsStorages.objects.get(goodsidx=item['good'].goodsidx).quantity
+    #     item['update_quantity_form'] = CartAddGoodForm(
+    #         initial={'quantity': item['quantity'],
+    #                  'update': True,
+    #                  'max_quantity': good_storage_quantity})
     return render(request, 'app_cart/cart_detail.html', {'cart': cart})
 
 
