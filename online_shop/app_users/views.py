@@ -32,10 +32,10 @@ class RegisterView(View):
         if user_form.is_valid() and profile_form.is_valid():
             user = user_form.save()
             profile = profile_form.save(commit=False)
-            profile.useridx = User.objects.get(id=user.id)
+            profile.useridx = User.objects.get()
             profile.save()
-            username = user_form.cleaned_data.get('username')
-            password = user_form.cleaned_data.get('password1')
+            username = user_form.cleaned_data.get()
+            password = user_form.cleaned_data.get()
             user = authenticate(username=username, password=password)
             login(request, user)
             return redirect(reverse('personal_account'))

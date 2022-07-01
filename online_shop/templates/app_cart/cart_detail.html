@@ -22,7 +22,7 @@
     <div class="Section">
       <div class="wrap">
         {% if cart %}
-        <form class="form Cart" action="#" method="post">
+        <form class="form Cart" action="/orders/create" method="post">
           {% csrf_token %}
           {% for item in cart %}
             <div class="Cart-product">
@@ -42,7 +42,7 @@
                 </div>
                 <div class="Cart-block Cart-block_price">
                   <div class="Cart-price">
-                    {{ item.price }}
+                    {{ item.price|floatformat:2 }}
                   </div>
                 </div>
               </div>
@@ -85,11 +85,11 @@
               <strong class="Cart-title">
                 Итого:
               </strong>
-              <span class="Cart-price">{{ cart.total_cost }}</span>
+              <span class="Cart-price">{{ cart.total_cost|floatformat:2 }}</span>
 <!--              <span class="Cart-price_old">{{ cart.total_cost }}</span>-->
             </div>
             <div class="Cart-block">
-              <a class="btn btn_success btn_lg" href="order.html">
+              <a class="btn btn_success btn_lg" href="/orders/create">
                 Оформить заказ
               </a>
             </div>

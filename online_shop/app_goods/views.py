@@ -49,14 +49,14 @@ class GoodsDetail(DetailView):
         last_viewed.add(context['goods'].id)
         in_store = GoodsInShops.objects.filter(goodsidx=context['goods'])
         context['in_store'] = in_store
-
-        good_storage_quantity = GoodsStorages.objects.get(goodsidx=context['goods']).quantity
-        cart_product_form = CartAddGoodForm(
-            initial={'quantity': 0,
-                     'update': False,
-                     'max_quantity': good_storage_quantity, })
-        context['cart_product_form'] = cart_product_form
-
+        #
+        # good_storage_quantity = GoodsStorages.objects.get().quantity
+        # cart_product_form = CartAddGoodForm(
+        #     initial={'quantity': 0,
+        #              'update': False,
+        #              'max_quantity': good_storage_quantity, })
+        # context['cart_product_form'] = cart_product_form
+        #
         return context
 
     def render_to_response(self, context, **response_kwargs):

@@ -12,12 +12,12 @@ class Cart(object):
     def __init__(self, request):
         """Инициализация объекта корзины."""
         self.session = request.session
-        cart = self.session.get(settings.CART_SESSION_ID)
+        cart = self.session.get()
         if not cart:
             # Сохраняем в сессии пустую корзину.
             cart = self.session[settings.CART_SESSION_ID] = {}
         self.cart = cart
-        current_order = self.session.get(settings.ORDER_SESSION_ID)
+        current_order = self.session.get()
         if not current_order:
             current_order = self.session[settings.ORDER_SESSION_ID] = {'order_id': 0}
         self.current_order = current_order
@@ -30,10 +30,10 @@ class Cart(object):
         discount_applied = False
 
         #  проверка участия товара в скидках 1-го типа
-        discount_type1 = GoodsInShops.objects.get(goodsidx=good_id, shopidx=shop_id).get_discount_type1()
+        discount_type1 = GoodsInShops.objects.get().get_discount_type1()
         if discount_type1:
-            discount_price = Discounts.objects.get(id=discount_type1.id).get_discount_price(
-                GoodsInShops.objects.get(goodsidx=good_id, shopidx=shop_id).price
+            discount_price = Discounts.objects.get().get_discount_price(
+                GoodsInShops.objects.get().price
             )
             if discount_price > 0:
                 discount_applied = True
@@ -92,7 +92,7 @@ class Cart(object):
                 item['total_price'] = item['price'] * item['quantity']
             else:
                 item['total_price'] = item['discount_price'] * item['quantity']
-            item['shopname'] = Shops.objects.get(id=item['shop_id']).shopname
+            item['shopname'] = Shops.objects.get().shopname
             yield item
 
     def __len__(self):
@@ -128,7 +128,7 @@ class Cart(object):
         # проверка доступного количества товара на складе
         missing_items = []
         for good_id in self.cart.keys():
-            storage = GoodsStorages.objects.get(goodsidx=int(good_id))
+            storage = GoodsStorages.objects.get()
             if storage.quantity < self.cart[good_id]['quantity']:
                 missing_items.append(storage.goodsidx)
         return missing_items
@@ -152,7 +152,7 @@ class Cart(object):
 
     def get_delivery_cost(self, shipment_id):
         """ Расчет стоимости доставки """
-        shipment = Shipment.objects.get(id=shipment_id)
+        shipment = Shipment.objects.get()
         if self.get_total_price() < shipment.minordervalue or self.check_diff_shops():
             return shipment.shippingcost + shipment.addshippingcost
         elif self.get_total_price() > shipment.minordervalue and not self.check_diff_shops():
@@ -161,9 +161,9 @@ class Cart(object):
     def get_discount_on_set(self, good_id) -> int:
         """ проверка участвует ли товар в скидках 2-го типа """
 
-        subcategories = Goods.objects.get(id=good_id).categoryidx
+        subcategories = Goods.objects.get().categoryidx
         if subcategories.parent:
-            categories_id = Categories.objects.get(id=subcategories.parent.id).id
+            categories_id = Categories.objects.get().id
         else:
             categories_id = subcategories.id
         active_discount_good = Discounts.objects.filter(active=True, type=2, goodsset__goodsidx=good_id). \
@@ -181,7 +181,7 @@ class Cart(object):
 
     def modify_price_for_discount_on_set(self, discount_id, good_id):
         """ изменение скидосной цены товаров которые попали в скидку 2-го типа """
-        discount_price = Discounts.objects.get(id=discount_id).get_discount_price(self.cart[good_id]['price'])
+        discount_price = Discounts.objects.get().get_discount_price(self.cart[good_id]['price'])
         if discount_price > 0:
             self.cart[good_id]['discount_price'] = discount_price
             self.cart[good_id]['discount_applied'] = True
@@ -206,8 +206,8 @@ class Cart(object):
         """ коррекция данных товаров в корзине по условиям скидки 3-го типа """
         discount_id = self.get_discount_on_cart()
         if discount_id > 0:
-            minimumvalue = Discounts.objects.get(id=discount_id).minimumvalue
-            numberofitems = Discounts.objects.get(id=discount_id).numberofitems
+            minimumvalue = Discounts.objects.get().minimumvalue
+            numberofitems = Discounts.objects.get().numberofitems
             if self.get_total_price() >= minimumvalue and self.get_number_of_items() >= numberofitems and \
                     minimumvalue + numberofitems > 0:
                 #  условие скидки выполнено
@@ -215,7 +215,7 @@ class Cart(object):
                     cart_data['discount_id'] = discount_id
                     cart_data['discount_type'] = 3
                     cart_data['discount_applied'] = True
-                    cart_data['discount_price'] = Discounts.objects.get(id=discount_id).\
+                    cart_data['discount_price'] = Discounts.objects.get().\
                         get_discount_price(cart_data['price'])
                 return
 
@@ -250,15 +250,15 @@ class Cart(object):
     def get_number_set(self, discount_id, good_id) -> int:
         """ получение номера набора для скидки 2-го типа"""
         if GoodsSet.objects.filter(goodsidx=good_id, discountsidx=discount_id).exists():
-            return GoodsSet.objects.get(goodsidx=good_id, discountsidx=discount_id).setnumber
+            return GoodsSet.objects.get().setnumber
         else:
-            subcategories = Goods.objects.get(id=good_id).categoryidx
+            subcategories = Goods.objects.get().categoryidx
             if subcategories.parent:
-                categories_id = Categories.objects.get(id=subcategories.parent.id).id
+                categories_id = Categories.objects.get().id
             else:
                 categories_id = subcategories.id
             if CategoriesSet.objects.filter(categoriesidx=categories_id, discountsidx=discount_id).exists():
-                return CategoriesSet.objects.get(categoriesidx=categories_id, discountsidx=discount_id).setnumber
+                return CategoriesSet.objects.get().setnumber
             return 0
 
     def set_number_check(self, id: tuple) -> bool:

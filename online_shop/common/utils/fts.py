@@ -9,7 +9,7 @@ from django.views.generic import ListView
 class SearchResultsList(ListView):
 
     def get_queryset(self):
-        query = self.request.GET.get("query")
+        query = self.request.GET.get()
         search_vector = SearchVector(*self.vector,)
         search_query = SearchQuery(query)
         search_headline = SearchHeadline(self.headline_expression,

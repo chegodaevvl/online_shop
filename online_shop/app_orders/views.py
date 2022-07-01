@@ -1,49 +1,93 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
-from .models import OrderItem, Orders
+from django.views.generic import TemplateView
+import json
+from datetime import datetime
 from .forms import OrderCreateForm
 from app_cart.cart import Cart
-import json
 from app_goods.models import GoodsStorages
+from app_users.models import UserProfiles
+from app_payment.models import Payment
+from .models import OrderItem, Orders, PaymentMethod, Shipment
+from .utils import get_shipment_methods, get_payment_methods
 
 
-def order_create(request):
-    """Создание заказа"""
-    cart = Cart(request)
-    if request.method == 'POST':
-        form = OrderCreateForm(request.POST)
-        if form.is_valid():
+# def order_create(request):
+#     """Создание заказа"""
+#     cart = Cart(request)
+#     if request.method == 'POST':
+#         form = OrderCreateForm(request.POST)
+#         if form.is_valid():
+#
+#             # проверка что все товары в корзине есть на складе в нужном кол-ве
+#             if cart.item_in_storage_check():
+#                 # вывод списка товаров отсутствующих на складе
+#                 return render(request, 'app_orders/no_items_in_storage.html',
+#                               {'items': cart.item_in_storage_check()})
+#
+#             order = form.save(commit=False)
+#             order.useridx = request.user
+#             order.save()
+#             cart.set_order_id(order.id)
+#
+#             # todo оплата заказа
+#             return redirect('app_payment:payment_data_request')
+#
+#     else:
+#         form = OrderCreateForm()
+#         return render(request, 'app_orders/create.html', {'cart': cart, 'form': form})
 
-            # проверка что все товары в корзине есть на складе в нужном кол-ве
-            if cart.item_in_storage_check():
-                # вывод списка товаров отсутствующих на складе
-                return render(request, 'app_orders/no_items_in_storage.html',
-                              {'items': cart.item_in_storage_check()})
 
-            order = form.save(commit=False)
-            order.useridx = request.user
-            order.save()
-            cart.set_order_id(order.id)
+class OrderCreate(TemplateView):
+    template_name = 'app_orders/create.html'
 
-            # todo оплата заказа
-            return redirect('app_payment:payment_data_request')
+    def get_context_data(self, **kwargs):
+        context = dict()
+        context['cart'] = Cart(self.request)
+        context['user_info'] = None
+        context['shipments'] = get_shipment_methods()
+        context['payments'] = get_payment_methods()
+        if self.request.user.is_authenticated:
+            context['user_info'] = UserProfiles.objects.get(useridx=self.request.user.id)
+        return context
 
-    else:
-        form = OrderCreateForm()
-        return render(request, 'app_orders/create.html', {'cart': cart, 'form': form})
+    def post(self, request, *args, **kwargs):
+        cart = Cart(request)
+        shipment = Shipment.objects.get(id=request.POST['delivery'])
+        payment = PaymentMethod.objects.get(id=request.POST['pay'])
+        if request.user.is_authenticated:
+            new_order = Orders()
+            new_order.useridx = request.user
+            new_order.dt = datetime.now()
+            new_order.paid = payment
+            new_order.paymentidx = Payment().save()
+            new_order.shipment = shipment
+            new_order.address = f"{request.POST['city']}, {request.POST['address']}"
+            new_order.order = "Some order"
+            new_order.total = cart.total_cost() + float(shipment.shippingcost) + float(shipment.addshippingcost)
+            new_order.save()
+            for item in cart:
+                new_order_item = OrderItem()
+                new_order_item.orderidx = new_order
+                new_order_item.good = item['goods']
+                new_order_item.price = item['price']
+                new_order_item.quantity = item['quantity']
+                new_order_item.save()
+            # return redirect('app_payment:payment_data_request')
+            return redirect(f'/payment/{new_order.id}')
 
 
 def order_created(request):
     """ Завершие создания заказа - оплата и все проверки пройдены """
     cart = Cart(request)
-    order = Orders.objects.get(id=cart.get_order_id())
+    order = Orders.objects.get()
     total_price = 0.00
     item_dict = {
         "order": cart.get_order_id(),
         "items": []
     }
     for item in cart:
-        storage = GoodsStorages.objects.get(goodsidx=item['good'].goodsidx)
+        storage = GoodsStorages.objects.get()
 
         # уменьшение кол-ва товара на складе
         storage.quantity -= item['quantity']

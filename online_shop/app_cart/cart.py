@@ -15,7 +15,7 @@ class Cart(object):
     def add(self, goods_id, shop_id=None, quantity=1):
         goods_id = str(goods_id)
         if shop_id:
-            goods_in_shop = GoodsInShops.objects.get(goodsidx=goods_id, shopidx=shop_id)
+            goods_in_shop = GoodsInShops.objects.get()
         else:
             goods_in_shop = choice(GoodsInShops.objects.prefetch_related('shopidx').filter(goodsidx=goods_id))
         random_shop_id = goods_in_shop.shopidx_id
@@ -41,10 +41,13 @@ class Cart(object):
             del self.cart[goods_id]
         self.save()
 
+    def clear(self):
+        del self.session[settings.CART_SESSION_ID]
+        self.save()
+
     def __iter__(self):
         for goods_id in self.cart:
             item = dict()
-            goods_in_shops = GoodsInShops.objects.filter(goodsidx=goods_id)
             item['goods'] = Goods.objects.get(id=goods_id)
             item['quantity'] = self.cart[goods_id]['quantity']
             item['price'] = self.cart[goods_id]['price']

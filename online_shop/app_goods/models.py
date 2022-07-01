@@ -34,13 +34,13 @@ class Goods(models.Model):
             order_by('priority').last()
         if not active_discount_good:
             return None
-        return active_discount_good.discountpercentage
+        return int(active_discount_good.discountpercentage)
 
     def price(self):
         return float(GoodsInShops.objects.filter(goodsidx=self.id).aggregate(Avg('price'))['price__avg'])
 
     def discount_price(self):
-        return self.price() * (1 - self.discount() / 100)
+        return float(self.price() * (1 - self.discount() / 100))
 
 
 class Shops(models.Model):
@@ -84,8 +84,8 @@ class GoodsInShops(models.Model):
     def get_discount_type1(self):
         """ проверка на выполнения условия скидки по 1-му типу - Скидка на товар """
         good_id = self.goodsidx.id
-        subcategories = Categories.objects.get(id=self.goodsidx.categoryidx.id)
-        categories_id = Categories.objects.get(id=subcategories.parent.id).id
+        subcategories = Categories.objects.get()
+        categories_id = Categories.objects.get().id
         active_discount_good = Discounts.objects.filter(active=True, type=1, goodsset__goodsidx=good_id).\
             order_by('priority').last()
         active_discount_category = Discounts.objects.filter(active=True, type=1,
@@ -104,8 +104,8 @@ class GoodsInShops(models.Model):
     def get_price_for_discount_type1(self):
         discount_type1 = self.get_discount_type1()
         if discount_type1:
-            return Discounts.objects.get(id=discount_type1.id).get_discount_price(
-                GoodsInShops.objects.get(goodsidx=self.goodsidx, shopidx=self.shopidx).price
+            return Discounts.objects.get().get_discount_price(
+                GoodsInShops.objects.get().price
             )
         return None
 

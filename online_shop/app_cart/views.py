@@ -61,9 +61,3 @@ def cart_detail(request):
     #                  'update': True,
     #                  'max_quantity': good_storage_quantity})
     return render(request, 'app_cart/cart_detail.html', {'cart': cart})
-
-
-def cart_clear(request):
-    cart = Cart(request)
-    cart.clear()
-    return render(request, 'app_cart/cart_detail.html', {'cart': cart})
