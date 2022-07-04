@@ -82,7 +82,7 @@ class FindGood(SearchResultsList):
     vector = ["goodsname", "description"]
     headline_expression = Concat(F("id"), F("goodsname"), F("image"),
                                   F("categoryidx_id"))
-    annotate_expression = Concat('categoryidx_id__subcategoryname', Value(''))
+    annotate_expression = Concat('categoryidx_id__categoryname', Value(''))
 
 
 class LastViewedView(TemplateView):
