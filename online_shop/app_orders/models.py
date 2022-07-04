@@ -1,5 +1,19 @@
+from datetime import datetime, date
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+
+MONTH_DICT = {1: 'Jan',
+              2: 'Feb',
+              3: 'Mar',
+              4: 'Apr',
+              5: 'May',
+              6: 'Jun',
+              7: 'Jul',
+              8: 'Aug',
+              9: 'Sep',
+              10: 'Oct',
+              11: 'Nov',
+              12: 'Dec'}
 
 
 # class ShipmentMethod(models.Model): # todo первый вариант доставки - удалить модель
@@ -197,6 +211,18 @@ class Discounts(models.Model):
         elif self.fixedcost > 0:
             discount_price = self.fixedcost
         return discount_price
+
+    def start_day(self):
+        return self.startdate.date().day
+
+    def start_month(self):
+        return MONTH_DICT[self.startdate.date().month]
+
+    def stop_day(self):
+        return self.stopdate.date().day
+
+    def stop_month(self):
+        return MONTH_DICT[self.stopdate.date().month]
 
 
 SET_NUMBER = [

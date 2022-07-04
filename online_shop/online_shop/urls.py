@@ -17,11 +17,12 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
-from .views import MainView
+from .views import MainView, DiscountsListView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', MainView.as_view(), name='main'),
+    path('discounts/', DiscountsListView.as_view(), name='discounts'),
     path('users/', include('app_users.urls')),
     path('goods/', include('app_goods.urls')),
     path('categories/', include('app_categories.urls')),
