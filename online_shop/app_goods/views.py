@@ -2,9 +2,10 @@ import json
 
 from django.db.models.functions import Concat
 from django.views.generic import ListView, TemplateView, DetailView
-from .models import GoodsInShops, Goods, GoodsStorages
+from .models import GoodsInShops, Goods, GoodsStorages, Shops
 
-from .utils import get_hot_offers, get_limited_goods, get_top_goods, get_offer_of_the_day, LastViewed
+from .utils import get_hot_offers, get_limited_goods, get_top_goods, get_offer_of_the_day, LastViewed, \
+    get_top_goods_by_store
 from app_compare.compare import Comparation
 from common.utils.utils import get_categories
 from app_cart.forms import CartAddGoodForm
@@ -102,4 +103,19 @@ class LastViewedView(TemplateView):
     def get_context_data(self, **kwargs):
         context = dict()
         context['last_viewed'] = LastViewed(self.request)
+        return context
+
+
+class StoreDetail(DetailView):
+    model = Shops
+    context_object_name = 'store'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        cart = Cart(self.request)
+        context.update({'compare_count': len(Comparation(self.request))})
+        context.update({'cart_count': len(cart)})
+        context.update({'cart_cost': cart.total_cost()})
+        context.update({'categories': get_categories()})
+        context.update({'solded_goods': get_top_goods_by_store(context['store'])})
         return context

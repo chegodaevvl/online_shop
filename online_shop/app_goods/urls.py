@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import HotOffersListView, LimitedGoodsListView, TopGoodsListView, \
-    DaysOfferView, GoodsDetail, FindGood, LastViewedView
+    DaysOfferView, GoodsDetail, FindGood, LastViewedView, StoreDetail
 
 
 app_name = 'app_goods'
@@ -12,4 +12,5 @@ urlpatterns = [
     path('offer-of-the-day', DaysOfferView.as_view(), name='offer-of-the-day'),
     path('<int:pk>', GoodsDetail.as_view(), name='goods-detail'),
     path('last-viewed', LastViewedView.as_view(), name='last-viewed'),
+    path('shop/<int:pk>', StoreDetail.as_view(), name='last-viewed'),
 ]

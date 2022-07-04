@@ -72,3 +72,9 @@ def get_offer_of_the_day():
         return offer.goodsidx
     else:
         return None
+
+
+def get_top_goods_by_store(store):
+    top_goods = Goods.objects.filter(id__in=GoodsInShops.objects.filter(shopidx=store).values('goodsidx')).annotate(
+        total_bought=Sum('statistics__quantity')).order_by('-total_bought')[:8]
+    return top_goods

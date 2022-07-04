@@ -1,0 +1,172 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+{% load l10n %}
+{% block content %}
+  <div class="Middle Middle_top">
+    <div class="Middle-top">
+      <div class="wrap">
+        <div class="Middle-header">
+          <h1 class="Middle-title">
+            {{ store.shopname }}
+          </h1>
+          <ul class="breadcrumbs Middle-breadcrumbs">
+            <li class="breadcrumbs-item">
+              <a href="{% url 'main' %}">домой</a>
+            </li>
+            <li class="breadcrumbs-item breadcrumbs-item_current">
+              <span>{{ store.shopname }}</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="Section Section_column Section_columnLeft Section_columnWide">
+      <div class="wrap">
+        <div class="Section-column">
+          <div class="Section-columnSection Section-columnSection_mark">
+            <div class="media media_advantage">
+              <div class="media-image">
+                <img src="{% static 'assets/img/icons/advantages/shipping.svg' %}" alt="Доставка"/>
+              </div>
+              <div class="media-content">
+                <strong class="media-title">
+                  Доставка и возвраты
+                </strong>
+                <p class="media-text">
+                  Международная доставка
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="Section-columnSection Section-columnSection_mark">
+            <div class="media media_advantage">
+              <div class="media-image">
+                <img src="{% static 'assets/img/icons/advantages/moneyBack.svg' %}" alt="Возврат"/>
+              </div>
+              <div class="media-content">
+                <strong class="media-title">
+                  Возврат денег
+                </strong>
+                <p class="media-text">
+                  Гарантированные выплаты
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="Section-columnSection Section-columnSection_mark">
+            <div class="media media_advantage">
+              <div class="media-image">
+                <img src="{% static 'assets/img/icons/advantages/support.svg' %}" alt="Поддержка"/>
+              </div>
+              <div class="media-content">
+                <strong class="media-title">
+                  Поддержка
+                </strong>
+                <p class="media-text">
+                  Команда поддержки
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="Section-columnSection Section-columnSection_mark">
+            <div class="media media_advantage">
+              <div class="media-image">
+                <img src="{% static 'assets/img/icons/advantages/quality.svg' %}" alt="Качество"/>
+              </div>
+              <div class="media-content">
+                <strong class="media-title">
+                  Гарантии качества
+                </strong>
+                <p class="media-text">
+                  Только проверенные товары
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="Section-columnSection Section-columnSection_mark">
+            <div class="media media_middle">
+              <div class="media-image">
+                <img src="{% static 'assets/img/icons/contacts/phone.svg' %}" alt="Телефон"/>
+              </div>
+              <div class="media-content">Телефон:&#32;
+                <nobr>{{ store.phone }}</nobr>
+<!--                <br>Mobile:&#32;<nobr>+8 (200) 800-2000-650</nobr>-->
+              </div>
+            </div>
+          </div>
+          <div class="Section-columnSection Section-columnSection_mark">
+            <div class="media media_middle">
+              <div class="media-image">
+                <img src="{% static 'assets/img/icons/contacts/address.svg' %}" alt="Адрес"/>
+              </div>
+              <div class="media-content">
+                {{ store.address }}
+              </div>
+            </div>
+          </div>
+          <div class="Section-columnSection Section-columnSection_mark">
+            <div class="media media_middle">
+              <div class="media-image">
+                <img src="{% static 'assets/img/icons/contacts/mail.svg' %}" alt="email"/>
+              </div>
+              <div class="media-content">
+                {{ store.email }}
+              </div>
+            </div>
+          </div>
+          <div class="Section-columnSection">
+            <header class="Section-header">
+              <strong class="Section-title">
+                Мы в соц. сетях
+              </strong>
+            </header>
+            <div class="Section-columnContent">
+              <div class="Footer-payments Footer-payments_column">
+                <div><img src="{% static 'assets/img/icons/socialContent/fb.png' %}" alt="fb.png"/>
+                </div>
+                <div><img src="{% static 'assets/img/icons/socialContent/tw.png' %}" alt="tw.png"/>
+                </div>
+                <div><img src="{% static 'assets/img/icons/socialContent/gg.png' %}" alt="gg.png"/>
+                </div>
+                <div><img src="{% static 'assets/img/icons/socialContent/in.png' %}" alt="in.png"/>
+                </div>
+                <div><img src="{% static 'assets/img/icons/socialContent/pt.png' %}" alt="pt.png"/>
+                </div>
+                <div><img src="{% static 'assets/img/icons/socialContent/ml.png' %}" alt="ml.png"/>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="Section-content">
+          <div class="row row_verticalCenter row_maxHalf">
+            <div class="row-block">
+              <div class="pict">
+                <img src="/media/{{ store.image }}" alt="{{ store.shopname }}"/>
+              </div>
+            </div>
+            <div class="row-block">
+              <h2>
+                {{ store.shopname }}
+              </h2>
+              <p>
+                {{ store.description }}
+              </p>
+            </div>
+          </div>
+          <header class="Section-header">
+            <h2 class="Section-title">
+              Популярные товары
+            </h2>
+          </header>
+          <div class="Cards">
+            {% for item in solded_goods %}
+              {% include "app_goods/goods_card.html" %}
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
