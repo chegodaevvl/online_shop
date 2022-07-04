@@ -15,7 +15,7 @@ class Cart(object):
     def add(self, goods_id, shop_id=None, quantity=1):
         goods_id = str(goods_id)
         if shop_id:
-            goods_in_shop = GoodsInShops.objects.get()
+            goods_in_shop = GoodsInShops.objects.get(goodsidx=goods_id, shopidx=shop_id)
         else:
             goods_in_shop = choice(GoodsInShops.objects.prefetch_related('shopidx').filter(goodsidx=goods_id))
         random_shop_id = goods_in_shop.shopidx_id

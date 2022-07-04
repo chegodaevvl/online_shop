@@ -51,6 +51,9 @@ class GoodsDetail(DetailView):
         last_viewed = LastViewed(self.request)
         last_viewed.add(context['goods'].id)
         in_store = GoodsInShops.objects.filter(goodsidx=context['goods'])
+        for line in in_store:
+            if line.goodsidx.discount():
+                line.price = float(line.price) * (1 - line.goodsidx.discount() / 100)
         context['in_store'] = in_store
         cart = Cart(self.request)
         context.update({'compare_count': len(Comparation(self.request))})

@@ -67,7 +67,7 @@
                     {% endif %}
                   </div>
                   <div class="ProductCard-compare">
-                    <a class="btn btn_default" href="#">
+                    <a class="btn btn_default" href="/compare/add/{{ goods.id }}">
                       <img class="btn-icon" src="{% static 'assets/img/icons/card/change.svg' %}" alt="change.svg"/>
                     </a>
                   </div>
@@ -163,11 +163,11 @@
                         </div>
                         <div class="Categories-block Categories-price">
                           <strong>
-                            {{ item.price }}&#32;рублей
+                            {{ item.price|floatformat:2 }}
                           </strong>
                         </div>
                         <div class="Categories-block Categories-button">
-                          <a class="btn btn_primary" href="#">
+                          <a class="btn btn_primary" href="/cart/add/{{ item.goodsidx.id }}/{{ item.shopidx.id }}">
                             <img class="btn-icon" src="{% static 'assets/img/icons/card/cart_white.svg' %}" alt="Корзина"/>
                             <span class="btn-content">Купить</span>
                           </a>

@@ -28,10 +28,10 @@ from .forms import CartAddGoodForm
 #     return redirect('app_cart:cart_detail')
 
 
-def cart_add(request, good_id):
+def cart_add(request, good_id, shop_id=None):
     """Обработчик для добавления товара в корзину"""
     cart = Cart(request)
-    cart.add(good_id)
+    cart.add(good_id, shop_id)
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
