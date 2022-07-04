@@ -1,11 +1,14 @@
+import json
+
 from django.db.models.functions import Concat
 from django.views.generic import ListView, TemplateView, DetailView
+from .models import GoodsInShops, Goods, GoodsStorages
 
 from .utils import get_hot_offers, get_limited_goods, get_top_goods, get_offer_of_the_day, LastViewed
-
-from .models import GoodsInShops, Goods, GoodsStorages
+from app_compare.compare import Comparation
+from common.utils.utils import get_categories
 from app_cart.forms import CartAddGoodForm
-import json
+from app_cart.cart import Cart
 
 from common.utils.fts import SearchResultsList
 
@@ -49,6 +52,11 @@ class GoodsDetail(DetailView):
         last_viewed.add(context['goods'].id)
         in_store = GoodsInShops.objects.filter(goodsidx=context['goods'])
         context['in_store'] = in_store
+        cart = Cart(self.request)
+        context.update({'compare_count': len(Comparation(self.request))})
+        context.update({'cart_count': len(cart)})
+        context.update({'cart_cost': cart.total_cost()})
+        context.update({'categories': get_categories()})
         #
         # good_storage_quantity = GoodsStorages.objects.get().quantity
         # cart_product_form = CartAddGoodForm(

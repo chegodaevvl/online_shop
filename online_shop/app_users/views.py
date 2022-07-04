@@ -10,10 +10,22 @@ from .forms import ProfileForm
 from .utils import get_browsing_history
 from app_orders.models import Orders
 from app_goods.utils import LastViewed
+from common.utils.utils import get_favorite_categories, get_banners, get_categories
+from app_compare.compare import Comparation
+from app_cart.cart import Cart
 
 
 class LoginView(views.LoginView):
     template_name = 'app_users/login.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        cart = Cart(self.request)
+        context.update({'compare_count': len(Comparation(self.request))})
+        context.update({'cart_count': len(cart)})
+        context.update({'cart_cost': cart.total_cost()})
+        context.update({'categories': get_categories()})
+        return context
 
 
 class LogoutView(views.LogoutView):

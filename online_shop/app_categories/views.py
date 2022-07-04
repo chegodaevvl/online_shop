@@ -6,6 +6,8 @@ from .models import Categories
 from .utils import get_featured_categories, get_max_price, get_min_price, get_sellers_list
 from app_goods.models import Goods
 from common.utils.utils import get_categories
+from app_compare.compare import Comparation
+from app_cart.cart import Cart
 
 
 class CategoriesList(ListView):
@@ -32,4 +34,9 @@ class GoodsList(ListView):
         context.update({'min_price': get_min_price(context['goods'])})
         context.update({'max_price': get_max_price(context['goods'])})
         context.update({'sellers': get_sellers_list(context['goods'])})
+        cart = Cart(self.request)
+        context.update({'compare_count': len(Comparation(self.request))})
+        context.update({'cart_count': len(cart)})
+        context.update({'cart_cost': cart.total_cost()})
+        context.update({'categories': get_categories()})
         return context

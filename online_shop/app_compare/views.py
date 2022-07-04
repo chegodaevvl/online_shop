@@ -1,6 +1,8 @@
 from django.views.generic import TemplateView
 from django.http import HttpResponseRedirect
+from common.utils.utils import get_categories
 from .compare import Comparation
+from app_cart.cart import Cart
 
 
 def add_goods_to_comparation(request, goods_id):
@@ -23,6 +25,11 @@ class GoodsCompare(TemplateView):
         characteristics_list = ['header', 'goods_name', 'price']
         context = dict()
         comparation_set = Comparation(self.request)
+        cart = Cart(self.request)
+        context.update({'compare_count': len(comparation_set)})
+        context.update({'cart_count': len(cart)})
+        context.update({'cart_cost': cart.total_cost()})
+        context.update({'categories': get_categories()})
         if len(comparation_set) < 2:
             return None
         comparation_rows = list()
