@@ -9,6 +9,7 @@ from django.contrib.auth import update_session_auth_hash
 from .forms import ProfileForm
 from .utils import get_browsing_history
 from app_orders.models import Orders
+from app_orders.utils import get_last_order
 from app_goods.utils import LastViewed
 from common.utils.utils import get_favorite_categories, get_banners, get_categories
 from app_compare.compare import Comparation
@@ -91,26 +92,26 @@ class LastOrderView(LoginRequiredMixin, TemplateView):
         return context
 
 
-class OrderHistoryListView(LoginRequiredMixin, ListView):
-    template_name = 'app_users/order_history.html'
-    context_object_name = 'order_history'
-
-    def get_queryset(self):
-        queryset = Orders.objects.filter(useridx=self.request.user)
-        return queryset
-
-
-class OrderHistoryDetailView(UserPassesTestMixin, DetailView):
-    model = Orders
-    template_name = 'app_users/order_history_item.html'
-    context_object_name = 'order'
-
-    def test_func(self):
-        return self.get_object().useridx == self.request.user
+# class OrderHistoryListView(LoginRequiredMixin, ListView):
+#     template_name = 'app_users/order_history.html'
+#     context_object_name = 'order_history'
+#
+#     def get_queryset(self):
+#         queryset = Orders.objects.filter(useridx=self.request.user)
+#         return queryset
+#
+#
+# class OrderHistoryDetailView(UserPassesTestMixin, DetailView):
+#     model = Orders
+#     template_name = 'app_users/order_history_item.html'
+#     context_object_name = 'order'
+#
+#     def test_func(self):
+#         return self.get_object().useridx == self.request.user
 
 
 class LastViewedGoodsListView(LoginRequiredMixin, ListView):
-    template_name = 'app_users/last_viewed_goods.html'
+    template_name = 'app_users/orders_list.html'
     context_object_name = 'last_viewed_goods'
 
     def get_queryset(self):
@@ -141,4 +142,10 @@ class PersonalAccountView(LoginRequiredMixin, TemplateView):
             short_last_viewed.append(item)
             stop_value += 1
         context['short_last_viewed'] = short_last_viewed
+        cart = Cart(self.request)
+        context.update({'compare_count': len(Comparation(self.request))})
+        context.update({'cart_count': len(cart)})
+        context.update({'cart_cost': cart.total_cost()})
+        context.update({'categories': get_categories()})
+        context.update({'last_order': get_last_order(self.request.user.id)})
         return context

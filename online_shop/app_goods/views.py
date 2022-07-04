@@ -103,6 +103,11 @@ class LastViewedView(TemplateView):
     def get_context_data(self, **kwargs):
         context = dict()
         context['last_viewed'] = LastViewed(self.request)
+        cart = Cart(self.request)
+        context.update({'compare_count': len(Comparation(self.request))})
+        context.update({'cart_count': len(cart)})
+        context.update({'cart_cost': cart.total_cost()})
+        context.update({'categories': get_categories()})
         return context
 
 

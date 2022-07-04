@@ -1,6 +1,6 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, ListView, DetailView
 import json
 from datetime import datetime
 from .forms import OrderCreateForm
@@ -10,6 +10,9 @@ from app_users.models import UserProfiles
 from app_payment.models import Payment
 from .models import OrderItem, Orders, PaymentMethod, Shipment
 from .utils import get_shipment_methods, get_payment_methods
+from common.utils.utils import get_categories
+from app_compare.compare import Comparation
+from app_cart.cart import Cart
 
 
 # def order_create(request):
@@ -111,3 +114,40 @@ def order_created(request):
     cart.clear()
     # Вывод сообщения об успешном оформлении заказа
     return render(request, 'app_orders/created.html', {'order': order})
+
+
+class OrdersList(ListView):
+    model = Orders
+    context_object_name = 'orders'
+    template_name = 'app_orders/orders_list.html'
+
+    def get_queryset(self):
+        return Orders.objects.filter(useridx=self.request.user.id)
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        cart = Cart(self.request)
+        context.update({'compare_count': len(Comparation(self.request))})
+        context.update({'cart_count': len(cart)})
+        context.update({'cart_cost': cart.total_cost()})
+        context.update({'categories': get_categories()})
+        return context
+
+
+class OrderDetail(DetailView):
+    model = Orders
+    context_object_name = 'order'
+    template_name = 'app_orders/order_detail.html'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        cart = Cart(self.request)
+        context.update({'compare_count': len(Comparation(self.request))})
+        context.update({'cart_count': len(cart)})
+        context.update({'cart_cost': cart.total_cost()})
+        context.update({'categories': get_categories()})
+        user_profile = UserProfiles.objects.get(useridx=self.request.user.id)
+        context.update({'user': user_profile})
+        order_lines = OrderItem.objects.filter(orderidx=context['order'])
+        context.update({'order_lines': order_lines})
+        return context

@@ -10,8 +10,6 @@ urlpatterns = [
     path('profile_update', ProfileUpdateView.as_view(), name='profile_update'),
     path('password_update', PasswordUpdateForm.as_view(), name='password_update'),
     path('last_order', LastOrderView.as_view(), name='last_order'),
-    path('order_history', OrderHistoryListView.as_view(), name='order_history'),
-    path('order_history/<int:pk>', OrderHistoryDetailView.as_view(), name='order_history_item'),
     path('last_viewed_goods', LastViewedGoodsListView.as_view(), name='last_viewed_goods'),
     path('browsing_history', BrowsingHistoryListView.as_view(), name='browsing_history')
 ]
