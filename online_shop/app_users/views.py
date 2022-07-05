@@ -149,3 +149,18 @@ class PersonalAccountView(LoginRequiredMixin, TemplateView):
         context.update({'categories': get_categories()})
         context.update({'last_order': get_last_order(self.request.user.id)})
         return context
+
+
+class ProfileView(TemplateView):
+    template_name = 'app_users/profile.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        cart = Cart(self.request)
+        context.update({'user': self.request.user.profile})
+        context.update({'compare_count': len(Comparation(self.request))})
+        context.update({'cart_count': len(cart)})
+        context.update({'cart_cost': cart.total_cost()})
+        context.update({'categories': get_categories()})
+        context.update({'last_order': get_last_order(self.request.user.id)})
+        return context
