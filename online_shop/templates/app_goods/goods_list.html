@@ -31,7 +31,8 @@
               </strong>
             </header>
             <div class="Section-columnContent">
-              <form class="form" action="#" method="post">
+              <form class="form" action="#" method="get">
+                {% csrf_token %}
                 <div class="form-group">
                   <div class="range Section-columnRange">
                     <input class="range-line" id="price" name="price" type="text" data-type="double" data-min="{{ min_price }}" data-max="{{ max_price }}" data-from="{{ min_price }}" data-to="{{ max_price }}"/>
@@ -45,7 +46,7 @@
                 </div>
                 <div class="form-group">
                   <!-- - var options = setOptions(items, ['value', 'selected', 'disabled']);-->
-                  <select class="form-select">
+                  <select class="form-select" name="seller">
                     <option value="seller" selected="selected" disabled="disabled">
                       Продавец
                     </option>
@@ -58,41 +59,41 @@
                 </div>
                 <div class="form-group">
                   <label class="toggle">
-                    <input type="checkbox"/>
+                    <input type="checkbox" name="available"/>
                     <span class="toggle-box"></span>
                     <span class="toggle-text">Только в наличии</span>
                   </label>
                 </div>
+<!--                <div class="form-group">-->
+<!--                  <label class="toggle">-->
+<!--                    <input type="checkbox"/>-->
+<!--                    <span class="toggle-box"></span>-->
+<!--                    <span class="toggle-text">С бесплатной доставкой</span>-->
+<!--                  </label>-->
+<!--                </div>-->
                 <div class="form-group">
-                  <label class="toggle">
-                    <input type="checkbox"/>
-                    <span class="toggle-box"></span>
-                    <span class="toggle-text">С бесплатной доставкой</span>
-                  </label>
-                </div>
-                <div class="form-group">
-                  <div class="buttons">
-                      <a class="btn btn_square btn_dark btn_narrow" href="#">Отфильтровать</a>
-                  </div>
+                  <button class="buttons btn btn_square btn_dark btn_narrow" type="submit">
+                      Отфильтровать
+                  </button>
                 </div>
               </form>
             </div>
           </div>
-          <div class="Section-columnSection">
-            <header class="Section-header">
-              <strong class="Section-title">
-                Популярные теги
-              </strong>
-            </header>
-            <div class="Section-columnContent">
-              <div class="buttons">
-                  <a class="btn btn_default btn_sm" href="#">Видео</a>
-                  <a class="btn btn_default btn_sm" href="#">Компьютеры</a>
-                  <a class="btn btn_default btn_sm" href="#">Игры</a>
-                  <a class="btn btn_default btn_sm" href="#">Asus</a>
-              </div>
-            </div>
-          </div>
+<!--          <div class="Section-columnSection">-->
+<!--            <header class="Section-header">-->
+<!--              <strong class="Section-title">-->
+<!--                Популярные теги-->
+<!--              </strong>-->
+<!--            </header>-->
+<!--            <div class="Section-columnContent">-->
+<!--              <div class="buttons">-->
+<!--                  <a class="btn btn_default btn_sm" href="#">Видео</a>-->
+<!--                  <a class="btn btn_default btn_sm" href="#">Компьютеры</a>-->
+<!--                  <a class="btn btn_default btn_sm" href="#">Игры</a>-->
+<!--                  <a class="btn btn_default btn_sm" href="#">Asus</a>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
         </div>
         <div class="Section-content">
           <div class="Sort">
@@ -102,45 +103,10 @@
                 <a class="Sort-sortBy Sort-sortBy_dec" href="#">Популярности</a>
                 <a class="Sort-sortBy" href="#">Цене</a>
                 <a class="Sort-sortBy" href="#">Отзывам</a>
-                <a class="Sort-sortBy Sort-sortBy_inc" href="#">Новизне</a>
+<!--                <a class="Sort-sortBy Sort-sortBy_inc" href="#">Новизне</a>-->
             </div>
           </div>
-          {% if goods %}
-            <div class="Cards">
-              {% for item in goods %}
-                {% include "app_goods/goods_card.html" %}
-              {% endfor %}
-            </div>
-          {% else %}
-            <h2 class="empty-title">Здесь пока пусто</h2>
-          {% endif %}
-          <div class="Pagination">
-            <div class="Pagination-ins">
-              {% if page_obj.has_previous %}
-                <a class="Pagination-element Pagination-element_prev" href="?page={{ page_obj.previous_page_number }}">
-              {% else %}
-                <a class="Pagination-element Pagination-element_prev" href="#">
-              {% endif %}
-                  <img src="{% static 'assets/img/icons/prevPagination.svg' %}" alt="prevPagination.svg"/>
-                </a>
-              {% for page in paginator.page_range %}
-                {% if page_obj.number == page %}
-                  <a class="Pagination-element Pagination-element_current" href="?page={{ page }}">
-                {% else %}
-                  <a class="Pagination-element" href="?page={{ page }}">
-                {% endif %}
-                    <span class="Pagination-text">{{ page }}</span>
-                  </a>
-              {% endfor %}
-              {% if page_obj.has_next %}
-                <a class="Pagination-element Pagination-element_prev" href="?page={{ page_obj.next_page_number }}">
-              {% else %}
-                <a class="Pagination-element Pagination-element_prev" href="#">
-              {% endif %}
-                  <img src="{% static 'assets/img/icons/nextPagination.svg' %}" alt="nextPagination.svg"/>
-                </a>
-            </div>
-          </div>
+          {% include "app_goods/filtered_goods.html" %}
         </div>
       </div>
     </div>

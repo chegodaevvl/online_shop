@@ -22,3 +22,7 @@ def get_sellers_list(query_set):
     stores_in_view = GoodsInShops.objects.filter(goodsidx__in=query_set).values('shopidx').distinct('shopidx')
     sellers = Shops.objects.filter(id__in=stores_in_view).values('id', 'shopname')
     return sellers
+
+
+def get_sellers_goods(seller_id):
+    return GoodsInShops.objects.filter(shopidx=seller_id).values('goodsidx').distinct('goodsidx')
