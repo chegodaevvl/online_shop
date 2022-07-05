@@ -1,12 +1,18 @@
 {% extends 'app_users/personal_account.html' %}
 {% load static %}
+{% block account_header %}
+  История заказов
+{% endblock %}
+{% block account_subheader %}
+  История заказов
+{% endblock %}
 {% block account_menu %}
   <ul class="menu menu_vt">
     <li class="menu-item">
       <a class="menu-link" href="{% url 'personal_account' %}">Личный кабинет</a>
     </li>
     <li class="menu-item">
-      <a class="menu-link" href="{% url 'profile_update' %}">Профиль</a>
+      <a class="menu-link" href="{% url 'profile' %}">Профиль</a>
     </li>
     <li class="menu-item_ACTIVE menu-item">
       <a class="menu-link" href="/orders">История заказов</a>
