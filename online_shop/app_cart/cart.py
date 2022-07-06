@@ -14,22 +14,20 @@ class Cart(object):
 
     def add(self, goods_id, shop_id=None, quantity=1):
         goods_id = str(goods_id)
+        goods_in_shops = GoodsInShops.objects.filter(goodsidx=goods_id)
         if shop_id:
-            goods_in_shop = GoodsInShops.objects.get(goodsidx=goods_id, shopidx=shop_id)
+            random_shop = goods_in_shops.get(shopidx=shop_id)
         else:
-            goods_in_shop = choice(GoodsInShops.objects.prefetch_related('shopidx').filter(goodsidx=goods_id))
-        random_shop_id = goods_in_shop.shopidx_id
-        exact_price = float(goods_in_shop.price)
-        if goods_in_shop.goodsidx.discount():
-            exact_price *= (1 - goods_in_shop.goodsidx.discount() / 100)
+            random_shop = choice(goods_in_shops)
         if goods_id not in self.cart.keys():
-            self.cart[goods_id] = {'quantity': 0,
-                                   'shop_id': random_shop_id,
-                                   'price': exact_price}
-        self.cart[goods_id]['quantity'] += quantity
-        if shop_id and self.cart[goods_id]['shop_id'] != shop_id:
-            self.cart[goods_id]['shop_id'] = shop_id
-            self.cart[goods_id]['price'] = exact_price
+            self.cart[goods_id] = {'quantity': quantity,
+                                   'shop_id': random_shop.shopidx.id,
+                                   'price': float(random_shop.price)}
+        else:
+            if quantity != 1:
+                self.cart[goods_id]['quantity'] = quantity
+            if shop_id and self.cart[goods_id]['shop_id'] != random_shop.shopidx.id:
+                self.cart[goods_id]['shop_id'] = float(random_shop.price)
         self.save()
 
     def save(self):

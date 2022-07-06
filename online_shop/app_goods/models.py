@@ -42,6 +42,9 @@ class Goods(models.Model):
     def discount_price(self):
         return float(self.price() * (1 - self.discount() / 100))
 
+    def available_quantity(self):
+        return GoodsStorages.objects.get(goodsidx=self.id).values('quantity')
+
 
 class Shops(models.Model):
     """Магазины"""
