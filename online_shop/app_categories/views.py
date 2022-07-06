@@ -7,7 +7,8 @@ from django.views import View
 from django.shortcuts import render
 from django.core.paginator import Paginator
 from .models import Categories
-from .utils import get_featured_categories, get_max_price, get_min_price, get_sellers_list, get_sellers_goods
+from .utils import get_featured_categories, get_max_price, get_min_price, get_sellers_list, get_sellers_goods,\
+    sort_query_set
 from app_goods.models import Goods
 from common.utils.utils import get_categories
 from app_compare.compare import Comparation
@@ -42,7 +43,9 @@ class GoodsList(ListView):
             goods = goods.filter(goodsinshops__price__range=(price_range[0], price_range[1]))
         if 'available' in self.request.GET:
             goods = goods.filter(storage__quantity__gte=1)
-        return goods
+        if 'order_by' in self.request.GET:
+            return sort_query_set(goods, self.request.GET['order_by'], self.request.GET['direction'])
+        return sort_query_set(goods, 'popular', 'up')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -54,17 +57,11 @@ class GoodsList(ListView):
         context.update({'cart_count': len(cart)})
         context.update({'cart_cost': cart.total_cost()})
         context.update({'categories': get_categories()})
+        active_sort_dict_key = 'popular'
+        active_sort_dict_val = 'Sort-sortBy_inc'
+        if 'order_by' in self.request.GET:
+            active_sort_dict_key = self.request.GET['order_by']
+            if self.request.GET['direction'] == 'down':
+                active_sort_dict_val = 'Sort-sortBy_dec'
+        context.update({'sort_order': {active_sort_dict_key: active_sort_dict_val}})
         return context
-
-    # def post(self, request, *args, **kwargs):
-    #     goods = self.get_queryset()
-    #     # context.annotate(price=goodsinshops.aggregate(Avg('price')))
-    #     # min_price, max_price = request.POST['price'].split(';')
-    #     # min_price = float(min_price)
-    #     # max_price = float(max_price)
-    #     # context = context.filter(price__value=(min_price, max_price))
-    #     goods_title = request.POST['title']
-    #     goods = goods.filter(goodsname__contains=goods_title)
-    #     # seller_id = request.POST['seller']
-    #     print(goods)
-    #     return goods
