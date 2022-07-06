@@ -43,6 +43,9 @@ class CharacteristicTypes(models.Model):
         verbose_name = _('characteristic type')
         verbose_name_plural = _('characteristic types')
 
+    def __str__(self):
+        return self.characteristictype
+
 
 class Characteristics(models.Model):
     """Характеристики"""

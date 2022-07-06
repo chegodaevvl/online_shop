@@ -5,7 +5,7 @@ from django.http import HttpResponseRedirect
 from django.views.generic import ListView, TemplateView, DetailView
 from .models import GoodsInShops, Goods, GoodsStorages, Shops
 from .utils import get_hot_offers, get_limited_goods, get_top_goods, get_offer_of_the_day, LastViewed, \
-    get_top_goods_by_store, get_goods_comments
+    get_top_goods_by_store, get_goods_comments, get_goods_characteristics
 from app_compare.compare import Comparation
 from common.utils.utils import get_categories
 from app_cart.forms import CartAddGoodForm
@@ -61,6 +61,7 @@ class GoodsDetail(DetailView):
         context.update({'categories': get_categories()})
         print(get_goods_comments(context['goods']))
         context.update({'reviews': get_goods_comments(context['goods'])})
+        context.update({'characteristics': get_goods_characteristics(context['goods'])})
         #
         # good_storage_quantity = GoodsStorages.objects.get().quantity
         # cart_product_form = CartAddGoodForm(

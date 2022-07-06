@@ -4,6 +4,8 @@ from django.db.models import Q, Sum, Avg
 from django.conf import settings
 from .models import Goods, Offer, GoodsInShops
 from app_users.models import Comments
+from app_categories.models import Characteristics
+
 
 class LastViewed(object):
 
@@ -81,3 +83,7 @@ def get_top_goods_by_store(store):
 
 def get_goods_comments(goods_id):
     return Comments.objects.filter(goods=goods_id)
+
+
+def get_goods_characteristics(goods_id):
+    return Characteristics.objects.filter(goodsidx=goods_id).order_by('characteristictype')

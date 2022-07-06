@@ -130,22 +130,30 @@
                 <p>{{ goods.description }}&#32;</p>
                 <img class="pict pict_right" src="/media/{{ goods.image }}" alt="{{ goods.goodsname }}"/>
                 <div class="clearfix"></div>
-                <div class="table">
-                  <table>
-                    <tr>
-                      <th>Характеристика
-                      </th>
-                      <th>Значение
-                      </th>
-                    </tr>
-                    <tr>
-                      <td>ываыв
-                      </td>
-                      <td>llslssl
-                      </td>
-                    </tr>
-                  </table>
-                </div>
+                {% if characteristics %}
+                  <div class="table">
+                    <table>
+                      <tr>
+                        <th>Характеристика
+                        </th>
+                        <th>Значение
+                        </th>
+                      </tr>
+                      {% for characteristic in characteristics %}
+                        <tr>
+                          <td>
+                            {{ characteristic.characteristictype }}
+                          </td>
+                          <td>
+                            {{ characteristic.value }}
+                          </td>
+                        </tr>
+                      {% endfor %}
+                    </table>
+                  </div>
+                {% else %}
+                  <p>Для выбранного товара не заданы характеристики</p>
+                {% endif %}
               </div>
               <div class="Tabs-block" id="sellers">
                 {% if in_store %}
