@@ -1,19 +1,17 @@
 import json
-
 from django.db.models.functions import Concat
+from django.db.models import F, Value
+from django.http import HttpResponseRedirect
 from django.views.generic import ListView, TemplateView, DetailView
 from .models import GoodsInShops, Goods, GoodsStorages, Shops
-
 from .utils import get_hot_offers, get_limited_goods, get_top_goods, get_offer_of_the_day, LastViewed, \
-    get_top_goods_by_store
+    get_top_goods_by_store, get_goods_comments
 from app_compare.compare import Comparation
 from common.utils.utils import get_categories
 from app_cart.forms import CartAddGoodForm
 from app_cart.cart import Cart
-
 from common.utils.fts import SearchResultsList
-
-from django.db.models import F, Value
+from app_users.models import Comments
 
 
 class HotOffersListView(ListView):
@@ -61,6 +59,8 @@ class GoodsDetail(DetailView):
         context.update({'cart_count': len(cart)})
         context.update({'cart_cost': cart.total_cost()})
         context.update({'categories': get_categories()})
+        print(get_goods_comments(context['goods']))
+        context.update({'reviews': get_goods_comments(context['goods'])})
         #
         # good_storage_quantity = GoodsStorages.objects.get().quantity
         # cart_product_form = CartAddGoodForm(
@@ -86,6 +86,16 @@ class GoodsDetail(DetailView):
 
         response.set_cookie(key='browsing_history', value=cookies)
         return response
+
+    def post(self, *args, **kwargs):
+        if self.request.user.is_authenticated:
+            new_comment = Comments()
+            new_comment.useridx = self.request.user
+            new_comment.goods = Goods.objects.get(id=kwargs['pk'])
+            new_comment.text = self.request.POST['review']
+            new_comment.rating = 5
+            new_comment.save()
+        return HttpResponseRedirect(self.request.META.get('HTTP_REFERER'))
 
 
 class FindGood(SearchResultsList):

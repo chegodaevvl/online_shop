@@ -204,12 +204,12 @@
               <div class="Tabs-block" id="reviews">
                 <header class="Section-header">
                   <h3 class="Section-title">
-                    2 Отзывы
+                    Количество отзывов: {{ reviews.count }}
                   </h3>
                 </header>
-                {% if goods.reviews %}
+                {% if reviews %}
                 <div class="Comments">
-                  {% for item in goods.reviews %}
+                  {% for item in reviews %}
                     <div class="Comment">
                     <div class="Comment-column Comment-column_pict">
                       <div class="Comment-avatar">
@@ -219,7 +219,7 @@
                       <header class="Comment-header">
                         <div>
                           <strong class="Comment-title">
-                            {{ item.useridx.name }}
+                            {{ item.useridx.profile.fullname }}
                           </strong>
                           <span class="Comment-date">
                             {{ item.dt }}
@@ -243,21 +243,25 @@
                 </header>
                 <div class="Tabs-addComment">
                   <form class="form" action="#" method="post">
+                    {% csrf_token %}
                     <div class="form-group">
                       <textarea class="form-textarea" name="review" id="review" placeholder="Текст отзыва"></textarea>
                     </div>
-                    <div class="form-group">
-                      <div class="row">
-                        <div class="row-block">
-                          <input class="form-input" id="name" name="name" type="text" placeholder="Ваше имя"/>
-                        </div>
-                        <div class="row-block">
-                          <input class="form-input" id="email" name="email" type="text" placeholder="Email"/>
+                    {% if not request.user.is_authenticated %}
+                      <div class="form-group">
+                        <div class="row">
+                          <div class="row-block">
+                            <input class="form-input" id="name" name="name" type="text" placeholder="Ваше имя"/>
+                          </div>
+                          <div class="row-block">
+                            <input class="form-input" id="email" name="email" type="text" placeholder="Email"/>
+                          </div>
                         </div>
                       </div>
-                    </div>
+                    {% endif %}
                     <div class="form-group">
-                      <button class="btn btn_muted" type="submit">Отправить
+                      <button class="btn btn_muted" type="submit">
+                        Отправить
                       </button>
                     </div>
                   </form>

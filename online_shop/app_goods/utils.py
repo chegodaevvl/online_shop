@@ -1,10 +1,9 @@
-from django.db.models import Q, Sum, Avg
-from django.conf import settings
-
-from .models import Goods, Offer, GoodsInShops
 from random import sample
 from datetime import datetime
-
+from django.db.models import Q, Sum, Avg
+from django.conf import settings
+from .models import Goods, Offer, GoodsInShops
+from app_users.models import Comments
 
 class LastViewed(object):
 
@@ -78,3 +77,7 @@ def get_top_goods_by_store(store):
     top_goods = Goods.objects.filter(id__in=GoodsInShops.objects.filter(shopidx=store).values('goodsidx')).annotate(
         total_bought=Sum('statistics__quantity')).order_by('-total_bought')[:8]
     return top_goods
+
+
+def get_goods_comments(goods_id):
+    return Comments.objects.filter(goods=goods_id)
