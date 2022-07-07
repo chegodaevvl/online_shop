@@ -66,7 +66,7 @@
                     <div class="Amount">
                       <button class="Amount-remove" type="button">
                       </button>
-                      <input class="Amount-input form-input" name="amount" type="text" value="{{ item.quantity }}"/>
+                      <input class="Amount-input form-input" name="amount" type="text" value="{{ item.quantity }}" max="{{ item.goods.available_quantity }}"/>
                       <button class="Amount-add" type="button">
                       </button>
                     </div>

@@ -661,7 +661,8 @@ var Amount = function(){
                 e.preventDefault();
                 var $inputThis = $(this).siblings($input).filter($input);
                 var value = parseFloat($inputThis.val());
-                $inputThis.val( value + 1);
+                var maxVal = $inputThis[0].max
+                $inputThis.val(value<maxVal?value + 1:maxVal);
             });
             $remove.on('click', function(e){
                 e.preventDefault();
