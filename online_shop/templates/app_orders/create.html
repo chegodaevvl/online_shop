@@ -2,6 +2,9 @@
 {% load static %}
 {% load humanize %}
 {% load l10n %}
+{% block additional_script %}
+  <script src="{% static 'assets/js/order.js' %}" defer></script>
+{% endblock %}
 {% block content %}
   <div class="Middle Middle_top">
     <div class="Middle-top">
@@ -115,9 +118,9 @@
                   <div>
                     <label class="toggle">
                       {% if shipment.id == 1 %}
-                        <input type="radio" name="delivery" value="{{ shipment.id }}" checked="checked"/>
+                        <input class="deliveryType" type="radio" name="delivery" value="{{ shipment.id }}" checked="checked"/>
                       {% else %}
-                        <input type="radio" name="delivery" value="{{ shipment.id }}"/>
+                        <input class="deliveryType" type="radio" name="delivery" value="{{ shipment.id }}"/>
                       {% endif %}
                       <span class="toggle-box"></span>
                       <span class="toggle-text">{{ shipment.deliverymethod }}</span>
@@ -129,7 +132,7 @@
                 <label class="form-label" for="city">
                   Город
                 </label>
-                <input class="form-input" id="city" name="city" type="text"/>
+                <input class="form-input" id="city" name="city" type="text" value=""/>
               </div>
               <div class="form-group">
                 <label class="form-label" for="address">
@@ -152,9 +155,9 @@
                   <div>
                     <label class="toggle">
                       {% if payment.id == 1 %}
-                        <input type="radio" name="pay" value="{{ payment.id }}" checked="checked"/>
+                        <input class="paymentType" type="radio" name="pay" value="{{ payment.id }}" checked="checked"/>
                       {% else %}
-                        <input type="radio" name="pay" value="{{ payment.id }}"/>
+                        <input class="paymentType" type="radio" name="pay" value="{{ payment.id }}"/>
                       {% endif %}
                       <span class="toggle-box"></span>
                       <span class="toggle-text">{{ payment.paymentmethodtext }}</span>
@@ -181,20 +184,19 @@
                         <div class="Order-infoType">
                           ФИО:
                         </div>
-                        <div class="Order-infoContent">
-                          {{ request. }}
+                        <div class="Order-infoContent" id="order-name">
                         </div>
                       </div>
                       <div class="Order-info">
                         <div class="Order-infoType">Телефон:
                         </div>
-                        <div class="Order-infoContent">+7000000000
+                        <div class="Order-infoContent" id="order-phone">+7000000000
                         </div>
                       </div>
                       <div class="Order-info">
                         <div class="Order-infoType">E-mail:
                         </div>
-                        <div class="Order-infoContent">send@test.test
+                        <div class="Order-infoContent" id="order-email">send@test.test
                         </div>
                       </div>
                     </div>
@@ -202,25 +204,25 @@
                       <div class="Order-info Order-info_delivery">
                         <div class="Order-infoType">Тип доставки:
                         </div>
-                        <div class="Order-infoContent">Обычная доставка
+                        <div class="Order-infoContent" id="order-delivery">Обычная доставка
                         </div>
                       </div>
                       <div class="Order-info">
                         <div class="Order-infoType">Город:
                         </div>
-                        <div class="Order-infoContent">Москва
+                        <div class="Order-infoContent" id="order-city">Москва
                         </div>
                       </div>
                       <div class="Order-info">
                         <div class="Order-infoType">Адрес:
                         </div>
-                        <div class="Order-infoContent">Ул. Академика Арцимовича, д. 10, кв. 10
+                        <div class="Order-infoContent" id="order-address">Ул. Академика Арцимовича, д. 10, кв. 10
                         </div>
                       </div>
                       <div class="Order-info Order-info_pay">
                         <div class="Order-infoType">Оплата:
                         </div>
-                        <div class="Order-infoContent">Онлайн картой
+                        <div class="Order-infoContent" id="order-payment">Онлайн картой
                         </div>
                       </div>
                     </div>
