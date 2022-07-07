@@ -2,9 +2,6 @@
 {% load static %}
 {% load humanize %}
 {% load l10n %}
-{% block additional_css %}
-  <link rel="stylesheet" href="{% static 'assets/css/custom.css' %}">
-{% endblock %}
 {% block additional_script %}
   <script src="{% static 'assets/js/cart-add.js' %}" defer></script>
 {% endblock %}
@@ -59,16 +56,22 @@
                 </h2>
                 <div class="ProductCard-info">
                   <div class="ProductCard-cost">
-                    {% if goods.discount %}
-                      <div class="ProductCard-price">
-                        {{ goods.discount_price|floatformat:2|intcomma }}
-                      </div>
-                      <div class="ProductCard-priceOld">
-                        {{ goods.price|floatformat:2|intcomma }}
-                      </div>
+                    {% if goods.available_quantity != 0 %}
+                      {% if goods.discount %}
+                        <div class="ProductCard-price">
+                          {{ goods.discount_price|floatformat:2|intcomma }}
+                        </div>
+                        <div class="ProductCard-priceOld">
+                          {{ goods.price|floatformat:2|intcomma }}
+                        </div>
+                      {% else %}
+                        <div class="ProductCard-price">
+                          {{ goods.price|floatformat:2|intcomma }}
+                        </div>
+                      {% endif %}
                     {% else %}
                       <div class="ProductCard-price">
-                        {{ goods.price|floatformat:2|intcomma }}
+                        Goods is unavailable
                       </div>
                     {% endif %}
                   </div>
@@ -84,7 +87,8 @@
                   {{ goods.description }}
                 </p>
               </div>
-              <div class="ProductCard-cart">
+              {% if goods.available_quantity != 0 %}
+                <div class="ProductCard-cart">
                 <div class="ProductCard-cartElement ProductCard-cartElement_amount">
                   <div class="Amount Amount_product">
                     <button class="Amount-remove" type="button">
@@ -101,8 +105,6 @@
                   </a>
                 </div>
               </div>
-              {% if cart_error %}
-                <p class="ErrorMsg">{{ cart_error }}</p>
               {% endif %}
               <div class="ProductCard-footer">
 <!--                <div class="ProductCard-tags">-->

@@ -44,6 +44,8 @@ class Goods(models.Model):
 
     def available_quantity(self):
         goods_count = GoodsStorages.objects.get(goodsidx=self.id)
+        if not goods_count.quantity:
+            return 0
         return goods_count.quantity
 
 

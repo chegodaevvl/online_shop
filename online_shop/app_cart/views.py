@@ -30,17 +30,8 @@ from .forms import CartAddGoodForm
 
 def cart_add(request, good_id, shop_id=None, quantity=1):
     """Обработчик для добавления товара в корзину"""
-    print(quantity)
-    goods = Goods.objects.get(id=good_id)
-    if goods.available_quantity() == 0:
-        request.session['error'] = 'Goods in not available'
-    elif goods.available_quantity() < quantity:
-        request.session['error'] = 'There are not enough goods for your request'
-    elif quantity == 0:
-        request.session['error'] = 'Invalid requested goods count'
-    else:
-        cart = Cart(request)
-        cart.add(good_id, shop_id, quantity)
+    cart = Cart(request)
+    cart.add(good_id, shop_id, quantity)
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
