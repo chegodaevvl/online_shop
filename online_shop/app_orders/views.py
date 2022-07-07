@@ -50,6 +50,11 @@ class OrderCreate(TemplateView):
         context['user_info'] = None
         context['shipments'] = get_shipment_methods()
         context['payments'] = get_payment_methods()
+        cart = Cart(self.request)
+        context.update({'compare_count': len(Comparation(self.request))})
+        context.update({'cart_count': len(cart)})
+        context.update({'cart_cost': cart.total_cost()})
+        context.update({'categories': get_categories()})
         if self.request.user.is_authenticated:
             context['user_info'] = UserProfiles.objects.get(useridx=self.request.user.id)
         return context

@@ -23,6 +23,8 @@ class Cart(object):
             self.cart[goods_id] = {'quantity': quantity,
                                    'shop_id': random_shop.shopidx.id,
                                    'price': float(random_shop.price)}
+            if random_shop.goodsidx.discount():
+                self.cart[goods_id]['price'] *= (1 - random_shop.goodsidx.discount() / 100)
         else:
             if quantity != 1:
                 self.cart[goods_id]['quantity'] = quantity
