@@ -24,6 +24,10 @@ class Comparation(object):
             self.comparation.remove(goods_id)
         self.save()
 
+    def clear(self):
+        del self.session[settings.COMPARE_SESSION_ID]
+        self.save()
+
     def __iter__(self):
         goods = Goods.objects.filter(id__in=self.comparation)
         for item in goods:

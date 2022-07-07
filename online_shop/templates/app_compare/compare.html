@@ -28,7 +28,7 @@
             Разнообразный и богатый опыт постоянный количественный рост и сфера нашей активности обеспечивает широкому кругу (специалистов) участие в формировании системы обучения кадров, соответствует насущным потребностям. Идейные соображения высшего порядка, а также консультация с широким активом требуют определения и уточнения соответствующий условий активизации.
           </p>
         </article>
-        {% if comparation_rows %}
+        {% if not comparation_rows.error %}
           <div class="Compare">
             <div class="Compare-header">
               <label class="toggle Compare-checkDifferent">
@@ -37,96 +37,60 @@
                 <span class="toggle-text">Только различающиеся характеристики</span>
               </label>
             </div>
-            {% for row in comparation_rows %}
-              <div class="Compare-row">
-                {% if row.name == 'header' %}
+            {% for row in comparation_rows.rows %}
+              {% if row.class %}
+                <div class="Compare-row{{ row.class }}" style="">
+              {% else %}
+                <div class="Compare-row">
+              {% endif %}
+                {% if row.name == 'header' or row.name == 'goods_name' %}
                   <div class="Compare-title Compare-title_blank"></div>
-                  <div class="Compare-products">
-                    {% for value in row.values %}
-                      <div class="Compare-product">
-                        <div class="Compare-nameProduct Compare-nameProduct_main">
-                          {{ value.goods_name }}
-                        </div>
-                        <div class="Compare-feature">
-                          <img class="Compare-pict" src="/media/{{ value.goods_image }}" alt="{{ value.goods_name }}"/>
-                        </div>
-                      </div>
-                    {% endfor %}
-                  </div>
-                {% endif %}
-                {% if row.name == 'goods_name' %}
-                  <div class="Compare-title Compare-title_blank"></div>
-                  <div class="Compare-products">
-                    {% for value in row.values %}
-                      <div class="Compare-product">
-                        <div class="Compare-nameProduct">
-                          {{ value.goods_name }}
-                        </div>
-                        <div class="Compare-feature">
-                          <a class="Compare-btn" href="#">
-                            <img src="{% static 'assets/img/icons/card/cart.svg' %}" alt="cart.svg"/>
-                          </a>
-                          <a class="Compare-btn" href="remove/{{ value.goods_id }}">
-                            <img src="{% static 'assets/img/icons/card/delete.svg' %}" alt="delete.svg"/>
-                          </a>
-                        </div>
-                      </div>
-                    {% endfor %}
-                  </div>
-                {% endif %}
-                {% if row.name == 'price' %}
+                {% else %}
                   <div class="Compare-title">
                     {{ row.title }}
                   </div>
+                {% endif %}
                   <div class="Compare-products">
                     {% for value in row.values %}
                       <div class="Compare-product">
-<!--                        <div class="Compare-nameProduct">-->
-<!--                          {{ value.goods_name }}-->
-<!--                        </div>-->
-                        <div class="Compare-feature">
-                          <strong class="Compare-price">{{ value|floatformat:2 }}
-                          </strong>
-                        </div>
+                        {% if row.name == 'header' or row.name == 'goods_name' %}
+                          <div class="Compare-nameProduct Compare-nameProduct_main">
+                            {{ value.goods_name }}
+                          </div>
+                          {% if row.name == 'header' %}
+                            <div class="Compare-feature">
+                              <img class="Compare-pict" src="/media/{{ value.goods_image }}" alt="{{ value.goods_name }}"/>
+                            </div>
+                          {% else %}
+                            <div class="Compare-feature">
+                              <a class="Compare-btn" href="/cart/add/{{ value.goods_id }}">
+                                <img src="{% static 'assets/img/icons/card/cart.svg' %}" alt="cart.svg"/>
+                              </a>
+                              <a class="Compare-btn" href="remove/{{ value.goods_id }}">
+                                <img src="{% static 'assets/img/icons/card/delete.svg' %}" alt="delete.svg"/>
+                              </a>
+                            </div>
+                          {% endif %}
+                        {% else %}
+                          <div class="Compare-feature">
+                            {% if row.name == 'price' %}
+                              <strong class="Compare-price">
+                                {{ value }}
+                              </strong>
+                            {% else %}
+                              {{ value }}
+                            {% endif %}
+                          </div>
+                        {% endif %}
                       </div>
                     {% endfor %}
                   </div>
-                {% endif %}
               </div>
             {% endfor %}
-            <div class="Compare-row Compare-row_hide">
-              <div class="Compare-title">Время зарядки от сети
-              </div>
-              <div class="Compare-products">
-                <div class="Compare-product">
-                  <div class="Compare-nameProduct">Ноутбук SE40302
-                  </div>
-                  <div class="Compare-feature">3 часа
-                  </div>
-                </div>
-                <div class="Compare-product">
-                  <div class="Compare-nameProduct">Планшет Windows A848sls
-                  </div>
-                  <div class="Compare-feature">3 часа
-                  </div>
-                </div>
-                <div class="Compare-product">
-                  <div class="Compare-nameProduct">Планшет Windows A848sls
-                  </div>
-                  <div class="Compare-feature">3 часа
-                  </div>
-                </div>
-                <div class="Compare-product">
-                  <div class="Compare-nameProduct">Планшет Windows A848sls
-                  </div>
-                  <div class="Compare-feature">3 часа
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
         {% else %}
-          <p>Выбрано недостаточно товаров для сравнения</p>
+          <p>{{ comparation_rows.error }}</p>
+          <a href="clear">Очистить список сравнения</a>
         {% endif %}
       </div>
       </div>
