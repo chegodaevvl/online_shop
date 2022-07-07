@@ -2,6 +2,12 @@
 {% load static %}
 {% load humanize %}
 {% load l10n %}
+{% block additional_css %}
+  <link rel="stylesheet" href="{% static 'assets/css/custom.css' %}">
+{% endblock %}
+{% block additional_script %}
+  <script src="{% static 'assets/js/cart-add.js' %}" defer></script>
+{% endblock %}
 {% block content %}
   <div class="Middle Middle_top">
     <div class="Middle-top">
@@ -83,18 +89,21 @@
                   <div class="Amount Amount_product">
                     <button class="Amount-remove" type="button">
                     </button>
-                    <input class="Amount-input form-input" name="amount" type="text" value="1"/>
+                    <input class="Amount-input form-input" id="Amount-input" name="amount" type="text" value="1"/>
                     <button class="Amount-add" type="button">
                     </button>
                   </div>
                 </div>
                 <div class="ProductCard-cartElement">
-                  <a class="btn btn_primary" href="/cart/add/{{ goods.id }}=4">
+                  <a class="btn btn_primary cart_link" href="/cart/add/{{ goods.id }}=">
                     <img class="btn-icon" src="{% static 'assets/img/icons/card/cart_white.svg' %}" alt="Корзина"/>
                     <span class="btn-content">В корзину</span>
                   </a>
                 </div>
               </div>
+              {% if cart_error %}
+                <p class="ErrorMsg">{{ cart_error }}</p>
+              {% endif %}
               <div class="ProductCard-footer">
 <!--                <div class="ProductCard-tags">-->
 <!--                  <strong class="ProductCard-tagsTitle">Тэги:-->

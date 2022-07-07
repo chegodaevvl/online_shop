@@ -59,9 +59,11 @@ class GoodsDetail(DetailView):
         context.update({'cart_count': len(cart)})
         context.update({'cart_cost': cart.total_cost()})
         context.update({'categories': get_categories()})
-        print(get_goods_comments(context['goods']))
         context.update({'reviews': get_goods_comments(context['goods'])})
         context.update({'characteristics': get_goods_characteristics(context['goods'])})
+        if 'error' in self.request.session.keys():
+            context.update({'cart_error': self.request.session['error']})
+            del self.request.session['error']
         #
         # good_storage_quantity = GoodsStorages.objects.get().quantity
         # cart_product_form = CartAddGoodForm(
