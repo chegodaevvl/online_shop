@@ -14,6 +14,8 @@ from app_goods.utils import LastViewed
 from common.utils.utils import get_favorite_categories, get_banners, get_categories
 from app_compare.compare import Comparation
 from app_cart.cart import Cart
+from app_users.models import UserProfiles
+from django.contrib.auth.models import User
 
 
 class LoginView(views.LoginView):
@@ -137,6 +139,7 @@ class PersonalAccountView(LoginRequiredMixin, TemplateView):
         short_last_viewed = list()
         stop_value = 0
         for item in last_viewed:
+            print('как то сюда попал')
             if stop_value == 3:
                 break
             short_last_viewed.append(item)
@@ -156,11 +159,49 @@ class ProfileView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        try:
+            user_profile = self.request.user.profile
+        except:
+            user_profile = {'user': {'image': None,
+                                     'fullname': None,
+                                     'phone': None,
+                                     'email': None}}
         cart = Cart(self.request)
-        context.update({'user': self.request.user.profile})
+        context.update({'user': user_profile})
         context.update({'compare_count': len(Comparation(self.request))})
         context.update({'cart_count': len(cart)})
         context.update({'cart_cost': cart.total_cost()})
         context.update({'categories': get_categories()})
         context.update({'last_order': get_last_order(self.request.user.id)})
+        if 'saved' in self.request.session.keys():
+            context.update({'saved': self.request.session['saved']})
+            del self.request.session['saved']
         return context
+
+    def post(self, request, *args, **kwargs):
+        user_profile = UserProfiles.objects.get_or_create(useridx=self.request.user)
+        profile_changed = False
+        if request.POST['name']:
+            user_profile[0].fullname = request.POST['name']
+            profile_changed = True
+        if request.POST['phone']:
+            user_profile[0].phone = int(request.POST['phone'][1:])
+            profile_changed = True
+        if request.POST['mail']:
+            user_profile[0].email = request.POST['mail']
+            profile_changed = True
+        if request.FILES:
+            user_profile[0].avatar = request.FILES['avatar']
+            profile_changed = True
+        if profile_changed:
+            user_profile[0].save()
+        password_changed = False
+        if request.POST['password']:
+            if request.POST['password'] == request.POST['passwordReply']:
+                current_user = User.objects.get(id=self.request.user.id)
+                current_user.set_password(request.POST['password'])
+                current_user.save()
+                password_changed = True
+        if profile_changed or password_changed:
+            self.request.session['saved'] = True
+        return redirect('profile')

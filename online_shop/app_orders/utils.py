@@ -10,4 +10,6 @@ def get_payment_methods():
 
 
 def get_last_order(user_id: int):
+    if not Orders.objects.filter(useridx=user_id):
+        return None
     return Orders.objects.filter(useridx=user_id).order_by('-dt')[0]
