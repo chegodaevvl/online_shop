@@ -193,24 +193,15 @@ PAYMENT_VARIANTS = {
 #PAYMENT_VARIANT_FACTORY = "app_payment.provider_factory"
 
 
+# Email smtp
+EMAIL_USE_TLS = True
+EMAIL_HOST = os.getenv('EMAIL_HOST')
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+EMAIL_PORT = os.getenv('EMAIL_PORT')
 
-# This can be a string or callable, and should return a base host that
-# will be used when receiving callbacks and notifications from payment
-# providers.
-#
-# Keep in mind that if you use `localhost`, external servers won't be
-# able to reach you for webhook notifications.
-PAYMENT_HOST = 'localhost:8000'
 
-# Whether to use TLS (HTTPS). If false, will use plain-text HTTP.
-# Defaults to ``not settings.DEBUG``.
-PAYMENT_USES_SSL = False
-
-# A dotted path to your Payment class (see above).
-PAYMENT_MODEL = 'app_payment.Payment'
-
-PAYMENT_VARIANTS = {
-    'default': ('payments.dummy.DummyProvider', {})
-}
-
-#PAYMENT_VARIANT_FACTORY = "app_payment.provider_factory"
+# Celery Redis
+CELERY_BROKER_URL = 'redis://0.0.0.0:6379/0'
+CELERY_RESULT_BACKEND = 'redis://0.0.0.0:6379/0'
+CELERY_BROKER_TRANSPORT_OPTIONS = {'visibility_timeout': 3600}

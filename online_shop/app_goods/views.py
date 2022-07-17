@@ -1,4 +1,6 @@
 import json
+import os
+
 from django.db.models.functions import Concat
 from django.db.models import F, Value
 from django.http import HttpResponseRedirect
@@ -8,6 +10,16 @@ from .utils import get_hot_offers, get_limited_goods, get_top_goods, get_offer_o
     get_top_goods_by_store, get_goods_comments, get_goods_characteristics
 from app_compare.compare import Comparation
 from common.utils.utils import get_categories
+
+from django.shortcuts import render, redirect
+from django.views import View
+from django.contrib.auth.mixins import UserPassesTestMixin
+from .forms import ImportForm
+from .tasks import import_task
+
+from .utils import get_hot_offers, get_limited_goods, get_top_goods, get_offer_of_the_day
+
+from .models import GoodsInShops, Goods, GoodsStorages
 from app_cart.forms import CartAddGoodForm
 from app_cart.cart import Cart
 from common.utils.fts import SearchResultsList
@@ -137,3 +149,27 @@ class StoreDetail(DetailView):
         context.update({'categories': get_categories()})
         context.update({'solded_goods': get_top_goods_by_store(context['store'])})
         return context
+
+
+class ImportView(UserPassesTestMixin, View):
+    def get(self, request):
+        form = ImportForm(choices=self.get_choices())
+        return render(request, 'app_goods/import.html', {'form': form})
+
+    def post(self, request):
+        form = ImportForm(request.POST, choices=self.get_choices())
+        if form.is_valid():
+            email = form.cleaned_data['email']
+            files = form.cleaned_data['files']
+            import_task.delay(files=files, email=email)
+            return redirect('/admin/')
+        return render(request, 'app_goods/import.html', {'form': form})
+
+    @staticmethod
+    def get_choices():
+        os.makedirs('import/to_import', exist_ok=True)
+        choices = ((file, file) for file in os.listdir('import/to_import'))
+        return choices
+
+    def test_func(self):
+        return self.request.user.is_staff
