@@ -1,13 +1,30 @@
-{% block categories %}
-    {% if categories %}
-        <ul>
-            {% for category in categories %}
-                <li>
-                    <a href="cat-{{ category.id }}"> {{ category.categoryname }} </a>
-                </li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>There are no categories specified</p>
-    {% endif %}
-{% endblock %}
+{% load static %}
+{% load humanize %}
+{% load l10n %}
+{% if favorite_categories %}
+  <div class="Section">
+    <div class="wrap">
+      <div class="BannersHome">
+        {% for category in favorite_categories %}
+          <a class="BannersHomeBlock" href="/categories/{{ category.id }}">
+            <div class="BannersHomeBlock-row">
+              <div class="BannersHomeBlock-block">
+                <strong class="BannersHomeBlock-title">
+                  {{ category.categoryname }}
+                </strong>
+                <div class="BannersHomeBlock-content">
+                  от&#32;<span class="BannersHomeBlock-price">{{ category.min_price|floatformat:2|intcomma }} рублей</span>
+                </div>
+              </div>
+              <div class="BannersHomeBlock-block">
+                <div class="BannersHomeBlock-img">
+                  <img src="media/{{ category.categoryimg }}" alt="{{ category.categoryname }}"/>
+                </div>
+              </div>
+            </div>
+          </a>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+{% endif %}

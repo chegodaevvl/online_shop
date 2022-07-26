@@ -1,9 +1,31 @@
-{% block last_order %}
+{% load static %}
+<div class="order-info flex">
     {% if last_order %}
-        <p>{{ last_order.total }}$</p>
-        <p>{{ last_order.order }}</p>
-        <a href="{% url 'order_history' %}">Order history</a>
+        <div class="order-title flex">
+            <h3 class="order-header header-reset">
+                Заказ <a class="order-link" href="#">№ {{ last_order.id }} </a> от {{ last_order.dt }}
+            </h3>
+            <a href="{% url 'order_history' %}">Order history</a>
+        </div>
+        <ul class="order-detail list-reset">
+            <li class="order-property">
+                <span class="property-name">Тип доставки:</span>
+                <span class="property-value">{{ last_order.shipment }}</span>
+            </li>
+            <li class="order-property">
+                <span class="property-name">Оплата:</span>
+                <span class="property-value">{{ last_order.paymentidx }}</span>
+            </li>
+            <li class="order-property">
+                <span class="property-name">Общая стоимость:</span>
+                <span class="property-value">{{ last_order.total }}</span>
+            </li>
+            <li class="order-property">
+                <span class="property-name">Статус:</span>
+                <span class="property-paid">{{ last_order.paid }}</span>
+            </li>
+        </ul>
     {% else %}
-        <p>The order history is empty</p>
+        <h2 class="empty-title">The order history is empty</h2>
     {% endif %}
-{% endblock %}
+</div>

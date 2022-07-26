@@ -1,13 +1,117 @@
-{% block goods %}
-    {% if goods %}
-        <ul>
-            {% for item in goods %}
-                <li>
-                    <a href="/goods/{{ item.id }}"> {{ item.goodsname }} </a>
-                </li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>There are no goods in subcategory</p>
-    {% endif %}
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+{% load l10n %}
+{% block additional_script%}
+  <script src="{% static 'assets/js/sortby.js' %}" defer></script>
+{% endblock %}
+{% block content %}
+  <div class="Middle Middle_top">
+    <div class="Middle-top">
+      <div class="wrap">
+        <div class="Middle-header">
+          <h1 class="Middle-title">
+              Наш каталог
+          </h1>
+          <ul class="breadcrumbs Middle-breadcrumbs">
+            <li class="breadcrumbs-item">
+                <a href="{% url 'main' %}">домой</a>
+            </li>
+            <li class="breadcrumbs-item breadcrumbs-item_current">
+                <span>Каталог</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="Section Section_column Section_columnLeft">
+      <div class="wrap">
+        <div class="Section-column">
+          <div class="Section-columnSection">
+            <header class="Section-header">
+              <strong class="Section-title">
+                Фильтр
+              </strong>
+            </header>
+            <div class="Section-columnContent">
+              <form class="form" action="#" method="get">
+                {% csrf_token %}
+                <div class="form-group">
+                  <div class="range Section-columnRange">
+                    <input class="range-line" id="price" name="price" type="text" data-type="double" data-min="{{ min_price }}" data-max="{{ max_price }}" data-from="{{ min_price }}" data-to="{{ max_price }}"/>
+                    <div class="range-price">Цена:&#32;
+                      <div class="rangePrice"></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <input class="form-input form-input_full" id="title" name="title" type="text" placeholder="Название"/>
+                </div>
+                <div class="form-group">
+                  <!-- - var options = setOptions(items, ['value', 'selected', 'disabled']);-->
+                  <select class="form-select" name="seller">
+                    <option value="seller" selected="selected" disabled="disabled">
+                      Продавец
+                    </option>
+                    {% for seller in sellers %}
+                      <option value="{{ seller.id }}">
+                        {{ seller.shopname }}
+                      </option>
+                    {% endfor %}
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="toggle">
+                    <input type="checkbox" name="available"/>
+                    <span class="toggle-box"></span>
+                    <span class="toggle-text">Только в наличии</span>
+                  </label>
+                </div>
+<!--                <div class="form-group">-->
+<!--                  <label class="toggle">-->
+<!--                    <input type="checkbox"/>-->
+<!--                    <span class="toggle-box"></span>-->
+<!--                    <span class="toggle-text">С бесплатной доставкой</span>-->
+<!--                  </label>-->
+<!--                </div>-->
+                <div class="form-group">
+                  <button class="buttons btn btn_square btn_dark btn_narrow" type="submit">
+                      Отфильтровать
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+<!--          <div class="Section-columnSection">-->
+<!--            <header class="Section-header">-->
+<!--              <strong class="Section-title">-->
+<!--                Популярные теги-->
+<!--              </strong>-->
+<!--            </header>-->
+<!--            <div class="Section-columnContent">-->
+<!--              <div class="buttons">-->
+<!--                  <a class="btn btn_default btn_sm" href="#">Видео</a>-->
+<!--                  <a class="btn btn_default btn_sm" href="#">Компьютеры</a>-->
+<!--                  <a class="btn btn_default btn_sm" href="#">Игры</a>-->
+<!--                  <a class="btn btn_default btn_sm" href="#">Asus</a>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+        </div>
+        <div class="Section-content">
+          <div class="Sort">
+            <div class="Sort-title">Сортировать по:
+            </div>
+            <div class="Sort-variants">
+                <a class="Sort-sortBy {{ sort_order.popular }}" href="#" data-order="?order_by=popular">Популярности</a>
+                <a class="Sort-sortBy {{ sort_order.price }}" href="#" data-order="?order_by=price">Цене</a>
+                <a class="Sort-sortBy {{ sort_order.review }}" href="#" data-order="?order_by=review">Отзывам</a>
+<!--                <a class="Sort-sortBy Sort-sortBy_inc" href="#">Новизне</a>-->
+            </div>
+          </div>
+          {% include "app_goods/filtered_goods.html" %}
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock %}

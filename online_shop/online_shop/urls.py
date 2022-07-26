@@ -17,13 +17,17 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
+from .views import MainView, DiscountsListView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', MainView.as_view(), name='main'),
+    path('discounts/', DiscountsListView.as_view(), name='discounts'),
     path('users/', include('app_users.urls')),
     path('goods/', include('app_goods.urls')),
-    path('banners/', include('app_banners.urls')),
     path('categories/', include('app_categories.urls')),
     path('cart/', include('app_cart.urls', namespace='app_cart')),
+    path('compare/', include('app_compare.urls', namespace='comparation')),
     path('orders/', include('app_orders.urls', namespace='app_orders')),
+    path('payment/', include('app_payment.urls', namespace='app_payment')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

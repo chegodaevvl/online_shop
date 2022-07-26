@@ -9,5 +9,5 @@ def get_browsing_history(cookies, amount):
         cookies = json.loads(cookies['browsing_history'])[:amount]
         goods = []
         for goods_id in cookies:
-            goods.append(Goods.objects.get(id=goods_id))
+            goods.append(Goods.objects.get())
         return goods

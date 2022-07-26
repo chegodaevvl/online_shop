@@ -9,10 +9,26 @@ from django.contrib.auth import update_session_auth_hash
 from .forms import ProfileForm
 from .utils import get_browsing_history
 from app_orders.models import Orders
+from app_orders.utils import get_last_order
+from app_goods.utils import LastViewed
+from common.utils.utils import get_favorite_categories, get_banners, get_categories
+from app_compare.compare import Comparation
+from app_cart.cart import Cart
+from app_users.models import UserProfiles
+from django.contrib.auth.models import User
 
 
 class LoginView(views.LoginView):
     template_name = 'app_users/login.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        cart = Cart(self.request)
+        context.update({'compare_count': len(Comparation(self.request))})
+        context.update({'cart_count': len(cart)})
+        context.update({'cart_cost': cart.total_cost()})
+        context.update({'categories': get_categories()})
+        return context
 
 
 class LogoutView(views.LogoutView):
@@ -31,10 +47,10 @@ class RegisterView(View):
         if user_form.is_valid() and profile_form.is_valid():
             user = user_form.save()
             profile = profile_form.save(commit=False)
-            profile.useridx = User.objects.get(id=user.id)
+            profile.useridx = User.objects.get()
             profile.save()
-            username = user_form.cleaned_data.get('username')
-            password = user_form.cleaned_data.get('password1')
+            username = user_form.cleaned_data.get()
+            password = user_form.cleaned_data.get()
             user = authenticate(username=username, password=password)
             login(request, user)
             return redirect(reverse('personal_account'))
@@ -78,26 +94,26 @@ class LastOrderView(LoginRequiredMixin, TemplateView):
         return context
 
 
-class OrderHistoryListView(LoginRequiredMixin, ListView):
-    template_name = 'app_users/order_history.html'
-    context_object_name = 'order_history'
-
-    def get_queryset(self):
-        queryset = Orders.objects.filter(useridx=self.request.user)
-        return queryset
-
-
-class OrderHistoryDetailView(UserPassesTestMixin, DetailView):
-    model = Orders
-    template_name = 'app_users/order_history_item.html'
-    context_object_name = 'order'
-
-    def test_func(self):
-        return self.get_object().useridx == self.request.user
+# class OrderHistoryListView(LoginRequiredMixin, ListView):
+#     template_name = 'app_users/order_history.html'
+#     context_object_name = 'order_history'
+#
+#     def get_queryset(self):
+#         queryset = Orders.objects.filter(useridx=self.request.user)
+#         return queryset
+#
+#
+# class OrderHistoryDetailView(UserPassesTestMixin, DetailView):
+#     model = Orders
+#     template_name = 'app_users/order_history_item.html'
+#     context_object_name = 'order'
+#
+#     def test_func(self):
+#         return self.get_object().useridx == self.request.user
 
 
 class LastViewedGoodsListView(LoginRequiredMixin, ListView):
-    template_name = 'app_users/last_viewed_goods.html'
+    template_name = 'app_users/orders_list.html'
     context_object_name = 'last_viewed_goods'
 
     def get_queryset(self):
@@ -115,4 +131,77 @@ class BrowsingHistoryListView(ListView):
 
 
 class PersonalAccountView(LoginRequiredMixin, TemplateView):
-    template_name = 'app_users/personal_account.html'
+    template_name = 'app_users/account.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        last_viewed = LastViewed(self.request)
+        short_last_viewed = list()
+        stop_value = 0
+        for item in last_viewed:
+            print('как то сюда попал')
+            if stop_value == 3:
+                break
+            short_last_viewed.append(item)
+            stop_value += 1
+        context['short_last_viewed'] = short_last_viewed
+        cart = Cart(self.request)
+        context.update({'compare_count': len(Comparation(self.request))})
+        context.update({'cart_count': len(cart)})
+        context.update({'cart_cost': cart.total_cost()})
+        context.update({'categories': get_categories()})
+        context.update({'last_order': get_last_order(self.request.user.id)})
+        return context
+
+
+class ProfileView(TemplateView):
+    template_name = 'app_users/profile.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        try:
+            user_profile = self.request.user.profile
+        except:
+            user_profile = {'user': {'image': None,
+                                     'fullname': None,
+                                     'phone': None,
+                                     'email': None}}
+        cart = Cart(self.request)
+        context.update({'user': user_profile})
+        context.update({'compare_count': len(Comparation(self.request))})
+        context.update({'cart_count': len(cart)})
+        context.update({'cart_cost': cart.total_cost()})
+        context.update({'categories': get_categories()})
+        context.update({'last_order': get_last_order(self.request.user.id)})
+        if 'saved' in self.request.session.keys():
+            context.update({'saved': self.request.session['saved']})
+            del self.request.session['saved']
+        return context
+
+    def post(self, request, *args, **kwargs):
+        user_profile = UserProfiles.objects.get_or_create(useridx=self.request.user)
+        profile_changed = False
+        if request.POST['name']:
+            user_profile[0].fullname = request.POST['name']
+            profile_changed = True
+        if request.POST['phone']:
+            user_profile[0].phone = int(request.POST['phone'][1:])
+            profile_changed = True
+        if request.POST['mail']:
+            user_profile[0].email = request.POST['mail']
+            profile_changed = True
+        if request.FILES:
+            user_profile[0].avatar = request.FILES['avatar']
+            profile_changed = True
+        if profile_changed:
+            user_profile[0].save()
+        password_changed = False
+        if request.POST['password']:
+            if request.POST['password'] == request.POST['passwordReply']:
+                current_user = User.objects.get(id=self.request.user.id)
+                current_user.set_password(request.POST['password'])
+                current_user.save()
+                password_changed = True
+        if profile_changed or password_changed:
+            self.request.session['saved'] = True
+        return redirect('profile')

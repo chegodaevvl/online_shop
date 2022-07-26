@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="order-info">
+        <h3>Payment data</h3>
+        <p>The total amount of the order: ${{ cart.get_total_price }}</p>
+        <p>Delivery cost: ${{ delivery_cost }}</p>
+    </div>
+
+    {% if payment_method == 2 %}
+        <p><input type="submit" value="Random Card number"></p>
+    {% endif %}
+
+    <form action="." method="post" class="order-form">
+        {{ form.as_p }}
+        <p><input type="submit" value="Pay"></p>
+        {% csrf_token %}
+    </form>
+{% endblock %}>

@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{% load l10n %}
+{% block content %}
+    <div class="Middle Middle_top">
+    <div class="Middle-top">
+      <div class="wrap">
+        <div class="Middle-header">
+          <h1 class="Middle-title">
+            Наши акции
+          </h1>
+          <ul class="breadcrumbs Middle-breadcrumbs">
+            <li class="breadcrumbs-item">
+              <a href="{% url 'main' %}">home</a>
+            </li>
+            <li class="breadcrumbs-item breadcrumbs-item_current">
+              <span>Акции</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="Section">
+      <div class="wrap">
+        {% if discounts %}
+        <div class="Cards Cards_blog">
+          {% for discount in discounts %}
+            <div class="Card">
+              <a class="Card-picture" href="{{ discount.id }}">
+                <img src="{% static 'assets/img/content/sale/product.png' %}" alt="product.png"/>
+              </a>
+              {% if discount.startdate %}
+                <div class="Card-date">
+                  <strong class="Card-date-number">
+                  {{ discount.start_day }}
+                </strong>
+                  <span class="Card-date-month">
+                  {{ discount.start_month }}
+                </span>
+                </div>
+              {% endif %}
+              {% if discount.stopdate %}
+                <div class="Card-date Card-date_to">
+                  <strong class="Card-date-number">
+                    {{ discount.stop_day }}
+                  </strong>
+                  <span class="Card-date-month">
+                    {{ discount.stop_month }}
+                  </span>
+                </div>
+              {% endif %}
+              <div class="Card-content">
+                <strong class="Card-title">
+                  <a href="{{ discount.id }}">
+                    {{ discount.name }}
+                  </a>
+                </strong>
+                <div class="Card-description">
+                  {{ discount.description }}
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+        {% else %}
+          <p>Действующих акций нет</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  <div class="Pagination">
+    <div class="Pagination-ins">
+      {% if page_obj.has_previous %}
+        <a class="Pagination-element Pagination-element_prev" href="?page={{ page_obj.previous_page_number }}">
+      {% else %}
+        <a class="Pagination-element Pagination-element_prev" href="#">
+      {% endif %}
+        <img src="{% static 'assets/img/icons/prevPagination.svg' %}" alt="prevPagination.svg"/>
+      </a>
+      {% for page in paginator.page_range %}
+        {% if page_obj.number == page %}
+          <a class="Pagination-element Pagination-element_current" href="?page={{ page }}">
+        {% else %}
+          <a class="Pagination-element" href="?page={{ page }}">
+        {% endif %}
+            <span class="Pagination-text">{{ page }}</span>
+          </a>
+      {% endfor %}
+      {% if page_obj.has_next %}
+        <a class="Pagination-element Pagination-element_prev" href="?page={{ page_obj.next_page_number }}">
+      {% else %}
+        <a class="Pagination-element Pagination-element_prev" href="#">
+      {% endif %}
+        <img src="{% static 'assets/img/icons/nextPagination.svg' %}" alt="nextPagination.svg"/>
+      </a>
+    </div>
+  </div>
+{% endblock %}

@@ -1,9 +1,0 @@
-{% block banners %}
-    {% if context %}
-        {% for item in context %}
-            <div>
-                <a href="{{ item.bannerlink }}"> <img src="/media/{{ item.bannerimg }}" alt="{{ item.advertisementname }}"> </a>
-            </div>
-        {% endfor %}
-    {% endif %}
-{% endblock %}

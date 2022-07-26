@@ -1,0 +1,60 @@
+{% load static %}
+{% load humanize %}
+{% load l10n %}
+{% if day_offer %}
+  <div class="Section-column">
+        <div class="Section-columnSection Section-columnSection_mark">
+          <header class="Section-columnHeader">
+            <strong class="Section-columnTitle">
+              Предложение дня
+            </strong>
+          </header>
+          <div class="Card">
+            <a class="Card-picture" href="/goods/{{ day_offer.id }}">
+              <img src="media/{{ day_offer.image }}" alt="{{ day_offer.goodsname }}"/>
+            </a>
+            <div class="Card-content">
+              <strong class="Card-title">
+                  <a href="/goods/{{ day_offer.id }}">{{ day_offer.goodsname }}</a>
+              </strong>
+              <div class="Card-description">
+                <div class="Card-cost">
+                  {% if day_offer.discount %}
+                    <span class="Card-priceOld">{{ day_offer.price|floatformat:2|intcomma }}</span>
+                    <span class="Card-price">{{ day_offer.discountprice }}</span>
+                  {% else %}
+                    <span class="Card-price">{{ day_offer.price|floatformat:2|intcomma }}</span>
+                  {% endif %}
+                </div>
+                <div class="Card-category">
+                  {% if day_offer.categoryidx.parent %}
+                    {{ day_offer.categoryidx.parent.categoryname }} /
+                  {% endif %}
+                  {{ day_offer.categoryidx.categoryname }}
+                </div>
+              </div>
+              <div class="CountDown">
+                <div class="CountDown-block">
+                  <div class="CountDown-wrap">
+                    <div class="CountDown-hours" id="hrs"></div>
+                    <span class="CountDown-label">hours</span>
+                  </div>
+                </div>
+                <div class="CountDown-block">
+                  <div class="CountDown-wrap">
+                    <div class="CountDown-minutes" id="mins"></div>
+                    <span class="CountDown-label">mins</span>
+                  </div>
+                </div>
+                <div class="CountDown-block">
+                  <div class="CountDown-wrap">
+                    <div class="CountDown-secs" id="secs"></div>
+                    <span class="CountDown-label">secs</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+{% endif %}

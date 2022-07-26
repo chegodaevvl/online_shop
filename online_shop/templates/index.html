@@ -1,0 +1,145 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+{% load l10n %}
+{% block additional_script %}
+  <script src="{% static 'assets/js/timer.js' %}"></script>
+{% endblock %}
+{% block content %}
+  <div class="Middle">
+    {% include "app_categories/categories_list.html" %}
+    <div class="Section Section_column Section_columnLeft Section_columnDesktop">
+      <div class="wrap">
+        {% include "app_goods/day_offer.html" %}
+        <div class="Section-content">
+          <header class="Section-header">
+            <h2 class="Section-title">
+              Популярные продукты
+            </h2>
+          </header>
+          <div class="Cards">
+            {% for item in top_goods %}
+              {% include "app_goods/goods_card.html" %}
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="Section Section_dark">
+      <div class="wrap">
+        <div class="Section-content">
+          {% if hot_goods %}
+            <div class="Slider Slider_carousel">
+              <header class="Section-header">
+                <h2 class="Section-title">
+                  Горячее предложение
+                </h2>
+                <div class="Section-control">
+                  <div class="Slider-navigate"></div>
+                </div>
+              </header>
+              <div class="Slider-box Cards Cards_hz">
+                {% for item in hot_goods %}
+                  <div class="Slider-item">
+                    <div class="Slider-content">
+                      {% include "app_goods/goods_card.html" %}
+                    </div>
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    <div class="Section Section_column Section_columnRight">
+      <div class="wrap">
+        <div class="Section-column">
+          <div class="Section-columnSection Section-columnSection_mark">
+            <div class="media media_advantage">
+              <div class="media-image">
+                <img src="{% static 'assets/img/icons/advantages/shipping.svg' %}" alt="shipping.svg"/>
+              </div>
+              <div class="media-content">
+                <strong class="media-title">
+                  Доставка и возврат
+                </strong>
+                <p class="media-text">
+                  Гибкие условия доставки
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="Section-columnSection Section-columnSection_mark">
+            <div class="media media_advantage">
+              <div class="media-image">
+                <img src="{% static 'assets/img/icons/advantages/moneyBack.svg' %}" alt="moneyBack.svg"/>
+              </div>
+              <div class="media-content">
+                <strong class="media-title">
+                  Возврат денег
+                </strong>
+                <p class="media-text">
+                  Гарантированные выплаты
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="Section-columnSection Section-columnSection_mark">
+            <div class="media media_advantage">
+              <div class="media-image">
+                <img src="{% static 'assets/img/icons/advantages/support.svg' %}" alt="support.svg"/>
+              </div>
+              <div class="media-content">
+                <strong class="media-title">
+                  Условия поддержки
+                </strong>
+                <p class="media-text">
+                  Быстрая реакция
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="Section-columnSection Section-columnSection_mark">
+            <div class="media media_advantage">
+              <div class="media-image">
+                <img src="{% static 'assets/img/icons/advantages/quality.svg' %}" alt="quality.svg"/>
+              </div>
+              <div class="media-content">
+                <strong class="media-title">
+                  Гарантии качества
+                </strong>
+                <p class="media-text">
+                  Только проверенные товары
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="Section-content">
+          {% if limited_goods %}
+            <div class="Slider Slider_carousel">
+              <header class="Section-header Section-header_close">
+                <h2 class="Section-title">
+                  Ограниченный тираж
+                </h2>
+                <div class="Section-control">
+                  <div class="Slider-navigate"></div>
+                </div>
+              </header>
+              <div class="Slider-box Cards">
+                {% for item in limited_goods %}
+                  <div class="Slider-item">
+                    <div class="Slider-content">
+                      {% include "app_goods/goods_card.html" %}
+                    </div>
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

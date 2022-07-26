@@ -1,0 +1,37 @@
+{% load static %}
+{% if goods %}
+  <div class="Cards">
+    {% for item in goods %}
+      {% include "app_goods/goods_card.html" %}
+    {% endfor %}
+  </div>
+{% else %}
+  <h2 class="empty-title">Здесь пока пусто</h2>
+{% endif %}
+<div class="Pagination">
+  <div class="Pagination-ins">
+    {% if page_obj.has_previous %}
+      <a class="Pagination-element Pagination-element_prev" href="?page={{ page_obj.previous_page_number }}">
+    {% else %}
+      <a class="Pagination-element Pagination-element_prev" href="#">
+    {% endif %}
+        <img src="{% static 'assets/img/icons/prevPagination.svg' %}" alt="prevPagination.svg"/>
+      </a>
+    {% for page in paginator.page_range %}
+      {% if page_obj.number == page %}
+        <a class="Pagination-element Pagination-element_current" href="?page={{ page }}">
+      {% else %}
+        <a class="Pagination-element" href="?page={{ page }}">
+      {% endif %}
+          <span class="Pagination-text">{{ page }}</span>
+        </a>
+    {% endfor %}
+    {% if page_obj.has_next %}
+      <a class="Pagination-element Pagination-element_prev" href="?page={{ page_obj.next_page_number }}">
+    {% else %}
+      <a class="Pagination-element Pagination-element_prev" href="#">
+    {% endif %}
+        <img src="{% static 'assets/img/icons/nextPagination.svg' %}" alt="nextPagination.svg"/>
+      </a>
+  </div>
+</div>

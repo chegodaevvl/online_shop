@@ -6,4 +6,4 @@ class OrderCreateForm(forms.ModelForm):
 
     class Meta:
         model = Orders
-        fields = ['paid', 'shipment', 'address', 'useridx']
+        fields = ['paid', 'shipment', 'address', ]#'useridx']
