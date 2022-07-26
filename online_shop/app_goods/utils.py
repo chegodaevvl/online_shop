@@ -45,7 +45,7 @@ def get_hot_offers(quantity: int):
 
 
 def get_limited_goods(quantity: int):
-    pass
+    # pass
     limited_goods = list(Goods.objects.filter(Q(storage__limited=True) & Q(offer__isnull=True)).
                          annotate(price=Avg('goodsinshops__price')))
     if len(limited_goods) > quantity:
@@ -54,12 +54,14 @@ def get_limited_goods(quantity: int):
 
 
 def get_top_goods(quantity: int):
+    # pass
     top_goods = Goods.objects.annotate(
         total_bought=Sum('statistics__quantity')).order_by('-total_bought')[:quantity]
     return top_goods
 
 
 def get_offer_of_the_day():
+    # pass
     limited_goods = get_limited_goods(quantity=1)
     if limited_goods:
         offer = Offer.objects.get_or_create(pk=1, defaults={
