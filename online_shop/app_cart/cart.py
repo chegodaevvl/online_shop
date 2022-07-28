@@ -30,6 +30,20 @@ class Cart(object):
                 self.cart[goods_id]['quantity'] = quantity
             if shop_id and self.cart[goods_id]['shop_id'] != random_shop.shopidx.id:
                 self.cart[goods_id]['shop_id'] = float(random_shop.price)
+                if random_shop.goodsidx.discount():
+                    self.cart[goods_id]['price'] *= (1 - random_shop.goodsidx.discount() / 100)
+        self.save()
+
+    def update(self, goods_id, shop_id=None, quantity=None):
+        goods_id = str(goods_id)
+        if quantity:
+            self.cart[goods_id]['quantity'] = quantity
+        if shop_id:
+            goods_in_shop = GoodsInShops.objects.get(goodsidx=goods_id, shopidx=shop_id)
+            self.cart[goods_id]['shop_id'] = goods_in_shop.shopidx.id
+            self.cart[goods_id]['price'] = float(goods_in_shop.price)
+            if goods_in_shop.goodsidx.discount():
+                self.cart[goods_id]['price'] *= (1 - goods_in_shop.goodsidx.discount() / 100)
         self.save()
 
     def save(self):
