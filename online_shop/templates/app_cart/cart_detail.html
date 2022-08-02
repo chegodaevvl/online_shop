@@ -52,24 +52,24 @@
               <div class="Cart-block Cart-block_row">
                 <div class="Cart-block Cart-block_seller">
                   <!-- - var options = setOptions(items, ['value', 'selected', 'disabled']);-->
-                  {% for store in item.stores %}
-                  <select class="form-select">
-                    {% if store.shopidx.id == item.shop_id %}
-                      <option value="{{ store.shopidx.id }} selected">
-                    {% else %}
-                      <option value="{{ store.shopidx.id }}">
-                    {% endif %}
-                      {{ store.shopidx.shopname }}
-                    </option>
+                  <select class="form-select" data-goodsid="{{ item.goods.id }}">
+                    {% for store in item.stores %}
+                      {% if store.shopidx.id == item.shop_id %}
+                        <option value="{{ store.shopidx.id }}" selected>
+                      {% else %}
+                        <option value="{{ store.shopidx.id }}">
+                      {% endif %}
+                        {{ store.shopidx.shopname }}
+                      </option>
+                    {% endfor %}
                   </select>
-                  {% endfor %}
                 </div>
                 <div class="Cart-block Cart-block_amount">
                   <div class="Cart-amount">
                     <div class="Amount">
                       <button class="Amount-remove" type="button">
                       </button>
-                      <input class="Amount-input form-input" name="amount" type="text" value="{{ item.quantity }}" max="{{ item.goods.available_quantity }}"/>
+                      <input class="Amount-input form-input" name="amount" type="text" value="{{ item.quantity }}" max="{{ item.goods.available_quantity }}" data-goodsid="{{ item.goods.id }}"/>
                       <button class="Amount-add" type="button">
                       </button>
                     </div>
